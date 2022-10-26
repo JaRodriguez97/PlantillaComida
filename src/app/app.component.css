@@ -1,0 +1,154 @@
+/* !!! header !!! */
+header {
+  background-color: black;
+  position: fixed;
+  display: flex;
+  top: 0;
+  left: 0;
+  width: 100%;
+  padding: 1% 5%;
+  z-index: 1000;
+  justify-content: space-between;
+  align-items: center;
+  transition: 1.5s;
+}
+
+header.sticky {
+  background: #000;
+  padding: 20px 100px;
+  box-shadow: 0 5px 20px rgba(255, 255, 255, 0.5);
+}
+
+header>.logo {
+  font-size: 40px;
+  font-family: "Harlow Solid Italic";
+  color: rgb(254, 254, 153);
+  -webkit-text-stroke: 1px #f87c00;
+}
+
+header.sticky>.logo {
+  color: #fff;
+}
+
+header>ul {
+  position: relative;
+  display: flex;
+}
+
+header>ul>li {
+  position: relative;
+  list-style: none;
+}
+
+header>ul>li>a {
+  position: relative;
+  display: inline-block;
+  margin: 0 10px;
+  text-decoration: none;
+  font-size: 20px;
+  font-weight: 700;
+  color: #f87c00;
+  font-family: "Passion One";
+}
+
+header>ul>li>a:hover {
+  border-bottom: 0.1px solid #f87c00;
+  transition: 5s;
+}
+
+header.sticky>ul>li>a {
+  color: #fc9228;
+}
+
+/* !!! RESPONSIVE !!! */
+
+@media (max-width: 770px) {
+
+  header,
+  header.sticky {
+    padding: 2%;
+    z-index: 1000;
+  }
+
+  header>.logo {
+    font-size: 25px;
+    margin: 1%;
+  }
+
+  .menu {
+    position: fixed !important;
+    top: 10.5%;
+    left: -100%;
+    display: block !important;
+    padding: 20%;
+    text-align: center;
+    width: 100%;
+    height: 100%;
+    background: #000;
+    transition: 500ms;
+    z-index: 999;
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+  }
+
+  .menu.active {
+    left: 0;
+  }
+
+  header>ul>li>a {
+    color: #f87c00;
+    font-size: 25px;
+    margin: 5% !important;
+    text-transform: uppercase;
+  }
+
+  .toggle {
+    width: 10%;
+    height: 40px;
+    background: url("../assets/images/icons/menu.png");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 50%;
+    cursor: pointer;
+    transition: 500ms;
+  }
+
+  .toggle.active {
+    background: url("../assets/images/icons/close.png");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 30%;
+    cursor: pointer;
+  }
+
+  .copyrightText {
+    text-align: center;
+  }
+}
+
+@media (max-width: 566px) {
+  .menu {
+    top: 8.5%;
+  }
+
+  header>ul>li>a {
+    margin: 15% !important;
+  }
+
+  .toggle {
+    background-size: 80%;
+  }
+
+  .toggle.active {
+    background-size: 60%;
+  }
+
+  footer {
+    padding: 20px 40px;
+    flex-direction: column;
+    align-items: flex-end;
+  }
+
+  .copyrightText {
+    font-size: 8px;
+  }
+}

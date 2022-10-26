@@ -1,0 +1,7 @@
+@font-face {
+  font-family: "Harlow Solid Italic";
+  font-style: italic;
+  font-weight: 400;
+  src: local("Harlow Solid Italic"),
+    url("https://fonts.cdnfonts.com/s/14150/HARLOWSI_1.woff") format("woff");
+}

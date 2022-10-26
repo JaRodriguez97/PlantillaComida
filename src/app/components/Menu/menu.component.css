@@ -1,0 +1,338 @@
+.wrap {
+  padding: 5% 0;
+  bottom: 0;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: 
+    url(/assets/images/backgrounds/burguerWhitCheese.jpg);
+  background-size: 100% 100%;
+}
+
+.wrap>.container-fluid {
+  overflow: hidden;
+}
+
+.wrap>.container-fluid>div.title {
+  text-align: center;
+  padding: 1%;
+  margin: 1%;
+}
+
+.container-fluid>div.title>h2 {
+  margin: 2%;
+  color: #fff;
+  font-size: 350%;
+  -webkit-text-stroke: 1px #444;
+  text-shadow: 3px 3px 1px rgb(255, 3, 3);
+}
+
+#section {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+    url(/assets/images/backgrounds/adicionPapas.jpg);
+  background-size: 200px 200px;
+  background-repeat: repeat;
+}
+
+.containerBg {
+  padding: relative;
+  width: 1200px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  grid-gap: 20px;
+  padding: 20px;
+}
+
+.containerBg>.card {
+  width: 100%;
+  background: radial-gradient(rgba(255, 255, 255, 0.1),
+      rgba(255, 255, 255, 0.3),
+      rgba(255, 255, 255, 0.5));
+  border-radius: 5%;
+  border: solid 1px #fff;
+  box-shadow: 5px 5px 1px rgba(255, 255, 255, 0.8);
+}
+
+.containerBg>.card>.imgBx {
+  position: relative;
+  width: 100%;
+  height: 310px;
+  border-radius: 5%;
+  overflow: hidden;
+}
+
+.containerBg>.card>.imgBx>img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: 500ms ease-in-out;
+  transform-origin: right;
+}
+
+.containerBg>.card:active>.imgBx>img,
+.containerBg>.card:focus>.imgBx>img,
+.containerBg>.card:hover>.imgBx>img {
+  transform: scale(1.5);
+}
+
+.containerBg>.card>.imgBx>.action {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+}
+
+.containerBg>.card:active>.imgBx>.action>li,
+.containerBg>.card:focus>.imgBx>.action>li,
+.containerBg>.card:hover>.imgBx>.action>li {
+  transform: translateX(0);
+}
+
+.action>li {
+  position: relative;
+  list-style: none;
+  width: 40px;
+  height: 40px;
+  background: radial-gradient(rgba(255, 255, 255, 0.4),
+      rgba(255, 255, 255, 0.6),
+      rgba(255, 255, 255, 0.8));
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 1px;
+  cursor: pointer;
+  border-radius: 6px;
+  box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.5);
+  transition: 500ms;
+  transform: translateX(60px);
+}
+
+.action>li:nth-child(2) {
+  transition-delay: 150ms;
+}
+
+.action>li:nth-child(3) {
+  transition-delay: 300ms;
+}
+
+.action>li:hover {
+  background: #ff2020;
+  color: #fff;
+  transition-delay: 0ms;
+}
+
+.action>li.active {
+  background: #ff2020;
+  color: #fff;
+}
+
+.action>li>span {
+  position: absolute;
+  top: 50%;
+  right: 50px;
+  transform: translateY(-50%) translateX(-20px);
+  white-space: nowrap;
+  padding: 4px 6px;
+  background: #fff;
+  color: #333;
+  font-weight: 500;
+  font-size: 12px;
+  border-radius: 6px;
+  pointer-events: none;
+  opacity: 0;
+  transition: 500ms;
+}
+
+.action>li:hover>span {
+  transform: translateY(-50%) translateX(0px);
+  opacity: 1;
+}
+
+.action>li>span::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  right: -4px;
+  width: 8px;
+  height: 8px;
+  background: #fff;
+  transform: translateY(-50%) rotate(45deg);
+}
+
+.containerBg>.card>.content {
+  padding: 10px;
+}
+
+.containerBg>.card>.content>.productName>h3 {
+  font-size: 18px;
+  font-weight: 500;
+  color: #fff;
+  margin: 5px 0;
+}
+
+.containerBg>.card>.content>.priceRating {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.containerBg>.card>.content>.priceRating>h2 {
+  font-size: 20px;
+  color: #000;
+  font-weight: 500;
+}
+
+.content>.priceRating>.rating>.fa {
+  color: #ffd513;
+  cursor: pointer;
+}
+
+.content>.priceRating>.rating>.fa.grey {
+  color: #fff;
+}
+
+.swiper-container {
+  width: 100%;
+  padding-top: 50px;
+  padding-bottom: 50px;
+}
+
+.swiper-slide {
+  background-position: center;
+  background-size: cover;
+  width: 300px !important;
+  min-width: 300px;
+  padding: 0 !important;
+}
+
+.col-sm-4.scale {
+  transform: scale(1.1);
+}
+
+.col-sm-4>.price-table {
+  text-align: center;
+  overflow: hidden;
+  margin: 5.558%;
+  background: #fff;
+  box-sizing: border-box;
+  box-shadow: inset 0 0 40px rgba(0, 0, 0, 0.2), 0 20px 50px rgba(0, 0, 0, 0.5);
+  border-radius: 20px;
+}
+
+.col-sm-4>.price-table>.price-head {
+  padding-top: 15%;
+  padding-bottom: 40%;
+  border-bottom-left-radius: 30%;
+  border-bottom-right-radius: 30%;
+  background-position: 50% 30% !important;
+  background-size: cover !important;
+  -webkit-text-stroke: 0.5px #db0000;
+  cursor: pointer;
+}
+
+.price-table>.price-head>h4 {
+  text-transform: uppercase;
+  margin: 0;
+  padding: 0;
+  color: #fff;
+  font-weight: 700;
+}
+
+.price-table .price-head h2 {
+  margin: 0;
+  padding: 5% 0 0;
+  font-size: 250%;
+  color: #fff;
+}
+
+.price-content {
+  position: relative;
+}
+
+.price-content ul {
+  position: relative;
+  margin: 0;
+  padding: 0;
+}
+
+.price-content ul li {
+  list-style: none;
+  font-size: 110%;
+  text-transform: uppercase;
+  padding: 1% 10%;
+  color: #555;
+  cursor: default;
+  transition: 800ms;
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+}
+
+.price-content ul li:hover,
+.price-content ul li:active {
+  border-left: 10px solid black;
+  border-right: 10px solid black;
+}
+
+.price-button {
+  padding: 30px;
+}
+
+.price-button a:active {
+  box-shadow: inset 5em 5em 5em 5em rgba(0, 0, 0, 0.2);
+}
+
+.price-button a {
+  padding: 5% 10%;
+  background: #000;
+  color: #fff !important;
+  border-radius: 25px;
+  font-size: 18px;
+  text-transform: uppercase;
+  text-decoration: none !important;
+  background: linear-gradient(45deg, #b85402, #db0000);
+}
+
+footer {
+  bottom: 0;
+  left: 0;
+  padding: 4%;
+  width: 100%;
+}
+
+/*
+* Responsive
+*/
+
+
+@media (max-width: 991px) {
+  .col-sm-4 {
+    width: 100%;
+  }
+}
+
+@media (max-width: 769px) {
+  .wrap {
+    padding: 10% 0;
+  }
+
+  .wrap>.container-fluid>div.title {
+    padding: 0;
+    margin: 0;
+  }
+
+  .container-fluid>div.title>h2 {
+    margin: 10% 0 2%;
+    font-size: 250%;
+  }
+
+  .containerBg>.card>.imgBx>.action>li {
+    transform: translateX(0);
+  }
+}

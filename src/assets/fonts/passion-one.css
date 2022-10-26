@@ -1,0 +1,20 @@
+@font-face {
+    font-family: 'Passion One';
+    font-style: normal;
+    font-weight: 400;
+    src: local('Passion One'), url('https://fonts.cdnfonts.com/s/15566/PassionOne-Regular.woff') format('woff');
+}
+@font-face {
+    font-family: 'Passion One';
+    font-style: normal;
+    font-weight: 700;
+    src: local('Passion One'), url('https://fonts.cdnfonts.com/s/15566/PassionOne-Bold.woff') format('woff');
+}
+@font-face {
+    font-family: 'Passion One';
+    font-style: normal;
+    font-weight: 900;
+    src: local('Passion One'), url('https://fonts.cdnfonts.com/s/15566/PassionOne-Black.woff') format('woff');
+}
+
+

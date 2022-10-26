@@ -1,1 +1,28 @@
-/* You can add global styles to this file, and also import other style files */
+@import 'swiper/swiper-bundle.css';
+/* nombre logo */
+@import url("./assets/fonts/harlow-solid-italic.css");
+/* Letra grande */
+@import url("./assets/fonts/kavoon.css");
+/* Letra pequeña */
+@import url("./assets/fonts/Peralta.css");
+/* Letra menú */
+@import url("./assets/fonts/passion-one.css");
+
+@import url("./assets/fonts/Poppins_200-300-400-500-600-700-800-900.css");
+@import url("./assets/fonts/OpenSans.css");
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Peralta", "Poppins", sans-serif;
+}
+
+body {
+  background-color: #333;
+  transition: 1s;
+}
+
+app-menu {
+  overflow: scroll !important;
+}
