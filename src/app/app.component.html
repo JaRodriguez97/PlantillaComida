@@ -1,12 +1,12 @@
 <!-- !!! Header !!! -->
 <header>
-  <a [routerLink]="'/'" class="logo">MigueLizBurguer's</a>
+  <a [routerLink]="'/'" class="logo">Burguer's</a>
   <div class="toggle" (click)="toogleMenu()"></div>
   <ul class="menu">
-    <li><a [routerLink]="'/'">Inicio</a></li>
-    <li><a [routerLink]="'/menu'">Menú</a></li>
-    <li><a [routerLink]="'/reservas'">Reservas</a></li>
-    <li><a [routerLink]="'/tiendas'">Tiendas</a></li>
+    <li><a [routerLink]="toogleMenu('/')">Inicio</a></li>
+    <li><a [routerLink]="toogleMenu('/menu')">Menú</a></li>
+    <li><a [routerLink]="toogleMenu('/reservas')">Reservas</a></li>
+    <li><a [routerLink]="toogleMenu('/tiendas')">Tiendas</a></li>
 
     <!-- <input type="text" class="search" /><label for="serch">Búscar</label> -->
   </ul>

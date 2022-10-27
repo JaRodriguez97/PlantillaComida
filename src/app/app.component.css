@@ -19,28 +19,28 @@ header.sticky {
   box-shadow: 0 5px 20px rgba(255, 255, 255, 0.5);
 }
 
-header>.logo {
+header > .logo {
   font-size: 40px;
   font-family: "Harlow Solid Italic";
   color: rgb(254, 254, 153);
   -webkit-text-stroke: 1px #f87c00;
 }
 
-header.sticky>.logo {
+header.sticky > .logo {
   color: #fff;
 }
 
-header>ul {
+header > ul {
   position: relative;
   display: flex;
 }
 
-header>ul>li {
+header > ul > li {
   position: relative;
   list-style: none;
 }
 
-header>ul>li>a {
+header > ul > li > a {
   position: relative;
   display: inline-block;
   margin: 0 10px;
@@ -49,29 +49,29 @@ header>ul>li>a {
   font-weight: 700;
   color: #f87c00;
   font-family: "Passion One";
+  text-transform: uppercase;
 }
 
-header>ul>li>a:hover {
+header > ul > li > a:hover {
   border-bottom: 0.1px solid #f87c00;
   transition: 5s;
 }
 
-header.sticky>ul>li>a {
+header.sticky > ul > li > a {
   color: #fc9228;
 }
 
 /* !!! RESPONSIVE !!! */
 
 @media (max-width: 770px) {
-
   header,
   header.sticky {
-    padding: 2%;
+    padding: 3%;
     z-index: 1000;
   }
 
-  header>.logo {
-    font-size: 25px;
+  header > .logo {
+    font-size: 30px;
     margin: 1%;
   }
 
@@ -94,11 +94,9 @@ header.sticky>ul>li>a {
     left: 0;
   }
 
-  header>ul>li>a {
-    color: #f87c00;
-    font-size: 25px;
+  header > ul > li > a {
+    font-size: 30px;
     margin: 5% !important;
-    text-transform: uppercase;
   }
 
   .toggle {
@@ -130,7 +128,7 @@ header.sticky>ul>li>a {
     top: 8.5%;
   }
 
-  header>ul>li>a {
+  header > ul > li > a {
     margin: 15% !important;
   }
 

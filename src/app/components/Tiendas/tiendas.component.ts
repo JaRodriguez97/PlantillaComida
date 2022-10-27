@@ -6,9 +6,15 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./tiendas.component.css'],
 })
 export class TiendasComponent implements OnInit {
+  window: Window = window;
+
   constructor() {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.window.addEventListener('resize', function (params) {
+      console.log(window.innerHeight, params);
+    });
+  }
 
   // function getTienda(sede) {
   //   let tiendas = {

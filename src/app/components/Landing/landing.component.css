@@ -12,7 +12,7 @@
   background-position: 50% 20%;
 }
 
-.wrap>.text-wrap {
+.wrap > .text-wrap {
   position: absolute;
   color: #fff;
   text-align: left;
@@ -23,7 +23,7 @@
   left: 5%;
 }
 
-.text-wrap>h2 {
+.text-wrap > h2 {
   font-family: "kavoon";
   font-weight: 500;
   font-size: 150%;
@@ -31,13 +31,13 @@
   line-height: 150%;
 }
 
-.text-wrap>h2>span {
+.text-wrap > h2 > span {
   font-weight: 900;
   font-size: 200%;
   font-family: "kavoon";
 }
 
-.text-wrap>P {
+.text-wrap > P {
   font-size: 150%;
   font-family: "kavoon";
 }
@@ -57,7 +57,7 @@ button {
   border: none;
 }
 
-button>span {
+button > span {
   border: 0.5px solid #e9a810;
   position: absolute;
   top: 0;
@@ -75,37 +75,37 @@ button>span {
   font-family: "Peralta";
 }
 
-button:hover>span {
+button:hover > span {
   z-index: 1000;
   transition: 300ms;
   color: #fff;
   background: #915c32;
 }
 
-button:hover>span:nth-child(5) {
+button:hover > span:nth-child(5) {
   transform: translate(-40px, 40px);
   opacity: 1;
 }
 
-button:hover>span:nth-child(4) {
+button:hover > span:nth-child(4) {
   transform: translate(-30px, 30px);
   background: #e9a810;
   opacity: 0.8;
 }
 
-button:hover>span:nth-child(3) {
+button:hover > span:nth-child(3) {
   transform: translate(-20px, 20px);
   background: #ab260c;
   opacity: 0.6;
 }
 
-button:hover>span:nth-child(2) {
+button:hover > span:nth-child(2) {
   transform: translate(-10px, 10px);
   background: #4f200c;
   opacity: 0.4;
 }
 
-button:hover>span:nth-child(1) {
+button:hover > span:nth-child(1) {
   transform: translate(0px, 0px);
   background: #004800;
   opacity: 0.2;
@@ -132,7 +132,7 @@ app-footer {
 
 @media (max-width: 770px) {
   button {
-    top: -35%;
+    top: -30%;
     right: -2% !important;
     width: 60%;
   }
@@ -142,7 +142,7 @@ app-footer {
     justify-content: center;
   }
 
-  .wrap>.text-wrap {
+  .wrap > .text-wrap {
     justify-content: center;
     text-align: center;
     margin: 8%;
@@ -156,14 +156,14 @@ app-footer {
 
 @media (max-width: 500px) {
   button {
-    top: -38%;
+    top: -35%;
   }
 
-  .wrap>.text-wrap {
+  .wrap > .text-wrap {
     margin: 20% 8%;
     padding: 20% 8%;
   }
-/* 
+  /* 
   .wrap>.text-wrap>h2 {
     font-size: 2rem;
   }

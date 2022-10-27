@@ -11,7 +11,7 @@ export class AppComponent {
   menuToggle: any;
   menu: any;
 
-  @HostListener('window:load')
+  @HostListener('window:scroll')
   scrolling(): void {
     this.header = document.querySelector('header')!;
     this.header.classList.toggle('sticky', window.scrollY > 0);
@@ -20,10 +20,14 @@ export class AppComponent {
   ngOnInit(): void {}
 
   // Menú toggle
-  toogleMenu(): void {
+  toogleMenu(redirecTo?: string): any[] {
     this.menuToggle = document.querySelector('.toggle')!;
     this.menu = document.querySelector('.menu')!;
     this.menuToggle.classList.toggle('active');
     this.menu.classList.toggle('active');
+
+    console.log(redirecTo);
+
+    return [redirecTo];
   }
 }
