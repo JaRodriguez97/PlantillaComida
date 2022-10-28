@@ -1,10 +1,11 @@
-export interface comboInterface {
+export interface cardInterface {
+  img: string;
+  existentes?: number;
+  nombre: string;
   precio: string;
   peso: string;
   Ingredientes: string;
   incluye: string;
-  img: string;
-  existentes?: number;
   REF?: string;
   estrellas?: number;
 }

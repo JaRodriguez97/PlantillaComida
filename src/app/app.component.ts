@@ -7,7 +7,7 @@ import { Component, HostListener } from '@angular/core';
 })
 export class AppComponent {
   title = 'PlantillaComida';
-  header: HTMLElement | null = null;
+  header!: HTMLElement | null;
   menuToggle: any;
   menu: any;
 
@@ -25,8 +25,6 @@ export class AppComponent {
     this.menu = document.querySelector('.menu')!;
     this.menuToggle.classList.toggle('active');
     this.menu.classList.toggle('active');
-
-    console.log(redirecTo);
 
     return [redirecTo];
   }

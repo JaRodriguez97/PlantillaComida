@@ -1,6 +1,6 @@
 /* !!! header !!! */
 header {
-  background-color: black;
+  background: linear-gradient(to top, transparent, rgba(0, 0, 0, 1));
   position: fixed;
   display: flex;
   top: 0;
@@ -14,7 +14,7 @@ header {
 }
 
 header.sticky {
-  background: #000;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 1));
   padding: 20px 100px;
   box-shadow: 0 5px 20px rgba(255, 255, 255, 0.5);
 }

@@ -20,16 +20,7 @@
             }"
             class="mySwiper"
           >
-            <ng-template
-              swiperSlide
-              *ngFor="let combo of CombosBD"
-              style="
-                width: 100%;
-                transition-duration: 0ms;
-                z-index: 3;
-                transform: translate3d(0px, 0px, 0px) rotateZ(0deg) scale(1);
-              "
-            >
+            <ng-template swiperSlide *ngFor="let combo of CombosBD">
               <div class="col-sm-4">
                 <div class="price-table">
                   <div
@@ -80,20 +71,21 @@
             </div>
           </div>
         </ng-container>
-        <!-- !!!!!!!!! -->
       </div>
     </div>
   </div>
 </section>
+<!-- !!!!!!!!! -->
 <section id="section">
   <div class="containerBg">
-    <!-- !!! -->
-    <div class="card">
+    <div class="card" *ngFor="let card of cards">
       <div class="imgBx">
-        <img
-          src="/assets/images/cards/burguerChicken.jpg"
-          alt="burguerChicken"
-        />
+        <!-- <img
+          src="{{ card.img }}"
+          alt="{{ card.img.split('/').pop()!.split('.')[0] }}"
+          title="{{ card.img.split('/').pop()!.split('.')[0] }}"
+        /> -->
+        <div class="img" style="background-image: url('{{ card.img }}');"></div>
         <ul class="action">
           <li>
             <i class="fa fa-heart" aria-hidden="true"></i>
@@ -111,274 +103,17 @@
       </div>
       <div class="content">
         <div class="productName">
-          <h3>Burguer Chicken</h3>
-          <span hidden>#54m4652n1</span>
+          <h2>{{ card.nombre }}</h2>
+          <!-- cambiar h3 por h2-->
+          <label for="ref"
+            >Referencia:<span id="ref"> {{ card.REF }}</span></label
+          >
         </div>
         <div class="priceRating">
-          <h2>$13.450</h2>
+          <h3>{{ card.precio }}<span> C/U</span></h3>
+          <!-- cambiar h2 por h3-->
           <div class="rating">
             <i class="fa fa-star" aria-hidden="true"></i>
-            <i class="fa fa-star" aria-hidden="true"></i>
-            <i class="fa fa-star" aria-hidden="true"></i>
-            <i class="fa fa-star" aria-hidden="true"></i>
-            <i class="fa fa-star grey" aria-hidden="true"></i>
-          </div>
-        </div>
-      </div>
-    </div>
-    <!-- !!! -->
-    <div class="card">
-      <div class="imgBx">
-        <img
-          src="/assets/images/cards/burguersPapas.jpg"
-          alt="Burguer doble carne y papas"
-        />
-        <ul class="action">
-          <li class="active">
-            <i class="fa fa-heart" aria-hidden="true"></i>
-            <span>Agregar a Favoritos</span>
-          </li>
-          <li onClick="getDetails(1)">
-            <i class="fa fa-eye" aria-hidden="true"></i>
-            <span>Ver Detalles</span>
-          </li>
-          <li>
-            <i class="fa fa-shopping-cart" aria-hidden="true"></i>
-            <span>Agregar al Carrito</span>
-          </li>
-        </ul>
-      </div>
-      <div class="content">
-        <div class="productName">
-          <h3>Doble carne y papas</h3>
-          <span hidden>#54m4652n2</span>
-        </div>
-        <div class="priceRating">
-          <h2>$23.450</h2>
-          <div class="rating">
-            <i class="fa fa-star" aria-hidden="false"></i>
-            <i class="fa fa-star" aria-hidden="true"></i>
-            <i class="fa fa-star" aria-hidden="true"></i>
-            <i class="fa fa-star grey" aria-hidden="true"></i>
-            <i class="fa fa-star grey" aria-hidden="true"></i>
-          </div>
-        </div>
-      </div>
-    </div>
-    <!-- !!! -->
-    <div class="card">
-      <div class="imgBx">
-        <img
-          src="/assets/images/cards/lunchPolloPapas.jpg"
-          alt="lunchPolloPapas"
-        />
-        <ul class="action">
-          <li class="active">
-            <i class="fa fa-heart" aria-hidden="true"></i>
-            <span>Agregar a Favoritos</span>
-          </li>
-          <li onClick="getDetails(2)">
-            <i class="fa fa-eye" aria-hidden="true"></i>
-            <span>Ver Detalles</span>
-          </li>
-          <li>
-            <i class="fa fa-shopping-cart" aria-hidden="true"></i>
-            <span>Agregar al Carrito</span>
-          </li>
-        </ul>
-      </div>
-      <div class="content">
-        <div class="productName">
-          <h3>Blunch Pollo Papas</h3>
-          <span hidden>#54m4652n3</span>
-        </div>
-        <div class="priceRating">
-          <h2>$10.450</h2>
-          <div class="rating">
-            <i class="fa fa-star" aria-hidden="false"></i>
-            <i class="fa fa-star" aria-hidden="true"></i>
-            <i class="fa fa-star" aria-hidden="true"></i>
-            <i class="fa fa-star grey" aria-hidden="true"></i>
-            <i class="fa fa-star grey" aria-hidden="true"></i>
-          </div>
-        </div>
-      </div>
-    </div>
-    <!-- !!! -->
-    <div class="card">
-      <div class="imgBx">
-        <img src="/assets/images/cards/polloNaranja.png" alt="polloNaranja" />
-        <ul class="action">
-          <li>
-            <i class="fa fa-heart" aria-hidden="true"></i>
-            <span>Agregar a Favoritos</span>
-          </li>
-          <li onClick="getDetails(3)">
-            <i class="fa fa-eye" aria-hidden="true"></i>
-            <span>Ver Detalles</span>
-          </li>
-          <li>
-            <i class="fa fa-shopping-cart" aria-hidden="true"></i>
-            <span>Agregar al Carrito</span>
-          </li>
-        </ul>
-      </div>
-      <div class="content">
-        <div class="productName">
-          <h3>Pollo Naranja</h3>
-          <span hidden>#54m4652n4</span>
-        </div>
-        <div class="priceRating">
-          <h2>$25.650</h2>
-          <div class="rating">
-            <i class="fa fa-star" aria-hidden="false"></i>
-            <i class="fa fa-star" aria-hidden="true"></i>
-            <i class="fa fa-star" aria-hidden="true"></i>
-            <i class="fa fa-star" aria-hidden="true"></i>
-            <i class="fa fa-star grey" aria-hidden="true"></i>
-          </div>
-        </div>
-      </div>
-    </div>
-    <!-- !!! -->
-    <div class="card">
-      <div class="imgBx">
-        <img src="/assets/images/cards/sachipapa1.png" alt="sachipapa1" />
-        <ul class="action">
-          <li class="active">
-            <i class="fa fa-heart" aria-hidden="true"></i>
-            <span>Agregar a Favoritos</span>
-          </li>
-          <li onClick="getDetails(4)">
-            <i class="fa fa-eye" aria-hidden="true"></i>
-            <span>Ver Detalles</span>
-          </li>
-          <li>
-            <i class="fa fa-shopping-cart" aria-hidden="true"></i>
-            <span>Agregar al Carrito</span>
-          </li>
-        </ul>
-      </div>
-      <div class="content">
-        <div class="productName">
-          <h3>Sachipapa</h3>
-          <span hidden>#54m4652n5</span>
-        </div>
-        <div class="priceRating">
-          <h2>$8.350</h2>
-          <div class="rating">
-            <i class="fa fa-star" aria-hidden="false"></i>
-            <i class="fa fa-star" aria-hidden="true"></i>
-            <i class="fa fa-star" aria-hidden="true"></i>
-            <i class="fa fa-star grey" aria-hidden="true"></i>
-            <i class="fa fa-star grey" aria-hidden="true"></i>
-          </div>
-        </div>
-      </div>
-    </div>
-    <!-- !!! -->
-    <div class="card">
-      <div class="imgBx">
-        <img
-          src="/assets/images/cards/salchipapaCilantro.png"
-          alt="salchipapaCilantro"
-        />
-        <ul class="action">
-          <li>
-            <i class="fa fa-heart" aria-hidden="true"></i>
-            <span>Agregar a Favoritos</span>
-          </li>
-          <li onClick="getDetails(5)">
-            <i class="fa fa-eye" aria-hidden="true"></i>
-            <span>Ver Detalles</span>
-          </li>
-          <li>
-            <i class="fa fa-shopping-cart" aria-hidden="true"></i>
-            <span>Agregar al Carrito</span>
-          </li>
-        </ul>
-      </div>
-      <div class="content">
-        <div class="productName">
-          <h3>Salchipapa Cilantro</h3>
-          <span hidden>#54m4652n6</span>
-        </div>
-        <div class="priceRating">
-          <h2>$8.350</h2>
-          <div class="rating">
-            <i class="fa fa-star" aria-hidden="false"></i>
-            <i class="fa fa-star" aria-hidden="true"></i>
-            <i class="fa fa-star" aria-hidden="true"></i>
-            <i class="fa fa-star" aria-hidden="true"></i>
-            <i class="fa fa-star grey" aria-hidden="true"></i>
-          </div>
-        </div>
-      </div>
-    </div>
-    <!-- !!! -->
-    <div class="card">
-      <div class="imgBx">
-        <img src="/assets/images/cards/nuggetsPapas.jpg" alt="nuggetsPapas" />
-        <ul class="action">
-          <li>
-            <i class="fa fa-heart" aria-hidden="true"></i>
-            <span>Agregar a Favoritos</span>
-          </li>
-          <li onClick="getDetails(6)">
-            <i class="fa fa-eye" aria-hidden="true"></i>
-            <span>Ver Detalles</span>
-          </li>
-          <li>
-            <i class="fa fa-shopping-cart" aria-hidden="true"></i>
-            <span>Agregar al Carrito</span>
-          </li>
-        </ul>
-      </div>
-      <div class="content">
-        <div class="productName">
-          <h3>Nuggets Papas</h3>
-          <span hidden>#54m4652n7</span>
-        </div>
-        <div class="priceRating">
-          <h2>$14.990</h2>
-          <div class="rating">
-            <i class="fa fa-star" aria-hidden="false"></i>
-            <i class="fa fa-star" aria-hidden="true"></i>
-            <i class="fa fa-star" aria-hidden="true"></i>
-            <i class="fa fa-star grey" aria-hidden="true"></i>
-            <i class="fa fa-star grey" aria-hidden="true"></i>
-          </div>
-        </div>
-      </div>
-    </div>
-    <!-- !!! -->
-    <div class="card">
-      <div class="imgBx">
-        <img src="/assets/images/cards/carneAsada.jpg" alt="carneAsada" />
-        <ul class="action">
-          <li class="active">
-            <i class="fa fa-heart" aria-hidden="true"></i>
-            <span>Agregar a Favoritos</span>
-          </li>
-          <li onClick="getDetails(7)">
-            <i class="fa fa-eye" aria-hidden="true"></i>
-            <span>Ver Detalles</span>
-          </li>
-          <li>
-            <i class="fa fa-shopping-cart" aria-hidden="true"></i>
-            <span>Agregar al Carrito</span>
-          </li>
-        </ul>
-      </div>
-      <div class="content">
-        <div class="productName">
-          <h3>Carne Asada</h3>
-          <span hidden>#54m4652n8</span>
-        </div>
-        <div class="priceRating">
-          <h2>$28.790</h2>
-          <div class="rating">
-            <i class="fa fa-star" aria-hidden="false"></i>
             <i class="fa fa-star" aria-hidden="true"></i>
             <i class="fa fa-star" aria-hidden="true"></i>
             <i class="fa fa-star" aria-hidden="true"></i>

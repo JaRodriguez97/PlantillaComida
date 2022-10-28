@@ -7,6 +7,8 @@ export let combosBD: comboInterface[] = [
     Ingredientes: 'Lorem ipsum dolor sit, amet consectetur adipisicing elit.',
     incluye: 'papas gaseosa',
     img: '/assets/images/cards/comboBurguerPapas.jpg',
+    existentes: 20,
+    REF: '#654vev3',
   },
   {
     precio: '$20.000',
@@ -14,6 +16,8 @@ export let combosBD: comboInterface[] = [
     Ingredientes: 'Lorem ipsum dolor sit, amet consectetur adipisicing elit.',
     incluye: 'papas gaseosa',
     img: '/assets/images/cards/superBurguer.jpg',
+    existentes: 10,
+    REF: '#654vev2',
   },
   {
     precio: '$15.000',
@@ -21,5 +25,7 @@ export let combosBD: comboInterface[] = [
     Ingredientes: 'Lorem ipsum dolor sit, amet consectetur adipisicing elit.',
     incluye: 'papas gaseosa',
     img: '/assets/images/cards/comboHotDogs.jpg',
+    existentes: 15,
+    REF: '#654vev1',
   },
 ];

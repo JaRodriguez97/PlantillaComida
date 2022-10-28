@@ -1,3 +1,4 @@
+import { cardInterface } from '@app/models/cards.interface';
 import { DOCUMENT } from '@angular/common';
 import { Component, Inject, OnInit } from '@angular/core';
 
@@ -9,6 +10,7 @@ import SwiperCore, {
   Autoplay,
 } from 'swiper';
 import { combosBD } from '@app/bd/combos.model';
+import { cardsBD } from '@app/bd/cards.model';
 import { comboInterface } from '@app/models/combo.interface';
 
 SwiperCore.use([EffectCards, Pagination, Navigation, Autoplay]);
@@ -21,46 +23,15 @@ SwiperCore.use([EffectCards, Pagination, Navigation, Autoplay]);
 export class MenuComponent implements OnInit {
   CombosBD!: comboInterface[];
   container!: HTMLElement;
-  cards!: HTMLCollectionOf<Element>;
+  cards!: cardInterface[];
   wrapper!: HTMLElement;
   window: Window = window;
 
   constructor(@Inject(DOCUMENT) private document: Document) {}
 
   ngOnInit(): void {
-    /* Assigning the variable container to the element with the id of container. */
-    this.container = this.document.getElementById('container')!;
-    /* Assigning the variable cards to the elements with the class of col-sm-4. */
-    this.cards = this.document.getElementsByClassName('col-sm-4')!;
-    /* Assigning the variable wrapper to the element with the id of row. */
-    this.wrapper = this.document.getElementById('row')!;
-    /* Calling the function. */
-    this.mediaScreen();
-    /* Listening for the window to resize and then calling the mediaScreen function. */
-    window.addEventListener('resize', this.mediaScreen.bind(this));
-
     this.CombosBD = combosBD;
-  }
-
-  mediaScreen() {
-    if (window.innerWidth > 991) {
-      this.container.classList.remove('swiper-container');
-      this.wrapper.classList.remove('swiper-wrapper');
-      this.wrapper.classList.add('row');
-      for (let index = 0; index < this.cards.length; index++) {
-        this.cards[index].classList.remove('swiper-slide');
-        if (index === 1) this.cards[index].classList.add('scale');
-      }
-      return;
-    }
-
-    this.wrapper.classList.add('swiper-wrapper');
-    this.wrapper.classList.remove('row');
-    this.container.classList.add('swiper-container');
-    for (let index = 0; index < this.cards.length; index++) {
-      this.cards[index].classList.add('swiper-slide');
-      if (index === 1) this.cards[index].classList.remove('scale');
-    }
+    this.cards = cardsBD;
   }
 
   getDetails(p: number) {
