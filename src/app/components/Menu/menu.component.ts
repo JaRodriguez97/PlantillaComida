@@ -2,11 +2,16 @@ import { DOCUMENT } from '@angular/common';
 import { Component, Inject, OnInit } from '@angular/core';
 
 // import Swiper core and required modules
-import SwiperCore, { EffectCoverflow, Pagination } from 'swiper';
+import SwiperCore, {
+  EffectCards,
+  Pagination,
+  Navigation,
+  Autoplay,
+} from 'swiper';
 import { combosBD } from '@app/bd/combos.model';
 import { comboInterface } from '@app/models/combo.interface';
 
-SwiperCore.use([EffectCoverflow, Pagination]);
+SwiperCore.use([EffectCards, Pagination, Navigation, Autoplay]);
 
 @Component({
   selector: 'app-menu',

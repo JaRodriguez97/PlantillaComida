@@ -7,20 +7,29 @@
       <div class="row" id="row">
         <ng-container *ngIf="window.innerWidth < 991">
           <swiper
-            [effect]="'coverflow'"
+            [effect]="'cards'"
             [centeredSlides]="true"
-            [slidesPerView]="2"
-            [coverflowEffect]="{
-              rotate: 50,
-              stretch: 0,
-              depth: 100,
-              modifier: 1,
-              slideShadows: false
+            [navigation]="true"
+            [slidesPerView]="'auto'"
+            [autoplay]="{
+              delay: 1500,
+              disableOnInteraction: true
             }"
-            [autoplay]="true"
+            [pagination]="{
+              clickable: true
+            }"
             class="mySwiper"
           >
-            <ng-template swiperSlide *ngFor="let combo of CombosBD">
+            <ng-template
+              swiperSlide
+              *ngFor="let combo of CombosBD"
+              style="
+                width: 100%;
+                transition-duration: 0ms;
+                z-index: 3;
+                transform: translate3d(0px, 0px, 0px) rotateZ(0deg) scale(1);
+              "
+            >
               <div class="col-sm-4">
                 <div class="price-table">
                   <div
