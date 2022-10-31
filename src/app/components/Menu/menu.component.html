@@ -1,4 +1,10 @@
-<section class="wrap">
+<section
+  [ngClass]="{
+    pc: window.innerWidth > 991,
+    wrap: true,
+    mobile: window.innerWidth < 991
+  }"
+>
   <div class="container-fluid">
     <div class="title">
       <h2>Disfruta de nuestros mejores Combos</h2>
@@ -102,7 +108,7 @@
       </div>
       <div class="content">
         <div class="productName">
-          <h2>{{ card.nombre }}</h2>
+          <h3>{{ card.nombre }}</h3>
           <label for="ref"
             >Referencia:<span id="ref"> {{ card.REF }}</span></label
           >

@@ -5,6 +5,22 @@
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.mobile {
+  background: linear-gradient(
+      to top,
+      rgba(90, 80, 70, 0.9),
+      rgba(190, 180, 170, 0.5),
+      rgba(190, 180, 170, 0.5),
+      transparent
+    ),
+    url(/assets/images/backgrounds/burguerpotatoes.jpg);
+  background-size: cover;
+  background-position: center;
+}
+
+.pc {
   background: linear-gradient(
       to top,
       rgba(90, 80, 70, 0.9),
@@ -14,6 +30,7 @@
     ),
     url(/assets/images/backgrounds/burguerWhitCheese.jpg);
   background-size: 100% 100%;
+  background-position: center;
 }
 
 .wrap > .container-fluid {
@@ -190,7 +207,7 @@
   padding: 10px;
 }
 
-.containerBg > .card > .content > .productName > h2 {
+.containerBg > .card > .content > .productName > h3 {
   font-size: 18px;
   font-weight: 500;
   color: #fff;
@@ -218,8 +235,9 @@
   color: #fff;
 }
 
-.col-sm-4.scale {
-  transform: scale(1.1);
+.col-sm-4:hover {
+  transform: scale(1.05);
+  transition: 500ms;
 }
 
 .col-sm-4 > .price-table {
@@ -251,7 +269,7 @@
   font-weight: 700;
 }
 
-.price-table > .price-head > h3 {
+.price-table > .price-head > h2 {
   margin: 0;
   padding: 5% 0 0;
   font-size: 250%;
