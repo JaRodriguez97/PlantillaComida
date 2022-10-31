@@ -6,6 +6,7 @@ import { MenuComponent } from './menu.component';
 import { SwiperModule } from 'swiper/angular';
 import { FooterModule } from '@components/Footer/footer.module';
 import { ScrollingModule } from '@angular/cdk/scrolling';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 @NgModule({
   declarations: [MenuComponent],
@@ -15,6 +16,7 @@ import { ScrollingModule } from '@angular/cdk/scrolling';
     SwiperModule,
     FooterModule,
     ScrollingModule,
+    FontAwesomeModule,
   ],
 })
 export class MenuModule {}

@@ -7,7 +7,7 @@
       <div class="row" id="row">
         <ng-container *ngIf="window.innerWidth < 991">
           <swiper
-            [effect]="'cards'"
+            [effect]="'coverflow'"
             [centeredSlides]="true"
             [navigation]="true"
             [slidesPerView]="'auto'"
@@ -20,15 +20,18 @@
             }"
             class="mySwiper"
           >
-            <ng-template swiperSlide *ngFor="let combo of CombosBD">
+            <ng-template
+              swiperSlide
+              *ngFor="let combo of CombosBD; let i = index"
+            >
               <div class="col-sm-4">
                 <div class="price-table">
                   <div
                     class="price-head"
                     style="background: url('{{ combo.img }}');"
                   >
-                    <h4>Combo 1</h4>
-                    <h2>{{ combo.precio }} <span>C/U</span></h2>
+                    <h4>Combo {{ i }}</h4>
+                    <h3>{{ combo.precio }}<span> C/U</span></h3>
                   </div>
                   <div class="price-content">
                     <ul>
@@ -48,13 +51,13 @@
         </ng-container>
         <!-- !!!!!!!!! -->
         <ng-container *ngIf="window.innerWidth >= 991">
-          <div class="col-sm-4" *ngFor="let combo of CombosBD">
+          <div class="col-sm-4" *ngFor="let combo of CombosBD; let i = index">
             <div class="price-table">
               <div
                 class="price-head"
                 style="background: url('{{ combo.img }}');"
               >
-                <h4>Combo 1</h4>
+                <h4>Combo {{ i + 1 }}</h4>
                 <h2>{{ combo.precio }}<span>C/U</span></h2>
               </div>
               <div class="price-content">
@@ -78,25 +81,21 @@
 <!-- !!!!!!!!! -->
 <section id="section">
   <div class="containerBg">
-    <div class="card" *ngFor="let card of cards">
+    <div class="card" *ngFor="let card of cards; let i = index">
       <div class="imgBx">
-        <!-- <img
-          src="{{ card.img }}"
-          alt="{{ card.img.split('/').pop()!.split('.')[0] }}"
-          title="{{ card.img.split('/').pop()!.split('.')[0] }}"
-        /> -->
         <div class="img" style="background-image: url('{{ card.img }}');"></div>
         <ul class="action">
           <li>
-            <i class="fa fa-heart" aria-hidden="true"></i>
+            <fa-icon [icon]="faHeart" aria-hidden="true"></fa-icon>
             <span>Agregar a Favoritos</span>
           </li>
-          <li onClick="getDetails(0)">
-            <i class="fa fa-eye" aria-hidden="true"></i>
+          <li (click)="getDetails(card)">
+            <fa-icon [icon]="faEye" aria-hidden="true"></fa-icon>
             <span>Ver Detalles</span>
           </li>
           <li>
             <i class="fa fa-shopping-cart" aria-hidden="true"></i>
+            <fa-icon [icon]="faShoppingCart" aria-hidden="true"></fa-icon>
             <span>Agregar al Carrito</span>
           </li>
         </ul>
@@ -104,14 +103,12 @@
       <div class="content">
         <div class="productName">
           <h2>{{ card.nombre }}</h2>
-          <!-- cambiar h3 por h2-->
           <label for="ref"
             >Referencia:<span id="ref"> {{ card.REF }}</span></label
           >
         </div>
         <div class="priceRating">
           <h3>{{ card.precio }}<span> C/U</span></h3>
-          <!-- cambiar h2 por h3-->
           <div class="rating">
             <i class="fa fa-star" aria-hidden="true"></i>
             <i class="fa fa-star" aria-hidden="true"></i>

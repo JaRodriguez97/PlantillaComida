@@ -1,10 +1,14 @@
 import { cardInterface } from '@app/models/cards.interface';
-import { DOCUMENT } from '@angular/common';
-import { Component, Inject, OnInit } from '@angular/core';
+import {
+  faHeart,
+  faEye,
+  faShoppingCart,
+} from '@fortawesome/free-solid-svg-icons';
+import { Component, OnInit } from '@angular/core';
 
 // import Swiper core and required modules
 import SwiperCore, {
-  EffectCards,
+  EffectCoverflow,
   Pagination,
   Navigation,
   Autoplay,
@@ -13,7 +17,7 @@ import { combosBD } from '@app/bd/combos.model';
 import { cardsBD } from '@app/bd/cards.model';
 import { comboInterface } from '@app/models/combo.interface';
 
-SwiperCore.use([EffectCards, Pagination, Navigation, Autoplay]);
+SwiperCore.use([EffectCoverflow, Pagination, Navigation, Autoplay]);
 
 @Component({
   selector: 'app-menu',
@@ -21,38 +25,33 @@ SwiperCore.use([EffectCards, Pagination, Navigation, Autoplay]);
   styleUrls: ['./menu.component.css'],
 })
 export class MenuComponent implements OnInit {
+  faHeart = faHeart;
+  faEye = faEye;
+  faShoppingCart = faShoppingCart;
   CombosBD!: comboInterface[];
   container!: HTMLElement;
   cards!: cardInterface[];
   wrapper!: HTMLElement;
   window: Window = window;
 
-  constructor(@Inject(DOCUMENT) private document: Document) {}
+  constructor() {}
 
   ngOnInit(): void {
     this.CombosBD = combosBD;
     this.cards = cardsBD;
   }
 
-  getDetails(p: number) {
-    let content = this.document.getElementsByClassName('content'),
-      children = content[p].children;
+  getDetails(card: cardInterface) {
+    alert(`
+    Nombre plato: ${card.nombre}
 
-    alert(
-      `
-    Nombre plato: ${(children[0].children[0] as HTMLElement).innerText}
+    <img src="${card.img}"></img>
 
-    foto
+    Ref: ${card.REF}
 
-    Ref: ${(children[0].children[1] as HTMLElement).innerText}
-
-    descripción: Lorem ipsum dolor, sit amet consectetur adipisicing
-    elit. Qui Dexercitationem id aperiam. Iste perspiciatis dignissimos
-    ad, ea, non qui sapiente omnis labore commodi ut voluptates,
-    molestiae unde optio aut vel?
+    Ingredientes: ${card.Ingredientes}
     
-    precio: ${(children[1].children[0] as HTMLElement).innerText}
-    `
-    );
+    precio: ${card.precio}
+    `);
   }
 }

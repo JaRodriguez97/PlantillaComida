@@ -10,7 +10,7 @@ header {
   z-index: 1000;
   justify-content: space-between;
   align-items: center;
-  transition: 1.5s;
+  transition: 0.5s ease-out;
 }
 
 header.sticky {
