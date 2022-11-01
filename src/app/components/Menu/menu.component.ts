@@ -3,6 +3,7 @@ import {
   faHeart,
   faEye,
   faShoppingCart,
+  faStar,
 } from '@fortawesome/free-solid-svg-icons';
 import { Component, OnInit } from '@angular/core';
 
@@ -28,6 +29,7 @@ export class MenuComponent implements OnInit {
   faHeart = faHeart;
   faEye = faEye;
   faShoppingCart = faShoppingCart;
+  faStar = faStar;
   CombosBD!: comboInterface[];
   container!: HTMLElement;
   cards!: cardInterface[];

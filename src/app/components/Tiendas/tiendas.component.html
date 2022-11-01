@@ -1,70 +1,48 @@
 <section>
   <div class="container">
-    <div class="title" [ngClass]="{hidde:window.innerHeight<600}">
-      <h2 [ngClass]="{hidde:window.innerHeight<600}">Te esperamos en alguna de nuestras sedes</h2>
+    <div class="title" [ngClass]="{ hidde: window.innerHeight < 600 }">
+      <h2 [ngClass]="{ hidde: window.innerHeight < 600 }">
+        Te esperamos en alguna de nuestras sedes
+      </h2>
     </div>
     <div class="containerMap">
-      <iframe id="map" width="600" height="100%" allowfullscreen="" loading="lazy"
-        referrerpolicy="no-referrer-when-downgrade"></iframe>
+      <div id="map">
+        <!-- <agm-marker [latitude]="lat" [longitude]="lng"></agm-marker> -->
+      </div>
+      <!-- <iframe
+        id="map"
+        width="600"
+        height="100%"
+        allowfullscreen=""
+        loading="lazy"
+        referrerpolicy="no-referrer-when-downgrade"
+      ></iframe> -->
     </div>
     <div class="reservas">
       <button type="submit">Reserva ya!</button>
     </div>
     <div class="containerTiendas">
       <ul class="tiendas">
-        <li (click)="getTienda('sanLuis')">
-          <div class="title">San luis 2</div>
+        <li *ngFor="let tienda of campus" (click)="getTienda(tienda)">
+          <div class="title">{{ tienda.sede }}</div>
           <div class="containerPosition">
-            <p><label for="direccion">Dirección:</label>
-              Carrera 83 # 43 - 15
+            <p>
+              <label for="direccion">Dirección:</label>
+              {{ tienda.direccion }}
             </p>
-            <p><label for="telefono">Teléfono:</label>
-              324-397-3949</p>
-            <label for="calificacion">Calificación:
-              <p class="rating">
-                <i class="fa fa-star" aria-hidden="true"></i>
-                <i class="fa fa-star" aria-hidden="true"></i>
-                <i class="fa fa-star" aria-hidden="true"></i>
-                <i class="fa fa-star" aria-hidden="true"></i>
-                <i class="fa fa-star" aria-hidden="true"></i>
-              </p>
-            </label>
-          </div>
-        </li>
-        <li (onClick)="getTienda('alcazares')">
-          <div class="title">Alcazares</div>
-          <div class="containerPosition">
-            <p><label for="direccion">Dirección:</label>
-              Carrera 83 # 43 - 15
+            <p>
+              <label for="telefono">Teléfono:</label>
+
+              {{ tienda.telefono }}
             </p>
-            <p><label for="telefono">Teléfono:</label>
-              324-397-3949</p>
-            <label for="calificacion">Calificación:
+            <label for="calificacion">
+              Calificación:
               <p class="rating">
-                <i class="fa fa-star" aria-hidden="true"></i>
-                <i class="fa fa-star" aria-hidden="true"></i>
-                <i class="fa fa-star" aria-hidden="true"></i>
-                <i class="fa fa-star" aria-hidden="true"></i>
-                <i class="fa fa-star" aria-hidden="true"></i>
-              </p>
-            </label>
-          </div>
-        </li>
-        <li (onClick)="getTienda('centro')">
-          <div class="title">Centro</div>
-          <div class="containerPosition">
-            <p><label for="direccion">Dirección:</label>
-              Carrera 83 # 43 - 15
-            </p>
-            <p><label for="telefono">Teléfono:</label>
-              324-397-3949</p>
-            <label for="calificacion">Calificación:
-              <p class="rating">
-                <i class="fa fa-star" aria-hidden="true"></i>
-                <i class="fa fa-star" aria-hidden="true"></i>
-                <i class="fa fa-star" aria-hidden="true"></i>
-                <i class="fa fa-star" aria-hidden="true"></i>
-                <i class="fa fa-star" aria-hidden="true"></i>
+                <fa-icon [icon]="faStar" aria-hidden="true"></fa-icon>
+                <fa-icon [icon]="faStar" aria-hidden="true"></fa-icon>
+                <fa-icon [icon]="faStar" aria-hidden="true"></fa-icon>
+                <fa-icon [icon]="faStar" aria-hidden="true"></fa-icon>
+                <fa-icon [icon]="faStar" aria-hidden="true"></fa-icon>
               </p>
             </label>
           </div>

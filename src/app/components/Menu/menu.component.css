@@ -226,18 +226,21 @@
   font-weight: 500;
 }
 
-.content > .priceRating > .rating > .fa {
+.content > .priceRating > .rating > fa-icon {
   color: #ffd513;
   cursor: pointer;
 }
 
-.content > .priceRating > .rating > .fa.grey {
+.content > .priceRating > .rating > fa-icon.grey {
   color: #fff;
+}
+
+.col-sm-4 {
+  transition: 500ms;
 }
 
 .col-sm-4:hover {
   transform: scale(1.05);
-  transition: 500ms;
 }
 
 .col-sm-4 > .price-table {

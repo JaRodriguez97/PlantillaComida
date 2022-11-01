@@ -3,15 +3,16 @@ import { CommonModule } from '@angular/common';
 
 import { TiendasRoutingModule } from './tiendas-routing.module';
 import { TiendasComponent } from './tiendas.component';
-
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { AgmCoreModule } from '@agm/core';
 
 @NgModule({
-  declarations: [
-    TiendasComponent
-  ],
+  declarations: [TiendasComponent],
   imports: [
     CommonModule,
-    TiendasRoutingModule
-  ]
+    TiendasRoutingModule,
+    FontAwesomeModule,
+    AgmCoreModule,
+  ],
 })
-export class TiendasModule { }
+export class TiendasModule {}
