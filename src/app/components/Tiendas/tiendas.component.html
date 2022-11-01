@@ -1,22 +1,12 @@
 <section>
-  <div class="container">
+  <div class="container" #container>
     <div class="title" [ngClass]="{ hidde: window.innerHeight < 600 }">
       <h2 [ngClass]="{ hidde: window.innerHeight < 600 }">
         Te esperamos en alguna de nuestras sedes
       </h2>
     </div>
-    <div class="containerMap">
-      <div id="map">
-        <!-- <agm-marker [latitude]="lat" [longitude]="lng"></agm-marker> -->
-      </div>
-      <!-- <iframe
-        id="map"
-        width="600"
-        height="100%"
-        allowfullscreen=""
-        loading="lazy"
-        referrerpolicy="no-referrer-when-downgrade"
-      ></iframe> -->
+    <div class="containerMap" #containerMap>
+      <div id="map"></div>
     </div>
     <div class="reservas">
       <button type="submit">Reserva ya!</button>
@@ -38,11 +28,31 @@
             <label for="calificacion">
               Calificación:
               <p class="rating">
-                <fa-icon [icon]="faStar" aria-hidden="true"></fa-icon>
-                <fa-icon [icon]="faStar" aria-hidden="true"></fa-icon>
-                <fa-icon [icon]="faStar" aria-hidden="true"></fa-icon>
-                <fa-icon [icon]="faStar" aria-hidden="true"></fa-icon>
-                <fa-icon [icon]="faStar" aria-hidden="true"></fa-icon>
+                <fa-icon
+                  [icon]="faStar"
+                  aria-hidden="true"
+                  [ngClass]="{ gold: tienda.calificacion >= 1, gray: true }"
+                ></fa-icon>
+                <fa-icon
+                  [icon]="faStar"
+                  aria-hidden="true"
+                  [ngClass]="{ gold: tienda.calificacion >= 2, gray: true }"
+                ></fa-icon>
+                <fa-icon
+                  [icon]="faStar"
+                  aria-hidden="true"
+                  [ngClass]="{ gold: tienda.calificacion >= 3, gray: true }"
+                ></fa-icon>
+                <fa-icon
+                  [icon]="faStar"
+                  aria-hidden="true"
+                  [ngClass]="{ gold: tienda.calificacion >= 4, gray: true }"
+                ></fa-icon>
+                <fa-icon
+                  [icon]="faStar"
+                  aria-hidden="true"
+                  [ngClass]="{ gold: tienda.calificacion >= 5, gray: true }"
+                ></fa-icon>
               </p>
             </label>
           </div>

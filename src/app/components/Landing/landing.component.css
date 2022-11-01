@@ -140,6 +140,7 @@ app-footer {
   .wrap {
     flex-direction: column;
     justify-content: center;
+    overflow: hidden;
   }
 
   .wrap > .text-wrap {

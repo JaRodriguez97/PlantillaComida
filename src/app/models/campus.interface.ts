@@ -3,5 +3,5 @@ export interface campusInterface {
   direccion: string;
   telefono: number;
   calificacion: number;
-  coordenadas: number[];
+  coordenadas: { lat: any; lng: any };
 }

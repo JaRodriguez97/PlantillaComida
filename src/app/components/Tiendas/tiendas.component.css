@@ -226,6 +226,14 @@ div > div.title {
   margin: 0 !important;
 }
 
+.tiendas > li > .containerPosition > label > p.rating > .gray {
+  color: black;
+}
+
+.tiendas > li > .containerPosition > label > p.rating > .gold {
+  color: gold;
+}
+
 @media (max-width: 1200px) {
   .container > .containerTiendas {
     width: 50%;
@@ -249,6 +257,10 @@ div > div.title {
     left: 0;
   }
 
+  .container {
+    overflow: hidden;
+  }
+
   .container > .containerTiendas {
     height: 50%;
     width: 90%;
@@ -259,6 +271,12 @@ div > div.title {
 
   .container > .containerTiendas > .tiendas {
     margin: 0;
+    position: relative;
+    bottom: 0;
+  }
+
+  .container > .containerTiendas > .tiendas > li {
+    padding: 1%;
   }
 
   .containerTiendas > .tiendas > li > .title {
