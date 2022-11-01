@@ -6,7 +6,7 @@ export let Campus: campusInterface[] = [
     direccion: 'Carrera 83 # 43 - 15',
     telefono: 3243973949,
     calificacion: 5,
-    coordenadas: { lat: 3.4880401393205185, lng: -76.48932696506064 },
+    coordenadas: { lat: 3.4876083336812855, lng: -76.48927064868647 },
   },
   {
     sede: 'ALCAZARES',

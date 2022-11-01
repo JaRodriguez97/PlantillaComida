@@ -115,8 +115,9 @@ export class TiendasComponent implements OnInit, AfterViewInit {
       position,
       title,
     });
-
-    this.map.setZoom(13.2);
+    
+    if (this.window.innerWidth > 991) this.map.setZoom(13.2);
+    else this.map.setZoom(12.5);
 
     this.window.navigator.geolocation.getCurrentPosition((e) => {
       let lat = e.coords.latitude,

@@ -292,14 +292,16 @@ div > div.title {
   }
 
   .container > .slicerContainerMap.active {
-    bottom: 0;
+    bottom: -6%;
     z-index: 10;
   }
 
   .container > .slicerContainerMap.active > .containerMap {
-    margin: 0;
+    margin: auto;
     height: 80%;
     width: 80%;
+    position: relative;
+    bottom: -10%;
   }
 
   .container > .slicerContainerMap.active > .containerMap > #map {
