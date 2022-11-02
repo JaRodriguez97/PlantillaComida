@@ -1,5 +1,5 @@
 <!-- !!! Header !!! -->
-<header style="overflow: hidden">
+<header>
   <a [routerLink]="'/'" class="logo">Burguer's</a>
   <div class="toggle" #toggle (click)="toogleMenu()"></div>
   <ul class="menu" #menu>
@@ -11,6 +11,6 @@
     <!-- <input type="text" class="search" /><label for="serch">Búscar</label> -->
   </ul>
 </header>
-<div style="overflow: hidden">
+<div>
   <router-outlet></router-outlet>
 </div>
