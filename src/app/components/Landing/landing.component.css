@@ -119,11 +119,11 @@ app-footer {
   bottom: 0;
 }
 
-@media (max-width: 1300px) {
+/* @media (max-width: 1300px) {
   .wrap {
     background-position-y: 35%;
   }
-}
+} */
 
 @media (max-width: 1024px) {
   button {
@@ -141,7 +141,6 @@ app-footer {
   .wrap {
     flex-direction: column;
     justify-content: center;
-    overflow: hidden;
   }
 
   .wrap > .text-wrap {
