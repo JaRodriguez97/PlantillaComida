@@ -2,8 +2,9 @@
 
 .wrap {
   width: 100vw;
-  height: 100vh;
+  height: 100%;
   display: flex;
+  position: absolute;
   align-items: center;
   justify-content: center;
   background: linear-gradient(to right, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0)),
@@ -141,6 +142,7 @@ app-footer {
 
   .wrap {
     flex-direction: column;
+    /* height: 94vh; */
   }
 
   .wrap > .text-wrap {
