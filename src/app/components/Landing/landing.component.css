@@ -10,6 +10,7 @@
     url(/assets/images/backgrounds/Bg.jpg);
   background-size: cover;
   background-position: 50% 20%;
+  overflow: hidden;
 }
 
 .wrap > .text-wrap {
