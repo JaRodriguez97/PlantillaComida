@@ -224,6 +224,7 @@ div > div.title {
 .tiendas > li > .containerPosition > label > p.rating {
   white-space: nowrap;
   margin: 0 !important;
+  cursor: pointer;
 }
 
 .tiendas > li > .containerPosition > label > p.rating > .gray {

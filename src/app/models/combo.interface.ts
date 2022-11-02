@@ -1,10 +1,11 @@
 export interface comboInterface {
   precio: string;
   peso: string;
-  Ingredientes: string;
+  ingredientes: string;
   incluye: string;
   img: string;
-  existentes?: number;
-  REF?: string;
-  estrellas?: number;
+  existentes: number;
+  REF: string;
+  estrellas: number;
+  nombre: string;
 }

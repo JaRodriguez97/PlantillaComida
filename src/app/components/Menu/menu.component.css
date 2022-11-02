@@ -1,3 +1,7 @@
+body {
+  overflow: scroll;
+}
+
 .wrap {
   padding: 5% 0;
   bottom: 0;
@@ -227,12 +231,17 @@
 }
 
 .content > .priceRating > .rating > fa-icon {
-  color: #ffd513;
   cursor: pointer;
 }
 
-.content > .priceRating > .rating > fa-icon.grey {
-  color: #fff;
+.content > .priceRating > .rating > .gray {
+  color: black;
+  font-size: 80%;
+}
+
+.content > .priceRating > .rating > .gold {
+  color: gold;
+  font-size: 100%;
 }
 
 .col-sm-4 {
@@ -283,13 +292,13 @@
   position: relative;
 }
 
-.price-content ul {
+.price-content > ul {
   position: relative;
   margin: 0;
   padding: 0;
 }
 
-.price-content ul li {
+.price-content > ul > li {
   list-style: none;
   font-size: 110%;
   text-transform: uppercase;
@@ -301,8 +310,28 @@
   border-right: 10px solid transparent;
 }
 
-.price-content ul li:hover,
-.price-content ul li:active {
+.price-content > ul > li .rating > fa-icon {
+  cursor: pointer;
+  transition: 500ms;
+}
+
+.price-content > ul > li .rating:hover > fa-icon {
+  font-size: 200%;
+  transition: 500ms;
+}
+
+.price-content > ul > li .rating > .gray {
+  color: black;
+  font-size: 100%;
+}
+
+.price-content > ul > li .rating > .gold {
+  color: gold;
+  font-size: 150%;
+}
+
+.price-content > ul > li:hover,
+.price-content > ul > li:active {
   border-left: 10px solid black;
   border-right: 10px solid black;
 }

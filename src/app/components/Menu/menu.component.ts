@@ -1,22 +1,18 @@
-import { cardInterface } from '@app/models/cards.interface';
+import { Component, OnInit } from '@angular/core';
+import { combosBD } from '@app/bd/combos.model';
+import { comboInterface } from '@app/models/combo.interface';
 import {
-  faHeart,
   faEye,
+  faHeart,
   faShoppingCart,
   faStar,
 } from '@fortawesome/free-solid-svg-icons';
-import { Component, OnInit } from '@angular/core';
-
-// import Swiper core and required modules
 import SwiperCore, {
-  EffectCoverflow,
-  Pagination,
-  Navigation,
   Autoplay,
+  EffectCoverflow,
+  Navigation,
+  Pagination,
 } from 'swiper';
-import { combosBD } from '@app/bd/combos.model';
-import { cardsBD } from '@app/bd/cards.model';
-import { comboInterface } from '@app/models/combo.interface';
 
 SwiperCore.use([EffectCoverflow, Pagination, Navigation, Autoplay]);
 
@@ -32,18 +28,26 @@ export class MenuComponent implements OnInit {
   faStar = faStar;
   CombosBD!: comboInterface[];
   container!: HTMLElement;
-  cards!: cardInterface[];
+  cards!: comboInterface[];
   wrapper!: HTMLElement;
   window: Window = window;
 
   constructor() {}
 
   ngOnInit(): void {
-    this.CombosBD = combosBD;
-    this.cards = cardsBD;
+    this.CombosBD = combosBD.filter((combo) => combo.estrellas === 5);
+    this.cards = combosBD.filter((combo) => combo.estrellas !== 5);
+
+    if (!this.CombosBD.length) {
+      combosBD.sort(function (a: any, b: any) {
+        return b.estrellas - a.estrellas;
+      });
+      this.CombosBD = combosBD.splice(0, 3);
+      this.cards = combosBD;
+    }
   }
 
-  getDetails(card: cardInterface) {
+  getDetails(card: comboInterface) {
     alert(`
     Nombre plato: ${card.nombre}
 
@@ -51,7 +55,7 @@ export class MenuComponent implements OnInit {
 
     Ref: ${card.REF}
 
-    Ingredientes: ${card.Ingredientes}
+    Ingredientes: ${card.ingredientes}
     
     precio: ${card.precio}
     `);

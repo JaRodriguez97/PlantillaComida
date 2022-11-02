@@ -16,15 +16,14 @@
   padding: 0;
   box-sizing: border-box;
   font-family: "Peralta", "Poppins", sans-serif;
-  overflow: initial;
 }
 
 body {
-  overflow: auto;
+  /* overflow: hidden; */
   background-color: #333;
   transition: 1s;
 }
 
-app-menu {
+body > app-root > div > app-menu {
   overflow: scroll !important;
 }

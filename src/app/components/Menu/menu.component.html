@@ -36,15 +36,58 @@
                     class="price-head"
                     style="background: url('{{ combo.img }}');"
                   >
-                    <h4>Combo {{ i }}</h4>
-                    <h3>{{ combo.precio }}<span> C/U</span></h3>
+                    <h4>Combo {{ i + 1 }}</h4>
+                    <h2>{{ combo.precio }}<span>C/U</span></h2>
                   </div>
                   <div class="price-content">
                     <ul>
-                      <li><u>Peso:</u> {{ combo.peso }}</li>
-                      <li><u>Ingredientes:</u> {{ combo.Ingredientes }}</li>
-                      <li><u>Incluye:</u> {{ combo.incluye }}</li>
-                      <li>¡SOLO POR HOY!</li>
+                      <li><u>Peso:</u>{{ combo.peso }}</li>
+                      <li><u>Ingredientes:</u>{{ combo.ingredientes }}</li>
+                      <li><u>Incluye:</u>{{ combo.incluye }}</li>
+                      <li>
+                        <div class="rating">
+                          <fa-icon
+                            [icon]="faStar"
+                            aria-hidden="true"
+                            [ngClass]="{
+                              gold: combo.estrellas >= 1,
+                              gray: true
+                            }"
+                          ></fa-icon>
+                          <fa-icon
+                            [icon]="faStar"
+                            aria-hidden="true"
+                            [ngClass]="{
+                              gold: combo.estrellas >= 2,
+                              gray: true
+                            }"
+                          ></fa-icon>
+                          <fa-icon
+                            [icon]="faStar"
+                            aria-hidden="true"
+                            [ngClass]="{
+                              gold: combo.estrellas >= 3,
+                              gray: true
+                            }"
+                          ></fa-icon>
+                          <fa-icon
+                            [icon]="faStar"
+                            aria-hidden="true"
+                            [ngClass]="{
+                              gold: combo.estrellas >= 4,
+                              gray: true
+                            }"
+                          ></fa-icon>
+                          <fa-icon
+                            [icon]="faStar"
+                            aria-hidden="true"
+                            [ngClass]="{
+                              gold: combo.estrellas >= 5,
+                              gray: true
+                            }"
+                          ></fa-icon>
+                        </div>
+                      </li>
                     </ul>
                   </div>
                   <div class="price-button">
@@ -69,9 +112,37 @@
               <div class="price-content">
                 <ul>
                   <li><u>Peso:</u>{{ combo.peso }}</li>
-                  <li><u>Ingredientes:</u>{{ combo.Ingredientes }}</li>
+                  <li><u>Ingredientes:</u>{{ combo.ingredientes }}</li>
                   <li><u>Incluye:</u>{{ combo.incluye }}</li>
-                  <li>¡SOLO POR HOY!</li>
+                  <li>
+                    <div class="rating">
+                      <fa-icon
+                        [icon]="faStar"
+                        aria-hidden="true"
+                        [ngClass]="{ gold: combo.estrellas >= 1, gray: true }"
+                      ></fa-icon>
+                      <fa-icon
+                        [icon]="faStar"
+                        aria-hidden="true"
+                        [ngClass]="{ gold: combo.estrellas >= 2, gray: true }"
+                      ></fa-icon>
+                      <fa-icon
+                        [icon]="faStar"
+                        aria-hidden="true"
+                        [ngClass]="{ gold: combo.estrellas >= 3, gray: true }"
+                      ></fa-icon>
+                      <fa-icon
+                        [icon]="faStar"
+                        aria-hidden="true"
+                        [ngClass]="{ gold: combo.estrellas >= 4, gray: true }"
+                      ></fa-icon>
+                      <fa-icon
+                        [icon]="faStar"
+                        aria-hidden="true"
+                        [ngClass]="{ gold: combo.estrellas >= 5, gray: true }"
+                      ></fa-icon>
+                    </div>
+                  </li>
                 </ul>
               </div>
               <div class="price-button">
@@ -116,11 +187,31 @@
         <div class="priceRating">
           <h3>{{ card.precio }}<span> C/U</span></h3>
           <div class="rating">
-            <fa-icon [icon]="faStar" aria-hidden="true"></fa-icon>
-            <fa-icon [icon]="faStar" aria-hidden="true"></fa-icon>
-            <fa-icon [icon]="faStar" aria-hidden="true"></fa-icon>
-            <fa-icon [icon]="faStar" aria-hidden="true"></fa-icon>
-            <fa-icon [icon]="faStar" aria-hidden="true"></fa-icon>
+            <fa-icon
+              [icon]="faStar"
+              aria-hidden="true"
+              [ngClass]="{ gold: card.estrellas >= 1, gray: true }"
+            ></fa-icon>
+            <fa-icon
+              [icon]="faStar"
+              aria-hidden="true"
+              [ngClass]="{ gold: card.estrellas >= 2, gray: true }"
+            ></fa-icon>
+            <fa-icon
+              [icon]="faStar"
+              aria-hidden="true"
+              [ngClass]="{ gold: card.estrellas >= 3, gray: true }"
+            ></fa-icon>
+            <fa-icon
+              [icon]="faStar"
+              aria-hidden="true"
+              [ngClass]="{ gold: card.estrellas >= 4, gray: true }"
+            ></fa-icon>
+            <fa-icon
+              [icon]="faStar"
+              aria-hidden="true"
+              [ngClass]="{ gold: card.estrellas >= 5, gray: true }"
+            ></fa-icon>
           </div>
         </div>
       </div>
