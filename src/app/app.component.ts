@@ -5,6 +5,7 @@ import {
   ViewChild,
   Renderer2,
 } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -17,7 +18,7 @@ export class AppComponent {
   @ViewChild('toggle') menuToggle!: ElementRef;
   @ViewChild('menu') menu!: ElementRef;
 
-  constructor(private renderer: Renderer2) {}
+  constructor(private renderer: Renderer2, public router: Router) {}
 
   @HostListener('window:scroll')
   scrolling(): void {
@@ -28,20 +29,26 @@ export class AppComponent {
   ngOnInit(): void {}
 
   // Menú toggle
-  toogleMenu(redirecTo?: string): any[] {
-    // this.menu = document.querySelector('.menu')!;
-    if ([this.menuToggle.nativeElement.classList].indexOf('active') == -1)
-      this.renderer.addClass(this.menuToggle.nativeElement, 'active');
-    else this.renderer.removeClass(this.menuToggle.nativeElement, 'active');
-    // this.menuToggle.classList.toggle('active');
-    // this.menu.classList.toggle('active');
-    this.menuToggle.nativeElement.classList.filter((classN: string) => {
-      console.log(
-        '🚀 ~ file: app.component.ts ~ line 39 ~ AppComponent ~ this.menuToggle.nativeElement.classList.filter ~ classN',
-        classN
+  toogleMenu() {
+    let toggleMenu = this.menuToggle.nativeElement,
+      menu = this.menu.nativeElement,
+      existe = [toggleMenu.classList].filter(
+        (classN) => classN.value.indexOf('active') !== -1
       );
-      return (classN = 'active');
-    });
-    return [redirecTo];
+
+    if (existe.length) {
+      this.renderer.removeClass(toggleMenu, 'active');
+      this.renderer.removeClass(menu, 'active');
+    } else {
+      this.renderer.addClass(toggleMenu, 'active');
+      this.renderer.addClass(menu, 'active');
+    }
+  }
+
+  redirectTo(str: string) {
+    this.renderer.removeClass(this.menuToggle.nativeElement, 'active');
+    this.renderer.removeClass(this.menu.nativeElement, 'active');
+
+    this.router.navigate([str]).then(() => localStorage.clear());
   }
 }

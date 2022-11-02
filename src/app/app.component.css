@@ -39,6 +39,14 @@ header > ul > li {
   position: relative;
   list-style: none;
 }
+header.sticky > ul > li:hover,
+header.sticky > ul > li.active,
+header > ul > li.active,
+header > ul > li:hover {
+  background-color: white;
+  transition: 0.3s;
+  border-radius: 50px;
+}
 
 header > ul > li > a {
   position: relative;
@@ -50,16 +58,12 @@ header > ul > li > a {
   color: #f87c00;
   font-family: "Passion One";
   text-transform: uppercase;
+  cursor: pointer;
 }
 
-header > ul > li > a:hover {
-  border-bottom: 0.1px solid #f87c00;
-  transition: 5s;
-}
-
-header.sticky > ul > li > a {
+/* header.sticky > ul > li > a {
   color: #fc9228;
-}
+} */
 
 /* !!! RESPONSIVE !!! */
 
