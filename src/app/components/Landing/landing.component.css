@@ -3,8 +3,8 @@
 .wrap {
   width: 100vw;
   height: 100%;
-  display: flex;
   position: absolute;
+  display: flex;
   align-items: center;
   justify-content: center;
   background: linear-gradient(to right, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0)),

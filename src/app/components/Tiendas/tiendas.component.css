@@ -1,5 +1,6 @@
 section {
-  height: 100vh;
+  height: 100%;
+  position: absolute;
   width: 100vw;
   overflow: hidden;
   background: url(/assets/images/backgrounds/bg3.jpg);
