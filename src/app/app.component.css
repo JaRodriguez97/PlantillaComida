@@ -39,6 +39,7 @@ header > ul > li {
   position: relative;
   list-style: none;
 }
+
 header.sticky > ul > li:hover,
 header.sticky > ul > li.active,
 header > ul > li.active,
@@ -96,6 +97,7 @@ header > ul > li > a {
 
   .menu.active {
     left: 0;
+    transition: 500ms;
   }
 
   header > ul > li > a {
