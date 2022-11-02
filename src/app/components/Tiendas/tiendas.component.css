@@ -255,8 +255,15 @@ div > div.title {
 @media (max-width: 990px) {
   div > div.title {
     width: 90%;
-    top: 0;
+    top: 4%;
     left: 0;
+    right: 0;
+    margin: 1% auto;
+  }
+
+  .container > .title > h2 {
+    font-size: 120%;
+    transition: 500ms;
   }
 
   .container > .containerTiendas {
@@ -287,8 +294,6 @@ div > div.title {
 
   .containerTiendas > .tiendas > li > .containerPosition {
     transition: 500ms;
-    /* padding: 3% 0 0;
-    margin: 2% 1%; */
   }
 
   .container > .slicerContainerMap.active {
