@@ -1,16 +1,20 @@
 <!-- !!! Header !!! -->
 <header>
   <a [routerLink]="'/'" class="logo">Burguer's</a>
-  <div class="toggle" (click)="toogleMenu()"></div>
-  <ul class="menu">
-    <li><a [routerLink]="toogleMenu('/')">Inicio</a></li>
+  <div class="toggle" #toggle (click)="toogleMenu()"></div>
+  <ul class="menu" #menu>
+    <!-- <li><a [routerLink]="toogleMenu('/')">Inicio</a></li>
     <li><a [routerLink]="toogleMenu('/menu')">Menú</a></li>
     <li><a [routerLink]="toogleMenu('/reservas')">Reservas</a></li>
-    <li><a [routerLink]="toogleMenu('/tiendas')">Tiendas</a></li>
+    <li><a [routerLink]="toogleMenu('/tiendas')">Tiendas</a></li> -->
+    <li><a>Inicio</a></li>
+    <li><a>Menú</a></li>
+    <li><a>Reservas</a></li>
+    <li><a>Tiendas</a></li>
 
     <!-- <input type="text" class="search" /><label for="serch">Búscar</label> -->
   </ul>
 </header>
-<div>
+<div style="overflow: hidden">
   <router-outlet></router-outlet>
 </div>
