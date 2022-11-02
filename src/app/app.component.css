@@ -62,10 +62,6 @@ header > ul > li > a {
   cursor: pointer;
 }
 
-/* header.sticky > ul > li > a {
-  color: #fc9228;
-} */
-
 /* !!! RESPONSIVE !!! */
 
 @media (max-width: 770px) {
@@ -123,10 +119,6 @@ header > ul > li > a {
     background-size: 30%;
     cursor: pointer;
   }
-
-  .copyrightText {
-    text-align: center;
-  }
 }
 
 @media (max-width: 566px) {
@@ -144,15 +136,5 @@ header > ul > li > a {
 
   .toggle.active {
     background-size: 60%;
-  }
-
-  footer {
-    padding: 20px 40px;
-    flex-direction: column;
-    align-items: flex-end;
-  }
-
-  .copyrightText {
-    font-size: 8px;
   }
 }
