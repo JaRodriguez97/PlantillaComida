@@ -274,7 +274,7 @@ div > div.title {
   }
 
   .container > .containerTiendas > .tiendas > li {
-    padding: 1%;
+    padding: 5%;
   }
 
   .containerTiendas > .tiendas > li > .title {
@@ -287,8 +287,8 @@ div > div.title {
 
   .containerTiendas > .tiendas > li > .containerPosition {
     transition: 500ms;
-    padding: 3% 0 0;
-    margin: 2% 1%;
+    /* padding: 3% 0 0;
+    margin: 2% 1%; */
   }
 
   .container > .slicerContainerMap.active {
@@ -314,11 +314,12 @@ div > div.title {
 .containerTiendas > .tiendas > li > .containerPosition > p,
 .tiendas > li > .containerPosition > label,
 .tiendas > li > .containerPosition > p > label {
-  font-size: 80%;
+  font-size: 90%;
 }
 
 /* @media (max-width: 550px) {
-  .containerTiendas > .tiendas > li > .containerPosition {
+  .container > .containerTiendas > .tiendas > li {
+    padding: 2%;
   }
 } */
 
