@@ -2,9 +2,7 @@
 
 .wrap {
   width: 100vw;
-  height: 95vh;
-  position: relative;
-  bottom: 0;
+  height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -12,6 +10,7 @@
     url(/assets/images/backgrounds/Bg.jpg);
   background-size: cover;
   background-position: 50% 20%;
+  background-repeat: no-repeat;
   overflow: hidden;
 }
 
