@@ -259,10 +259,6 @@ div > div.title {
     left: 0;
   }
 
-  .container {
-    overflow: hidden;
-  }
-
   .container > .containerTiendas {
     height: 50%;
     width: 90%;
@@ -291,6 +287,8 @@ div > div.title {
 
   .containerTiendas > .tiendas > li > .containerPosition {
     transition: 500ms;
+    padding: 3% 0 0;
+    margin: 2% 1%;
   }
 
   .container > .slicerContainerMap.active {
@@ -313,24 +311,15 @@ div > div.title {
   }
 }
 
-/* 
-  .containerTiendas>.tiendas>li:hover>.containerPosition {
-    background: rgba(255, 255, 255, 0.5);
-    height: 100%;
-    transition: 500ms;
-  }
+.containerTiendas > .tiendas > li > .containerPosition > p,
+.tiendas > li > .containerPosition > label,
+.tiendas > li > .containerPosition > p > label {
+  font-size: 80%;
+}
 
-  .containerTiendas>.tiendas>li>.containerPosition>p,
-  .tiendas>li>.containerPosition>label,
-  .tiendas>li>.containerPosition>p>label {
-    transition: 500ms;
-    color: transparent;
+/* @media (max-width: 550px) {
+  .containerTiendas > .tiendas > li > .containerPosition {
   }
-
-  .containerTiendas>.tiendas>li:hover>.containerPosition>p,
-  .tiendas>li:hover>.containerPosition>label,
-  .tiendas>li:hover>.containerPosition>p>label {
-    color: #000;
-  } */
+} */
 
 /* !!! Cambiar con el click */

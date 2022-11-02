@@ -29,6 +29,7 @@ export class TiendasComponent implements OnInit, AfterViewInit {
   coords: any;
   window: Window = window;
   faStar = faStar;
+  marker!: google.maps.Marker;
 
   constructor(
     private mapsAPILoader: MapsAPILoader,
@@ -110,12 +111,14 @@ export class TiendasComponent implements OnInit, AfterViewInit {
     let position = new google.maps.LatLng(tienda.coordenadas),
       title = `Sede: ${tienda.sede}`;
 
-    new google.maps.Marker({
-      map: this.map,
-      position,
-      title,
-    });
-    
+    if (!this.marker) {
+      this.marker = new google.maps.Marker({
+        map: this.map,
+        position,
+        title,
+      });
+    } else this.marker.setPosition(position);
+
     if (this.window.innerWidth > 991) this.map.setZoom(13.4);
     else this.map.setZoom(12.4);
 
