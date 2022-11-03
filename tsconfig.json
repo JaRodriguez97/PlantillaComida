@@ -6,11 +6,10 @@
     "paths": {
       "@app/*": ["src/app/*"],
       "@assets/*": ["src/assets/*"],
-      "@enviroment/*": ["src/enviroments/*"],
+      "@env/*": ["src/environments/*"],
       "@components/*": ["src/app/components/*"],
-      // "@inicio/*": ["src/app/components/inicio/*"],
-      // "@nosotros/*": ["src/app/components/nosotros/*"],
-      // "@personajes/*": ["src/app/components/personajes/*"]
+      "@service/*": ["src/app/services/*"],
+      "@modules/*": ["src/app/models/*"]
     },
     "outDir": "./dist/out-tsc",
     "forceConsistentCasingInFileNames": true,

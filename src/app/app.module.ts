@@ -1,13 +1,14 @@
+import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
-import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
-import { SwiperModule } from 'swiper/angular';
+import { AgmCoreModule } from '@agm/core';
+import { ScrollingModule } from '@angular/cdk/scrolling';
 import { FooterModule } from '@components/Footer/footer.module';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { ScrollingModule } from '@angular/cdk/scrolling';
-import { AgmCoreModule } from '@agm/core';
+import { SwiperModule } from 'swiper/angular';
+import { AppRoutingModule } from './app-routing.module';
+import { AppComponent } from './app.component';
 
 @NgModule({
   declarations: [AppComponent],
@@ -15,6 +16,7 @@ import { AgmCoreModule } from '@agm/core';
     BrowserModule.withServerTransition({ appId: 'serverApp' }),
     AppRoutingModule,
     SwiperModule,
+    HttpClientModule,
     FooterModule,
     ScrollingModule,
     FontAwesomeModule,

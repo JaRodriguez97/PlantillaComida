@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { combosBD } from '@app/bd/combos.model';
 import { comboInterface } from '@app/models/combo.interface';
+import { CombosService } from '@service/Combos/combos.service';
 import {
   faEye,
   faHeart,
@@ -32,19 +33,21 @@ export class MenuComponent implements OnInit {
   wrapper!: HTMLElement;
   window: Window = window;
 
-  constructor() {}
+  constructor(private combosService: CombosService) {}
 
   ngOnInit(): void {
-    this.CombosBD = combosBD.filter((combo) => combo.estrellas === 5);
-    this.cards = combosBD.filter((combo) => combo.estrellas !== 5);
+    this.combosService.getCombos().subscribe((res) => {
+      this.CombosBD = res.filter((combo) => combo.estrellas === 5);
+      this.cards = res.filter((combo) => combo.estrellas !== 5);
 
-    if (!this.CombosBD.length) {
-      combosBD.sort(function (a: any, b: any) {
-        return b.estrellas - a.estrellas;
-      });
-      this.CombosBD = combosBD.splice(0, 3);
-      this.cards = combosBD;
-    }
+      if (!this.CombosBD.length) {
+        res.sort(function (a: any, b: any) {
+          return b.estrellas - a.estrellas;
+        });
+        this.CombosBD = res.splice(0, 3);
+        this.cards = res;
+      }
+    });
   }
 
   getDetails(card: comboInterface) {

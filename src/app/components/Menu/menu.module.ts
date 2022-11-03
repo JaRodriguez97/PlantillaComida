@@ -7,6 +7,7 @@ import { SwiperModule } from 'swiper/angular';
 import { FooterModule } from '@components/Footer/footer.module';
 import { ScrollingModule } from '@angular/cdk/scrolling';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { CombosService } from '@service/Combos/combos.service';
 
 @NgModule({
   declarations: [MenuComponent],
@@ -18,5 +19,6 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
     ScrollingModule,
     FontAwesomeModule,
   ],
+  providers: [CombosService],
 })
 export class MenuModule {}

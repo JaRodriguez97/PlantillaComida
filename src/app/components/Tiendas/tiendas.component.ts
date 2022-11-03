@@ -136,6 +136,12 @@ export class TiendasComponent implements OnInit, AfterViewInit {
 
       this.map.setCenter(center);
     });
+
+    this.renderer.setAttribute(
+      this.slicerContainerMap,
+      'innerHTML',
+      `<p>¿Cómo llegar a ${tienda.sede}?</p>`
+    );
     // if (this.slicerContainerMap.innerHTML.indexOf(ubicacion) === -1) {
     //   this.slicerContainerMap.innerHTML += `<p>¿Cómo llegar a ${ubicacion}?</p>`;
 
