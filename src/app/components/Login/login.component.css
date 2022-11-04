@@ -1,8 +1,10 @@
 section {
+  position: fixed;
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 100vh;
+  width: 100vw;
+  height: 100%;
   background: #03a9f4;
   transition: 500ms;
 }
@@ -158,19 +160,9 @@ section > .container > .formBx.active > .signUpForm {
 
   section > .container > .blueBg {
     top: 0;
-    height: 500px;
-  }
-
-  section > .container > .formBx {
-    width: 100%;
-    height: 500px;
-    top: 0;
-    box-shadow: none;
-  }
-
-  section > .container > .formBx.active {
-    left: 0;
-    top: 150px;
+    bottom: 0;
+    height: 80%;
+    margin: auto;
   }
 
   section > .container > .blueBg > .box {
@@ -180,7 +172,38 @@ section > .container > .formBx.active > .signUpForm {
     bottom: 0;
   }
 
-  .container > .blueBg > .box.signIn {
+  section > .container > .blueBg > .box.signIn {
     top: 0;
+    height: 100px;
+  }
+
+  section > .container > .formBx {
+    width: 100%;
+    height: 55%;
+    top: 10%;
+    box-shadow: none;
+  }
+
+  section > .container > .formBx.active {
+    left: 0;
+    top: 27%;
+    width: 100%;
+    height: 75%;
+    padding: 0;
+  }
+
+  section > .container > .formBx.active > .signUpForm {
+    padding: 10px 50px;
+    top: 0;
+  }
+
+  .formBx.active > .form > form {
+    display: grid;
+    margin: 0;
+    gap: 10px;
+  }
+
+  .formBx.active > .form > form > input {
+    margin: 0;
   }
 }

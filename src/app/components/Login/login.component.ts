@@ -17,6 +17,10 @@ export class LoginComponent implements OnInit, AfterViewInit {
   @ViewChild('signUpBtn') signUpBtn!: ElementRef;
   @ViewChild('formBx') formBx!: ElementRef;
   @ViewChild('body') body!: ElementRef;
+  telefono!: Number;
+  contrasena!: String;
+  nombres!: String;
+  apellidos!: String;
 
   constructor(private renderer: Renderer2) {}
 
