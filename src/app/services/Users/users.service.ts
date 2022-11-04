@@ -28,4 +28,12 @@ export class UsersService {
       headers,
     });
   }
+
+  getSignUp(form: userInterface, token?: string): Observable<userInterface> {
+    let headers = this.headers(token);
+
+    return this.http.post<userInterface>(`${this.URL}singUp`, form, {
+      headers,
+    });
+  }
 }

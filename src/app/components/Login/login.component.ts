@@ -8,6 +8,7 @@ import {
   ViewChild,
 } from '@angular/core';
 import { UsersService } from '@service/Users/users.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-login',
@@ -60,6 +61,50 @@ export class LoginComponent implements OnInit, AfterViewInit {
         this.router.navigate(['/landing']);
       },
       (err) => console.error(err),
+      () => {}
+    );
+  }
+
+  checkSignUp() {
+    if (!this.telefono) return alert('Diligenciar campo telefono');
+    else if (!this.contrasena) return alert('Diligenciar campo contraseña');
+    else if (!this.repiteContrasena)
+      return alert('Diligenciar nuevamente la contraseña');
+    else if (this.repiteContrasena !== this.contrasena)
+      return alert('Las contraseñas no coinciden');
+
+    let form = {
+      numeroTelefono: this.telefono,
+      contraseña: this.contrasena,
+      nombres: this.nombres,
+      apellidos: this.apellidos,
+      email: this.email,
+    };
+
+    this.usersService.getSignUp(form).subscribe(
+      (res) => {
+        Swal.fire({
+          // imageUrl: 'assets/images/Icono Mercury.png',
+          icon: 'success',
+          imageWidth: 100,
+          confirmButtonColor: '#007bff',
+          html: '<b>Se ha creado la cuenta correctamente, por favor, inicia sesión</b>',
+        }).then(() => {
+          this.renderer.removeClass(this.formBx.nativeElement, 'active');
+          this.renderer.removeClass(this.body.nativeElement, 'active');
+        });
+      },
+      (err) => {
+        console.error(err);
+
+        Swal.fire({
+          // imageUrl: 'assets/images/Icono Mercury.png',
+          icon: 'error',
+          imageWidth: 100,
+          confirmButtonColor: '#007bff',
+          html: `<b>${err.message}</b>`,
+        });
+      },
       () => {}
     );
   }

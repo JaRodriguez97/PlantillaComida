@@ -67,7 +67,7 @@ export class AppComponent implements OnInit {
       icon: 'success',
       imageWidth: 100,
       confirmButtonColor: '#007bff',
-      html: '<b>Sesión Cerrada Exitósamente</b>',
+      html: '<b>Sesión Cerrada Exitosamente</b>',
     }).then(() =>
       this.router.navigate(['/login']).then(() => localStorage.clear())
     );
