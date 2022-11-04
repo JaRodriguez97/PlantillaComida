@@ -1,0 +1,186 @@
+section {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background: #03a9f4;
+  transition: 500ms;
+}
+
+section.active {
+  background: #f43648;
+}
+
+section > .container {
+  position: relative;
+  width: 800px;
+  height: 500px;
+  margin: 20px;
+  padding: 0;
+}
+
+section > .container > .blueBg {
+  position: absolute;
+  top: 40px;
+  width: 100%;
+  height: 420px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: rgba(255 255 255/ 0.2);
+  box-shadow: 0 5px 45px rgba(0 0 0/ 0.15);
+}
+
+section > .container > .blueBg > .box {
+  position: relative;
+  width: 50%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.container > .blueBg > .box > h2 {
+  color: #fff;
+  font-size: 1.2em;
+  font-weight: 500;
+  margin-bottom: 10px;
+}
+
+.container > .blueBg > .box > button {
+  cursor: pointer;
+  padding: 10px 20px;
+  background: #fff;
+  color: #333;
+  font-size: 16px;
+  font-weight: 500;
+  border: none;
+}
+
+section > .container > .formBx {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 50%;
+  height: 100%;
+  background: #fff;
+  z-index: 2;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 5px 45px rgba(0 0 0/ 0.25);
+  transition: 500ms ease-in-out;
+  overflow: hidden;
+}
+
+section > .container > .formBx.active {
+  left: 50%;
+  height: 110%;
+  top: -5%;
+  transition: 500ms ease-in-out;
+}
+
+section > .container > .formBx > .form {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  padding: 50px;
+  transition: 500ms;
+}
+
+section > .container > .formBx > .signInForm {
+  transition-delay: 250ms;
+}
+
+section > .container > .formBx.active > .signInForm {
+  left: -100%;
+  transition-delay: 0s;
+}
+
+section > .container > .formBx > .signUpForm {
+  left: 100%;
+  transition-delay: 0s;
+}
+
+section > .container > .formBx.active > .signUpForm {
+  left: 0;
+  transition-delay: 250ms;
+}
+
+.container > .formBx > .form > form {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.formBx > .form > form > h3 {
+  font-size: 1.5em;
+  color: #333;
+  margin-bottom: 20px;
+  font-weight: 500;
+}
+
+.formBx > .form > form > input {
+  width: 100%;
+  margin-bottom: 20px;
+  padding: 10px;
+  outline: none;
+  font-size: 16px;
+  border: 1px solid #333;
+}
+
+.formBx > .form > form > input[type="submit"] {
+  background: #03a9f4;
+  border: none !important;
+  color: #fff;
+  max-width: max-content;
+  cursor: pointer;
+  transition: 1s;
+}
+
+.formBx.active > .signUpForm > form > input[type="submit"] {
+  background: #f43648;
+}
+
+.formBx > .form > form > .forgot {
+  color: #333;
+}
+
+@media (max-width: 991px) {
+  section > .container {
+    max-width: 400px;
+    height: 650px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  section > .container > .blueBg {
+    top: 0;
+    height: 500px;
+  }
+
+  section > .container > .formBx {
+    width: 100%;
+    height: 500px;
+    top: 0;
+    box-shadow: none;
+  }
+
+  section > .container > .formBx.active {
+    left: 0;
+    top: 150px;
+  }
+
+  section > .container > .blueBg > .box {
+    position: absolute;
+    width: 100%;
+    height: 150px;
+    bottom: 0;
+  }
+
+  .container > .blueBg > .box.signIn {
+    top: 0;
+  }
+}

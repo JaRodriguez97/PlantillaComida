@@ -35,6 +35,11 @@ const routes: Routes = [
       ),
   },
   {
+    path: 'login',
+    loadChildren: () =>
+      import('./components/Login/login.module').then((m) => m.LoginModule),
+  },
+  {
     path: '**',
     loadChildren: () =>
       import('./components/NotFound/not-found/not-found.module').then(

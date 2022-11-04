@@ -9,7 +9,7 @@
       "@env/*": ["src/environments/*"],
       "@components/*": ["src/app/components/*"],
       "@service/*": ["src/app/services/*"],
-      "@modules/*": ["src/app/models/*"]
+      "@models/*": ["src/app/models/*"]
     },
     "outDir": "./dist/out-tsc",
     "forceConsistentCasingInFileNames": true,
