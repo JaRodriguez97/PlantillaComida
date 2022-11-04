@@ -14,6 +14,9 @@
         user.nombres || user.numeroTelefono
       }}</a>
     </li>
+    <li *ngIf="user">
+      <a (click)="logOut()">cerrar</a>
+    </li>
 
     <!-- <input type="text" class="search" /><label for="serch">Búscar</label> -->
   </ul>

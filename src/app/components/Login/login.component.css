@@ -210,8 +210,13 @@ section > .container > .formBx.active > .signUpForm {
     margin: 0;
     gap: 10px;
   }
+  
+  .formBx.active > .form > form > h3 {
+    font-size: 1.5em;
+  }
 
   .formBx.active > .form > form > input {
     margin: 0;
   }
+
 }

@@ -9,15 +9,16 @@ import {
 } from '@angular/core';
 import { Router } from '@angular/router';
 import { userInterface } from '@models/users.interface';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'],
 })
-export class AppComponent implements AfterViewInit, OnInit {
+export class AppComponent implements OnInit {
   title = 'PlantillaComida';
-  user!: userInterface;
+  user!: userInterface | undefined;
   @ViewChild('header') header!: ElementRef;
   @ViewChild('toggle') menuToggle!: ElementRef;
   @ViewChild('menu') menu!: ElementRef;
@@ -34,10 +35,6 @@ export class AppComponent implements AfterViewInit, OnInit {
 
   ngOnInit(): void {
     this.user = JSON.parse(localStorage.getItem('user')!);
-  }
-
-  ngAfterViewInit(): void {
-    console.log(localStorage.getItem('user'));
   }
   // Menú toggle
   toogleMenu() {
@@ -60,6 +57,19 @@ export class AppComponent implements AfterViewInit, OnInit {
     this.renderer.removeClass(this.menuToggle.nativeElement, 'active');
     this.renderer.removeClass(this.menu.nativeElement, 'active');
 
-    this.router.navigate([str]).then(() => localStorage.clear());
+    this.router.navigate([str]);
+  }
+
+  logOut() {
+    this.user = undefined;
+    Swal.fire({
+      // imageUrl: 'assets/images/Icono Mercury.png',
+      icon: 'success',
+      imageWidth: 100,
+      confirmButtonColor: '#007bff',
+      html: '<b>Sesión Cerrada Exitósamente</b>',
+    }).then(() =>
+      this.router.navigate(['/login']).then(() => localStorage.clear())
+    );
   }
 }
