@@ -16,18 +16,20 @@
         <form>
           <h3>Login</h3>
           <input
+            required
             type="number"
             name="telefono"
             [(ngModel)]="telefono"
             placeholder="Teléfono"
           />
           <input
+            required
             type="password"
             name="contraseña"
             [(ngModel)]="contrasena"
             placeholder="Contraseña"
           />
-          <input type="submit" value="Ingresar" />
+          <input type="submit" value="Ingresar" (click)="checkLogin()" />
           <a [href]="'#'" class="forgot">¿Olvidaste la Contraseña?</a>
         </form>
       </div>
@@ -36,6 +38,7 @@
         <form>
           <h3>Crear Cuenta</h3>
           <input
+            required
             type="number"
             name="telefono"
             [(ngModel)]="telefono"
@@ -43,7 +46,6 @@
           />
           <input
             type="text"
-            name="nombres"
             [(ngModel)]="nombres"
             name="nombres"
             placeholder="Nombres (Opcional)"
@@ -51,15 +53,29 @@
           <input
             type="text"
             name="apellidos"
+            [(ngModel)]="apellidos"
             placeholder="Apellidos (Opcional)"
           />
           <input
             type="email"
             name="email"
+            [(ngModel)]="email"
             placeholder="Correo Electrónico (Opcional)"
           />
-          <input type="password" placeholder="Contraseña*" />
-          <input type="password" placeholder="Repite Contraseña*" />
+          <input
+            required
+            type="password"
+            name="contrasenña"
+            [(ngModel)]="contrasena"
+            placeholder="Contraseña*"
+          />
+          <input
+            required
+            type="password"
+            name="repiteContraseña"
+            [(ngModel)]="repiteContrasena"
+            placeholder="Repite Contraseña*"
+          />
           <input type="submit" value="Registrar" />
         </form>
       </div>

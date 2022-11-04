@@ -1,12 +1,19 @@
 <!-- !!! Header !!! -->
-<header>
+<header #header>
   <a [routerLink]="'/'" class="logo">Burguer's</a>
   <div class="toggle" #toggle (click)="toogleMenu()"></div>
   <ul class="menu" #menu>
     <li #list1><a (click)="redirectTo('/')">Inicio</a></li>
     <li #list2><a (click)="redirectTo('/menu')">Menú</a></li>
     <li #list4><a (click)="redirectTo('/tiendas')">Tiendas</a></li>
-    <li #list3><a (click)="redirectTo('/login')">Login/SingUp</a></li>
+    <li #list3 *ngIf="!user">
+      <a (click)="redirectTo('/login')">Login/SingUp</a>
+    </li>
+    <li #list4 *ngIf="user">
+      <a (click)="redirectTo('/perfil')">{{
+        user.nombres || user.numeroTelefono
+      }}</a>
+    </li>
 
     <!-- <input type="text" class="search" /><label for="serch">Búscar</label> -->
   </ul>

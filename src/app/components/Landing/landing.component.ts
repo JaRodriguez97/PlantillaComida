@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { userInterface } from '@models/users.interface';
+import { AppComponent } from '@app/app.component';
 
 @Component({
   selector: 'app-landing',
@@ -6,11 +8,11 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./landing.component.css'],
 })
 export class LandingComponent implements OnInit {
-  constructor() {}
+  user!: userInterface;
 
-  ngOnInit(): void {}
+  constructor(private appComponent: AppComponent) {}
 
-  //   function realizarPedido() {
-  //   return "./Menu/menu";
-  // }
+  ngOnInit(): void {
+    this.appComponent.user = JSON.parse(localStorage.getItem('user')!);
+  }
 }

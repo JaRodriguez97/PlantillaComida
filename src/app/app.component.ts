@@ -4,17 +4,21 @@ import {
   HostListener,
   ViewChild,
   Renderer2,
+  OnInit,
+  AfterViewInit,
 } from '@angular/core';
 import { Router } from '@angular/router';
+import { userInterface } from '@models/users.interface';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'],
 })
-export class AppComponent {
+export class AppComponent implements AfterViewInit, OnInit {
   title = 'PlantillaComida';
-  header!: HTMLElement | null;
+  user!: userInterface;
+  @ViewChild('header') header!: ElementRef;
   @ViewChild('toggle') menuToggle!: ElementRef;
   @ViewChild('menu') menu!: ElementRef;
 
@@ -22,12 +26,19 @@ export class AppComponent {
 
   @HostListener('window:scroll')
   scrolling(): void {
-    this.header = document.querySelector('header')!;
-    this.header.classList.toggle('sticky', window.scrollY > 0);
+    if (window.scrollY > 0)
+      return this.renderer.addClass(this.header.nativeElement, 'sticky');
+
+    this.renderer.removeClass(this.header.nativeElement, 'sticky');
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.user = JSON.parse(localStorage.getItem('user')!);
+  }
 
+  ngAfterViewInit(): void {
+    console.log(localStorage.getItem('user'));
+  }
   // Menú toggle
   toogleMenu() {
     let toggleMenu = this.menuToggle.nativeElement,

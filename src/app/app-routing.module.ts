@@ -39,6 +39,7 @@ const routes: Routes = [
     loadChildren: () =>
       import('./components/Login/login.module').then((m) => m.LoginModule),
   },
+  { path: 'perfil', loadChildren: () => import('./components/Perfil/perfil.module').then(m => m.PerfilModule) },
   {
     path: '**',
     loadChildren: () =>

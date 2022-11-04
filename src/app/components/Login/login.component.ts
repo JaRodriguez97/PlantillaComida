@@ -1,11 +1,13 @@
+import { Router } from '@angular/router';
 import {
+  AfterViewInit,
   Component,
   ElementRef,
   OnInit,
-  ViewChild,
   Renderer2,
-  AfterViewInit,
+  ViewChild,
 } from '@angular/core';
+import { UsersService } from '@service/Users/users.service';
 
 @Component({
   selector: 'app-login',
@@ -19,10 +21,16 @@ export class LoginComponent implements OnInit, AfterViewInit {
   @ViewChild('body') body!: ElementRef;
   telefono!: Number;
   contrasena!: String;
+  repiteContrasena!: String;
   nombres!: String;
   apellidos!: String;
+  email!: String;
 
-  constructor(private renderer: Renderer2) {}
+  constructor(
+    private renderer: Renderer2,
+    private usersService: UsersService,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {}
 
@@ -36,5 +44,23 @@ export class LoginComponent implements OnInit, AfterViewInit {
       this.renderer.removeClass(this.formBx.nativeElement, 'active');
       this.renderer.removeClass(this.body.nativeElement, 'active');
     });
+  }
+
+  checkLogin() {
+    if (!this.telefono) return alert('diligenciar campo telefono');
+    else if (!this.contrasena) return alert('diligenciar campo contraseña');
+    let form = {
+      numeroTelefono: this.telefono,
+      contraseña: this.contrasena,
+    };
+
+    this.usersService.getLogin(form).subscribe(
+      (res) => {
+        localStorage.setItem('user', JSON.stringify(res));
+        this.router.navigate(['/landing']);
+      },
+      (err) => console.error(err),
+      () => {}
+    );
   }
 }
