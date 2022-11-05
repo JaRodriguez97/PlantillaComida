@@ -34,7 +34,7 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.user = JSON.parse(localStorage.getItem('user')!);
+    this.user = JSON.parse(window.localStorage.getItem('user')!);
   }
   // Menú toggle
   toogleMenu() {
@@ -69,7 +69,7 @@ export class AppComponent implements OnInit {
       confirmButtonColor: '#007bff',
       html: '<b>Sesión Cerrada Exitosamente</b>',
     }).then(() =>
-      this.router.navigate(['/login']).then(() => localStorage.clear())
+      this.router.navigate(['/login']).then(() => window.localStorage.clear())
     );
   }
 }
