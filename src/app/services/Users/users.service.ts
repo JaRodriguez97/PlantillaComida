@@ -21,12 +21,24 @@ export class UsersService {
     });
   }
 
-  getLogin(form: userInterface, token?: string): Observable<userInterface> {
-    let headers = this.headers(token);
+  // getUser(_id: String, token?: string) {
+  //   let headers = this.headers(token);
 
-    return this.http.post<userInterface>(`${this.URL}login`, form, {
+  //   return this.http.post<userInterface>(`${this.URL}login`, form, {
+  //     headers,
+  //   });
+  // }
+
+  getLogin(form: userInterface, token?: string): Observable<userInterface> {
+    let headers = this.headers(token),
+      subs;
+
+    console.log('res');
+    subs = this.http.post<userInterface>(`${this.URL}login`, form, {
       headers,
     });
+
+    return subs
   }
 
   getSignUp(form: userInterface, token?: string): Observable<userInterface> {

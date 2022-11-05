@@ -1,6 +1,7 @@
 import { LowerCasePipe } from '@angular/common';
 
 export interface userInterface {
+  _id?: 'string';
   apellidos?: String;
   contraseña: String;
   email?: String | LowerCasePipe;
