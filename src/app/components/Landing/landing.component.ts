@@ -13,6 +13,8 @@ export class LandingComponent implements OnInit {
   constructor(private appComponent: AppComponent) {}
 
   ngOnInit(): void {
-    this.appComponent.user = JSON.parse(window.localStorage.getItem('user')!);
+    this.appComponent.user = JSON.parse(
+      globalThis.localStorage.getItem('user')!
+    );
   }
 }

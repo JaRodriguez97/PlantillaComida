@@ -57,7 +57,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
 
     this.usersService.getLogin(form).subscribe(
       (res) => {
-        window.localStorage.setItem('user', JSON.stringify(res));
+        globalThis.localStorage.setItem('user', JSON.stringify(res));
         this.router.navigate(['/landing']);
       },
       (err) => console.error(err),
