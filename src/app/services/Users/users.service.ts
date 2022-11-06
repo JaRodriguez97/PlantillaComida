@@ -21,13 +21,13 @@ export class UsersService {
     });
   }
 
-  // getUser(_id: String, token?: string) {
-  //   let headers = this.headers(token);
+  getUser(_id: String, token?: string): Observable<userInterface> {
+    let headers = this.headers(token);
 
-  //   return this.http.post<userInterface>(`${this.URL}login`, form, {
-  //     headers,
-  //   });
-  // }
+    return this.http.post<userInterface>(`${this.URL}login`, _id, {
+      headers,
+    });
+  }
 
   getLogin(form: userInterface, token?: string): Observable<userInterface> {
     let headers = this.headers(token);

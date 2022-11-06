@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  URL_BACKEND: '//localhost:3000/',
+  URL_BACKEND: 'https://bdpc2.up.railway.app/',
 };
 
 /*
