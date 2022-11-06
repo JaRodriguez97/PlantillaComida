@@ -9,6 +9,7 @@ import {
 } from '@angular/core';
 import { Router } from '@angular/router';
 import { userInterface } from '@models/users.interface';
+import { LocalStorageService } from 'ngx-localstorage';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -23,7 +24,11 @@ export class AppComponent implements OnInit {
   @ViewChild('toggle') menuToggle!: ElementRef;
   @ViewChild('menu') menu!: ElementRef;
 
-  constructor(private renderer: Renderer2, public router: Router) {}
+  constructor(
+    private renderer: Renderer2,
+    public router: Router,
+    private localStorageService: LocalStorageService
+  ) {}
 
   @HostListener('window:scroll')
   scrolling(): void {
@@ -34,7 +39,7 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.user = JSON.parse(globalThis.localStorage.getItem('user')!);
+    this.user = this.localStorageService.get('user', {})!;
   }
   // Menú toggle
   toogleMenu() {
@@ -71,7 +76,7 @@ export class AppComponent implements OnInit {
     }).then(() =>
       this.router
         .navigate(['/login'])
-        .then(() => globalThis.localStorage.clear())
+        .then(() => this.localStorageService.clear())
     );
   }
 }

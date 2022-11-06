@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { userInterface } from '@models/users.interface';
 import { AppComponent } from '@app/app.component';
+import { LocalStorageService } from 'ngx-localstorage';
 
 @Component({
   selector: 'app-landing',
@@ -10,11 +11,12 @@ import { AppComponent } from '@app/app.component';
 export class LandingComponent implements OnInit {
   user!: userInterface;
 
-  constructor(private appComponent: AppComponent) {}
+  constructor(
+    private appComponent: AppComponent,
+    private localStorageService: LocalStorageService
+  ) {}
 
   ngOnInit(): void {
-    this.appComponent.user = JSON.parse(
-      globalThis.localStorage.getItem('user')!
-    );
+    this.appComponent.user = this.localStorageService.get('user', {})!;
   }
 }

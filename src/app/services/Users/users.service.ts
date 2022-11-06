@@ -30,15 +30,11 @@ export class UsersService {
   // }
 
   getLogin(form: userInterface, token?: string): Observable<userInterface> {
-    let headers = this.headers(token),
-      subs;
+    let headers = this.headers(token);
 
-    console.log('res');
-    subs = this.http.post<userInterface>(`${this.URL}login`, form, {
+    return this.http.post<userInterface>(`${this.URL}login`, form, {
       headers,
     });
-
-    return subs
   }
 
   getSignUp(form: userInterface, token?: string): Observable<userInterface> {

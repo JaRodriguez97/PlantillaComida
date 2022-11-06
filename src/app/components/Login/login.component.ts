@@ -9,6 +9,9 @@ import {
 } from '@angular/core';
 import { UsersService } from '@service/Users/users.service';
 import Swal from 'sweetalert2';
+import { NgxIndexedDBService } from 'ngx-indexed-db';
+import { LocalStorageService } from 'ngx-localstorage';
+import { userInterface } from '@app/models/users.interface';
 
 @Component({
   selector: 'app-login',
@@ -30,7 +33,8 @@ export class LoginComponent implements OnInit, AfterViewInit {
   constructor(
     private renderer: Renderer2,
     private usersService: UsersService,
-    private router: Router
+    private router: Router,
+    private localStorageService: LocalStorageService
   ) {}
 
   ngOnInit(): void {}
@@ -57,7 +61,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
 
     this.usersService.getLogin(form).subscribe(
       (res) => {
-        globalThis.localStorage.setItem('user', JSON.stringify(res));
+        this.localStorageService.set<userInterface>('user', res, {});
         this.router.navigate(['/landing']);
       },
       (err) => console.error(err),

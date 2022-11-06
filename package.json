@@ -37,6 +37,8 @@
     "express": "^4.15.2",
     "font-awesome": "^4.7.0",
     "jquery": "^3.6.1",
+    "ngx-indexed-db": "^11.0.2",
+    "ngx-localstorage": "^4.0.0",
     "npm-check-updates": "^16.3.15",
     "rxjs": "~7.5.7",
     "scss": "^0.2.4",
