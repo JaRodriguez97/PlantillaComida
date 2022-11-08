@@ -4,7 +4,8 @@
 
 export const environment = {
   production: false,
-  URL_BACKEND: 'https://bdpc2.up.railway.app/',
+  backend: process.env['URL_BACKEND'],
+  apiKey: process.env['API_KEY'],
 };
 
 /*

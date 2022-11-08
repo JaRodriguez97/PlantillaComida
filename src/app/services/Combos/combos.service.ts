@@ -1,14 +1,14 @@
-import { environment } from '@env/environment';
-import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Injectable } from '@angular/core';
+import { environment } from '@env/environment';
 import { comboInterface } from '@models/combo.interface';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class CombosService {
-  URL = `${environment.URL_BACKEND}api/combos/`;
+  URL = `${environment.backend}api/combos/`;
 
   constructor(private http: HttpClient) {}
 

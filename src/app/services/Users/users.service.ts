@@ -1,16 +1,14 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { NgForm } from '@angular/forms';
-import { userInterface } from '@models/users.interface';
 import { environment } from '@env/environment';
-import { comboInterface } from '@models/combo.interface';
+import { userInterface } from '@models/users.interface';
 import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class UsersService {
-  URL = `${environment.URL_BACKEND}api/user/`;
+  URL = `${environment.backend}api/user/`;
 
   constructor(private http: HttpClient) {}
 
