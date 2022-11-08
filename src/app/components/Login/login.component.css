@@ -1,16 +1,17 @@
 section {
-  position: fixed;
   display: flex;
   justify-content: center;
   align-items: center;
+  min-height: 100vh;
+  background: #23242a;
+
+  position: fixed;
   width: 100vw;
-  height: 100%;
-  background: #03a9f4;
   transition: 500ms;
 }
 
 section.active {
-  background: #f43648;
+  background: #1c1c1c;
 }
 
 section > .container {
@@ -47,7 +48,6 @@ section > .container > .blueBg > .box {
   color: #fff;
   font-size: 1.2em;
   font-weight: 500;
-  margin-bottom: 10px;
 }
 
 .container > .blueBg > .box > button {
@@ -66,14 +66,50 @@ section > .container > .formBx {
   left: 0;
   width: 50%;
   height: 100%;
-  background: #fff;
+  background: #1c1c1c;
+  border-radius: 8px;
+  overflow: hidden;
+
   z-index: 2;
   display: flex;
   justify-content: center;
   align-items: center;
   box-shadow: 0 5px 45px rgba(0 0 0/ 0.25);
   transition: 500ms ease-in-out;
-  overflow: hidden;
+}
+
+section > .container > .formBx::before {
+  content: "";
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(0deg, transparent, #fff, #fff);
+  transform-origin: bottom right;
+  animation: animate 5s linear infinite;
+}
+
+section > .container > .formBx::after {
+  content: "";
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(0deg, transparent, #fff, #fff);
+  transform-origin: bottom right;
+  animation: animate 5s linear infinite;
+  animation-delay: -2.5s;
+}
+
+@keyframes animate {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
 section > .container > .formBx.active {
@@ -81,22 +117,31 @@ section > .container > .formBx.active {
   height: 110%;
   top: -5%;
   transition: 500ms ease-in-out;
+  background: #23242a;
 }
 
 section > .container > .formBx > .form {
   position: absolute;
-  left: 0;
-  width: 100%;
-  padding: 50px;
+  z-index: 3;
+  inset: 2px;
+  background: #28292d;
   transition: 500ms;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+
+  /* left: 0;
+  width: 100%;*/
 }
 
 section > .container > .formBx > .signInForm {
   transition-delay: 250ms;
+  padding: 50px 40px;
 }
 
 section > .container > .formBx.active > .signInForm {
-  left: -100%;
+  /* left: -100%; 
+  display: none;*/
   transition-delay: 0s;
 }
 
@@ -106,47 +151,109 @@ section > .container > .formBx > .signUpForm {
 }
 
 section > .container > .formBx.active > .signUpForm {
-  left: 0;
+  left: 2px;
   transition-delay: 250ms;
+  padding: 10px 40px;
+}
+
+section > .container > .formBx.active > .signUpForm > form {
+  gap: 20px;
 }
 
 .container > .formBx > .form > form {
   width: 100%;
-  display: flex;
+  display: grid;
   flex-direction: column;
+  gap: 30px;
 }
 
 .formBx > .form > form > h3 {
-  font-size: 2.5em;
-  color: #333;
-  margin-bottom: 20px;
+  color: #fff;
   font-weight: 500;
+  font-size: 2.5em;
+  text-align: center;
+  letter-spacing: 0.1em;
+  margin: 0;
 }
 
-.formBx > .form > form > input {
+.formBx > .form > form > .inputBox {
+  position: relative;
   width: 100%;
-  margin-bottom: 20px;
-  padding: 10px;
+}
+
+.formBx > .form > form > input,
+.formBx > .form > form > .inputBox > input {
+  position: relative;
+  width: 100%;
+  padding: 20px 10px 10px;
+  background: transparent;
+  border: none;
   outline: none;
-  font-size: 16px;
-  border: 1px solid #333;
+  color: #23242a;
+  font-size: 1em;
+  letter-spacing: 0.05em;
+  z-index: 5;
 }
 
-.formBx > .form > form > input:invalid {
-  border: red solid 1px;
+.formBx > .form > form > .inputBox > span {
+  position: absolute;
+  padding: 20px 0px 10px;
+  font-size: 1em;
+  color: #8f8f8f;
+  left: 0;
+  pointer-events: none;
+  letter-spacing: 0.05em;
+  transition: 500ms;
 }
 
-.formBx > .form > form > input:valid {
-  border: #03a9f4 solid 1px;
+.formBx > .form > form > .inputBox > input:invalid {
+  /* border: red solid 1px; */
+}
+
+.formBx > .form > form > .inputBox > input:focus ~ span,
+.formBx > .form > form > .inputBox > input:valid ~ span {
+  color: #fff;
+  transform: translateY(-34px);
+  font-size: 0.75em;
+}
+
+.formBx > .form > form > .inputBox > i {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 2px;
+  background: #fff;
+  border-radius: 4px;
+  transition: 0.5s;
+  pointer-events: none;
+  z-index: 4;
+}
+
+.formBx > .form > form > .inputBox > input:focus ~ i,
+.formBx > .form > form > .inputBox > input:valid ~ i {
+  height: 44px;
 }
 
 .formBx > .form > form > input[type="submit"] {
-  background: #03a9f4;
   border: none !important;
-  color: #fff;
-  max-width: max-content;
+  outline: none;
+  background: #fff;
+  color: #8f8f8f;
+  padding: 11px 25px;
+  width: max-content;
+  border-radius: 4px;
+  font-weight: 600;
   cursor: pointer;
-  transition: 1s;
+  transition: 500ms;
+}
+
+.formBx > .form > form > input[type="submit"]:hover {
+  filter: invert(0.2);
+}
+
+.formBx > .form > form > input[type="submit"]:active {
+  filter: invert(0.8);
 }
 
 .formBx.active > .signUpForm > form > input[type="submit"] {
@@ -154,7 +261,15 @@ section > .container > .formBx.active > .signUpForm {
 }
 
 .formBx > .form > form > .forgot {
-  color: #333;
+  justify-content: space-between;
+  color: #8f8f8f;
+  margin: 10px 0;
+  font-size: 1em;
+  text-decoration: none;
+}
+
+.formBx > .form > form > .forgot:hover {
+  color: #fff;
 }
 
 @media (max-width: 991px) {
@@ -210,13 +325,12 @@ section > .container > .formBx.active > .signUpForm {
     margin: 0;
     gap: 10px;
   }
-  
+
   .formBx.active > .form > form > h3 {
     font-size: 1.5em;
   }
 
-  .formBx.active > .form > form > input {
+  .formBx.active > .form > form > .inputBox > input {
     margin: 0;
   }
-
 }

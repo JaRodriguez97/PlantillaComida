@@ -39,7 +39,16 @@ const routes: Routes = [
     loadChildren: () =>
       import('./components/Login/login.module').then((m) => m.LoginModule),
   },
-  { path: 'perfil', loadChildren: () => import('./components/Perfil/perfil.module').then(m => m.PerfilModule) },
+  {
+    path: 'perfil',
+    loadChildren: () =>
+      import('./components/Perfil/perfil.module').then((m) => m.PerfilModule),
+  },
+  {
+    path: 'combo/:REF',
+    loadChildren: () =>
+      import('./components/Combo/combo.module').then((m) => m.ComboModule),
+  },
   {
     path: '**',
     loadChildren: () =>
