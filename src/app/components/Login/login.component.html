@@ -54,17 +54,22 @@
             <i></i>
           </div>
           <div class="inputBox">
-            <input type="text" name="nombres" [(ngModel)]="nombres" />
+            <input required type="text" name="nombres" [(ngModel)]="nombres" />
             <span>Nombres (Opcional)</span>
             <i></i>
           </div>
           <div class="inputBox">
-            <input type="text" name="apellidos" [(ngModel)]="apellidos" />
+            <input
+              required
+              type="text"
+              name="apellidos"
+              [(ngModel)]="apellidos"
+            />
             <span>Apellidos (Opcional)</span>
             <i></i>
           </div>
           <div class="inputBox">
-            <input type="email" name="email" [(ngModel)]="email" />
+            <input required type="email" name="email" [(ngModel)]="email" />
             <span>Email (Opcional)</span>
             <i></i>
           </div>

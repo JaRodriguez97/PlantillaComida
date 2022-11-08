@@ -17,14 +17,15 @@ section.active {
 section > .container {
   position: relative;
   width: 800px;
-  height: 500px;
+  height: 450px;
   margin: 20px;
   padding: 0;
+  display: flex;
+  align-items: center;
 }
 
 section > .container > .blueBg {
   position: absolute;
-  top: 40px;
   width: 100%;
   height: 420px;
   display: flex;
@@ -62,7 +63,6 @@ section > .container > .blueBg > .box {
 
 section > .container > .formBx {
   position: absolute;
-  top: 0;
   left: 0;
   width: 50%;
   height: 100%;
@@ -129,9 +129,6 @@ section > .container > .formBx > .form {
   border-radius: 8px;
   display: flex;
   flex-direction: column;
-
-  /* left: 0;
-  width: 100%;*/
 }
 
 section > .container > .formBx > .signInForm {
@@ -140,14 +137,12 @@ section > .container > .formBx > .signInForm {
 }
 
 section > .container > .formBx.active > .signInForm {
-  /* left: -100%; 
-  display: none;*/
-  transition-delay: 0s;
+  transition-delay: 250ms;
 }
 
 section > .container > .formBx > .signUpForm {
   left: 100%;
-  transition-delay: 0s;
+  transition-delay: 250ms;
 }
 
 section > .container > .formBx.active > .signUpForm {
@@ -195,19 +190,29 @@ section > .container > .formBx.active > .signUpForm > form {
   z-index: 5;
 }
 
+.formBx.active > .form > form > input,
+.formBx.active > .form > form > .inputBox > input {
+  padding: 8px 10px;
+}
+
 .formBx > .form > form > .inputBox > span {
   position: absolute;
   padding: 20px 0px 10px;
   font-size: 1em;
   color: #8f8f8f;
   left: 0;
+  bottom: 0;
   pointer-events: none;
   letter-spacing: 0.05em;
   transition: 500ms;
 }
 
-.formBx > .form > form > .inputBox > input:invalid {
-  /* border: red solid 1px; */
+.formBx.active > .form > form > .inputBox > span {
+  padding: 25px 0px 0px;
+}
+
+.formBx > .form > form > .inputBox > input:invalid ~ i {
+  border: red solid 1px;
 }
 
 .formBx > .form > form > .inputBox > input:focus ~ span,
@@ -233,6 +238,11 @@ section > .container > .formBx.active > .signUpForm > form {
 .formBx > .form > form > .inputBox > input:focus ~ i,
 .formBx > .form > form > .inputBox > input:valid ~ i {
   height: 44px;
+}
+
+.formBx.active > .form > form > .inputBox > input:focus ~ i,
+.formBx.active > .form > form > .inputBox > input:valid ~ i {
+  height: 34px;
 }
 
 .formBx > .form > form > input[type="submit"] {
@@ -320,13 +330,18 @@ section > .container > .formBx.active > .signUpForm > form {
     top: 0;
   }
 
-  .formBx.active > .form > form {
+  .container > .formBx > .form > form {
+    gap: 15px;
+  }
+
+  .container > .formBx.active > .form > form {
     display: grid;
     margin: 0;
-    gap: 10px;
+    gap: 25px;
   }
 
   .formBx.active > .form > form > h3 {
+    margin-top: 1em;
     font-size: 1.5em;
   }
 
