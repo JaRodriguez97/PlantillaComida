@@ -1,1 +1,19 @@
-<p>combo works!</p>
+<section class="banner">
+  <div class="banner__content">
+    <div class="banner__content--contentBx">
+      <h2>{{ combo.nombre }}</h2>
+      <!-- existentes:  REF:  estrellas:  -->
+      <p>
+        Nuestro combo está hecho con "{{ combo.ingredientes }}" además incluye
+        "{{ combo.incluye }}", tinene un peso de "{{ combo.peso }}"
+      </p>
+      <div class="banner__content--contentBx-inlineBlock">
+        <a href="#">Buy Now</a>
+        <span>{{ combo.precio }}</span>
+      </div>
+    </div>
+    <div class="banner__content--imgBx" *ngIf="combo">
+      <img [src]="combo.img" [alt]="combo.nombre" />
+    </div>
+  </div>
+</section>

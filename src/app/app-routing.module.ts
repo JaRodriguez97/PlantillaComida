@@ -45,7 +45,7 @@ const routes: Routes = [
       import('./components/Perfil/perfil.module').then((m) => m.PerfilModule),
   },
   {
-    path: 'combo/:REF',
+    path: 'combo/:id',
     loadChildren: () =>
       import('./components/Combo/combo.module').then((m) => m.ComboModule),
   },

@@ -1,13 +1,13 @@
+import { Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
-import { combosBD } from '@app/bd/combos.model';
 import { comboInterface } from '@app/models/combo.interface';
-import { CombosService } from '@service/Combos/combos.service';
 import {
   faEye,
   faHeart,
   faShoppingCart,
   faStar,
 } from '@fortawesome/free-solid-svg-icons';
+import { CombosService } from '@service/Combos/combos.service';
 import SwiperCore, {
   Autoplay,
   EffectCoverflow,
@@ -33,7 +33,7 @@ export class MenuComponent implements OnInit {
   wrapper!: HTMLElement;
   window: Window = window;
 
-  constructor(private combosService: CombosService) {}
+  constructor(private combosService: CombosService, private router: Router) {}
 
   ngOnInit(): void {
     this.combosService.getCombos().subscribe((res) => {
@@ -50,17 +50,7 @@ export class MenuComponent implements OnInit {
     });
   }
 
-  getDetails(card: comboInterface) {
-    alert(`
-    Nombre plato: ${card.nombre}
-
-    <img src="${card.img}"></img>
-
-    Ref: ${card.REF}
-
-    Ingredientes: ${card.ingredientes}
-    
-    precio: ${card.precio}
-    `);
+  getDetails(_id: String) {
+    this.router.navigate(['/combo', _id]);
   }
 }

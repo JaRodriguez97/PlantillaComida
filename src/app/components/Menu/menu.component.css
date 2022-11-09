@@ -397,4 +397,9 @@ footer {
   .col-sm-4 > .price-table {
     box-shadow: none;
   }
+  /* span de listas miniaturas  */
+  .action > li > span {
+    transform: translateY(-50%) translateX(0px);
+    opacity: 1;
+  }
 }

@@ -24,4 +24,10 @@ export class CombosService {
 
     return this.http.get<comboInterface[]>(this.URL, { headers });
   }
+
+  getCombo(_id: String, token?: string): Observable<comboInterface> {
+    let headers = this.headers(token);
+
+    return this.http.get<comboInterface>(this.URL + _id, { headers });
+  }
 }
