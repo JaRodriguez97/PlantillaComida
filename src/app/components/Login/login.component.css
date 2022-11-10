@@ -152,7 +152,7 @@ section > .container > .formBx.active > .signUpForm {
 }
 
 section > .container > .formBx.active > .signUpForm > form {
-  gap: 20px;
+  gap: 25px;
 }
 
 .container > .formBx > .form > form {
@@ -180,7 +180,8 @@ section > .container > .formBx.active > .signUpForm > form {
 .formBx > .form > form > .inputBox > input {
   position: relative;
   width: 100%;
-  padding: 20px 10px 10px;
+  height: 44px;
+  padding: 10px;
   background: transparent;
   border: none;
   outline: none;
@@ -193,6 +194,7 @@ section > .container > .formBx.active > .signUpForm > form {
 .formBx.active > .form > form > input,
 .formBx.active > .form > form > .inputBox > input {
   padding: 8px 10px;
+  height: 34px;
 }
 
 .formBx > .form > form > .inputBox > span {
@@ -215,6 +217,7 @@ section > .container > .formBx.active > .signUpForm > form {
   border: red solid 1px;
 }
 
+.formBx > .form > form > .inputBox > input:hover ~ span,
 .formBx > .form > form > .inputBox > input:focus ~ span,
 .formBx > .form > form > .inputBox > input:valid ~ span {
   color: #fff;
@@ -235,11 +238,13 @@ section > .container > .formBx.active > .signUpForm > form {
   z-index: 4;
 }
 
+.formBx > .form > form > .inputBox > input:hover ~ i,
 .formBx > .form > form > .inputBox > input:focus ~ i,
 .formBx > .form > form > .inputBox > input:valid ~ i {
   height: 44px;
 }
 
+.formBx.active > .form > form > .inputBox > input:hover ~ i,
 .formBx.active > .form > form > .inputBox > input:focus ~ i,
 .formBx.active > .form > form > .inputBox > input:valid ~ i {
   height: 34px;
@@ -250,7 +255,7 @@ section > .container > .formBx.active > .signUpForm > form {
   outline: none;
   background: #fff;
   color: #8f8f8f;
-  padding: 11px 25px;
+  /* padding: 11px 25px; */
   width: max-content;
   border-radius: 4px;
   font-weight: 600;
@@ -267,7 +272,7 @@ section > .container > .formBx.active > .signUpForm > form {
 }
 
 .formBx.active > .signUpForm > form > input[type="submit"] {
-  background: #f43648;
+  background: #fff;
 }
 
 .formBx > .form > form > .forgot {
@@ -327,7 +332,7 @@ section > .container > .formBx.active > .signUpForm > form {
 
   section > .container > .formBx.active > .signUpForm {
     padding: 10px 50px;
-    top: 0;
+    top: 2px;
   }
 
   .container > .formBx > .form > form {

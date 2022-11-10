@@ -10,6 +10,7 @@ import {
 import { Router } from '@angular/router';
 import { userInterface } from '@models/users.interface';
 import { LocalStorageService } from 'ngx-localstorage';
+import { NgxSpinnerService } from 'ngx-spinner';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -27,7 +28,8 @@ export class AppComponent implements OnInit {
   constructor(
     private renderer: Renderer2,
     public router: Router,
-    private localStorageService: LocalStorageService
+    private localStorageService: LocalStorageService,
+    private spinner: NgxSpinnerService
   ) {}
 
   @HostListener('window:scroll')
@@ -59,24 +61,30 @@ export class AppComponent implements OnInit {
   }
 
   redirectTo(str: string) {
-    this.renderer.removeClass(this.menuToggle.nativeElement, 'active');
-    this.renderer.removeClass(this.menu.nativeElement, 'active');
+    this.spinner.show().then(() => {
+      this.renderer.removeClass(this.menuToggle.nativeElement, 'active');
+      this.renderer.removeClass(this.menu.nativeElement, 'active');
 
-    this.router.navigate([str]);
+      // this.spinner.spinnerObservable.subscribe(
+      //   (res) => {
+      //     if (res.show) this.spinner.hide();
+      //   },
+      //   (err) => console.error(err)
+      // );
+      this.router.navigate([str]);
+    });
   }
 
   logOut() {
-    this.user = undefined;
     Swal.fire({
-      // imageUrl: 'assets/images/Icono Mercury.png',
       icon: 'success',
       imageWidth: 100,
-      confirmButtonColor: '#007bff',
+      confirmButtonColor: '#000',
+      confirmButtonAriaLabel: '',
       html: '<b>Sesión Cerrada Exitosamente</b>',
-    }).then(() =>
-      this.router
-        .navigate(['/login'])
-        .then(() => this.localStorageService.clear())
-    );
+    })
+      .then(() => this.redirectTo('/login'))
+      .then(() => (this.user = undefined))
+      .then(() => this.localStorageService.clear());
   }
 }

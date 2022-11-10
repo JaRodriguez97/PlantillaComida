@@ -16,7 +16,7 @@
     <li #list2><a (click)="redirectTo('/menu')">Menú</a></li>
     <li #list4><a (click)="redirectTo('/tiendas')">Tiendas</a></li>
     <li #list3 *ngIf="!user">
-      <a (click)="redirectTo('/login')">Login/SingUp</a>
+      <a (click)="redirectTo('/login')">Login/SignUp</a>
     </li>
     <li #list4 *ngIf="user">
       <a (click)="redirectTo('/perfil')">{{
