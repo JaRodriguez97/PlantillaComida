@@ -114,6 +114,7 @@
     width: 170px;
     height: 310px;
   }
+  
   .banner::after {
     bottom: 0;
     right: 0;
