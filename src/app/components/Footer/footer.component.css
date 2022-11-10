@@ -22,11 +22,11 @@ footer {
   margin: 0;
 }
 
-.sci>li {
+.sci > li {
   list-style: none;
 }
 
-.sci>li>a {
+.sci > li > a {
   position: relative;
   margin: 10px;
   text-align: center;
@@ -43,6 +43,7 @@ footer {
   padding: 0.5% 10%;
   padding-right: 2%;
   border-radius: 50px;
+  margin: 0;
 }
 
 /* !!! RESPONSIVE !!! */

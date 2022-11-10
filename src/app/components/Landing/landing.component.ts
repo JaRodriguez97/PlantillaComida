@@ -31,7 +31,9 @@ export class LandingComponent implements OnInit {
   }
 
   realizarPedido() {
-    this.localStorageService;
-    this.router.navigate(['/login']);
+    this.spinner.show().then(() => {
+      if (!this.appComponent.user) this.router.navigate(['/login']);
+      else this.router.navigate(['/menu']);
+    });
   }
 }

@@ -43,9 +43,8 @@ export class LoginComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    if (this.localStorageService.get<userInterface>('user', {})) {
+    if (this.localStorageService.get<userInterface>('user', {}))
       this.router.navigate(['/landing']);
-    }
 
     this.renderer.listen(this.signUpBtn.nativeElement, 'click', () => {
       this.renderer.addClass(this.formBx.nativeElement, 'active');

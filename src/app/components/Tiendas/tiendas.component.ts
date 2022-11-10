@@ -10,6 +10,8 @@ import {
 import { faStar } from '@fortawesome/free-solid-svg-icons';
 import { Campus } from '@app/bd/campus.model';
 import { MapsAPILoader } from '@agm/core';
+import { NgxSpinnerService } from 'ngx-spinner';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-tiendas',
@@ -33,51 +35,55 @@ export class TiendasComponent implements OnInit, AfterViewInit {
 
   constructor(
     private mapsAPILoader: MapsAPILoader,
-    private renderer: Renderer2
+    private renderer: Renderer2,
+    private spinner: NgxSpinnerService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
-    this.slicerContainerMap = this.renderer.createElement('div');
-    this.renderer.addClass(this.slicerContainerMap, 'slicerContainerMap');
+    this.spinner.show().then(() => {
+      this.slicerContainerMap = this.renderer.createElement('div');
+      this.renderer.addClass(this.slicerContainerMap, 'slicerContainerMap');
 
-    this.mapsAPILoader.load().then(() => {
-      let zoom = 17,
-        lat,
-        lng,
-        center,
-        mapTypeId = google.maps.MapTypeId.ROADMAP,
-        zoomControl = true,
-        streetViewControl = true,
-        disableDefaultUI = true,
-        clickableIcons = true,
-        fullscreenControl = false;
+      this.mapsAPILoader.load().then(() => {
+        let zoom = 17,
+          lat,
+          lng,
+          center,
+          mapTypeId = google.maps.MapTypeId.ROADMAP,
+          zoomControl = true,
+          streetViewControl = true,
+          disableDefaultUI = true,
+          clickableIcons = true,
+          fullscreenControl = false;
 
-      this.window.navigator.geolocation.getCurrentPosition(
-        (e) => {
-          lat = e.coords.latitude;
-          lng = e.coords.longitude;
-          center = new google.maps.LatLng(lat, lng);
+        this.window.navigator.geolocation.getCurrentPosition(
+          (e) => {
+            lat = e.coords.latitude;
+            lng = e.coords.longitude;
+            center = new google.maps.LatLng(lat, lng);
 
-          this.map = new google.maps.Map(document.getElementById('map')!, {
-            zoom,
-            center,
-            mapTypeId,
-            zoomControl,
-            streetViewControl,
-            disableDefaultUI,
-            clickableIcons,
-            fullscreenControl,
-          });
+            this.map = new google.maps.Map(document.getElementById('map')!, {
+              zoom,
+              center,
+              mapTypeId,
+              zoomControl,
+              streetViewControl,
+              disableDefaultUI,
+              clickableIcons,
+              fullscreenControl,
+            });
 
-          new google.maps.Marker({
-            position: center,
-            map: this.map,
-            title: 'Estás aquí',
-            optimized: true,
-          });
-        },
-        (err) => console.error(err)
-      );
+            new google.maps.Marker({
+              position: center,
+              map: this.map,
+              title: 'Estás aquí',
+              optimized: true,
+            });
+          },
+          (err) => console.error(err)
+        );
+      });
     });
   }
 
@@ -85,10 +91,10 @@ export class TiendasComponent implements OnInit, AfterViewInit {
     this.window.addEventListener('resize', this.mediaScreen.bind(this));
     this.campus = Campus;
 
-    this.mediaScreen();
+    this.mediaScreen().then(() => this.spinner.hide());
   }
 
-  mediaScreen() {
+  async mediaScreen() {
     if (this.window.innerWidth > 991)
       return this.renderer.appendChild(
         this.container.nativeElement,
