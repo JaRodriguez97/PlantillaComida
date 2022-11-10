@@ -1,5 +1,5 @@
 <section class="banner">
-  <div class="banner__content">
+  <div class="banner__content" *ngIf="combo">
     <div class="banner__content--contentBx">
       <h2>{{ combo.nombre }}</h2>
       <!-- existentes:  REF:  estrellas:  -->
@@ -12,7 +12,7 @@
         <span>{{ combo.precio }}</span>
       </div>
     </div>
-    <div class="banner__content--imgBx" *ngIf="combo">
+    <div class="banner__content--imgBx">
       <img [src]="combo.img" [alt]="combo.nombre" />
     </div>
   </div>

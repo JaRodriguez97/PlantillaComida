@@ -65,7 +65,7 @@
 }
 
 .banner__content--contentBx-inlineBlock {
-  gap: 50%;
+  justify-content: space-between;
   display: flex;
   margin: 0 20% 0 0;
 }
@@ -124,5 +124,31 @@
   .banner__content {
     flex-direction: column-reverse;
     margin: 50px 0;
+    gap: 15px;
+  }
+
+  .banner__content--contentBx {
+    max-width: 100%;
+    align-items: flex-start;
+  }
+
+  .banner__content--contentBx > h2 {
+    font-size: 2em;
+    width: 100%;
+  }
+
+  .banner__content--imgBx {
+    display: flex;
+    justify-content: center;
+  }
+
+  .banner__content--imgBx > img {
+    max-width: 80%;
+    min-width: 300px;
+  }
+
+  .banner__content--contentBx-inlineBlock {
+    margin: 0;
+    width: 100%;
   }
 }
