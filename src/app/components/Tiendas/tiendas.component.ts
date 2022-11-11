@@ -35,6 +35,7 @@ export class TiendasComponent implements OnInit {
   window: Window = window;
   faStar = faStar;
   marker!: google.maps.Marker;
+  tiendaSeleccionada!: campusInterface;
 
   constructor(
     private mapsAPILoader: MapsAPILoader,
@@ -132,6 +133,14 @@ export class TiendasComponent implements OnInit {
       .show()
       .then(() => {
         if (this.window.innerWidth < 991) {
+          // window.scrollBy({
+          //   left: 0,
+          //   top: -window.innerHeight,
+          //   behavior: 'smooth',
+          // });
+
+          this.tiendaSeleccionada = tienda;
+
           this.renderer.addClass(
             this.slicerContainerMap.nativeElement,
             'active'

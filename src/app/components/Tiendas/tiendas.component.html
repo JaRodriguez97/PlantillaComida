@@ -60,5 +60,9 @@
       </ul>
     </div>
   </div>
-  <div class="slicerContainerMap" #slicerContainerMap></div>
+  <div class="slicerContainerMap" #slicerContainerMap>
+    <div class="title" *ngIf="tiendaSeleccionada">
+      <h2>{{ tiendaSeleccionada.sede }}</h2>
+    </div>
+  </div>
 </section>
