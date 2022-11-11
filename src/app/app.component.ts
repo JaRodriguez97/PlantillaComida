@@ -1,11 +1,7 @@
 import {
   Component,
   ElementRef,
-  HostListener,
-  ViewChild,
-  Renderer2,
-  OnInit,
-  AfterViewInit,
+  HostListener, OnInit, Renderer2, ViewChild
 } from '@angular/core';
 import { Router } from '@angular/router';
 import { userInterface } from '@models/users.interface';

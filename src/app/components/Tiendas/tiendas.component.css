@@ -29,7 +29,7 @@ section {
   position: relative;
   bottom: -100%;
   width: 100%;
-  height: 80vh;
+  height: 100%;
   background: #fff;
   display: flex;
   justify-content: center;
@@ -37,6 +37,7 @@ section {
   border-top-right-radius: 30px;
   border-top-left-radius: 30px;
   flex-direction: column;
+  transition: 500ms;
 }
 
 .container > .slicerContainerMap::before {
@@ -261,6 +262,21 @@ div > div.title {
     margin: 1% auto;
   }
 
+  .sticky {
+  }
+
+  section.sticky {
+    height: 400%;
+    bottom: -300%;
+    padding: 30% 0 0;
+    background: linear-gradient(rgba(129, 111, 120, 0.22), #000);
+    overflow-y: scroll;
+  }
+
+  .container.sticky {
+    height: 95%;
+  }
+
   .container > .title > h2 {
     font-size: 120%;
     transition: 500ms;
@@ -297,7 +313,7 @@ div > div.title {
   }
 
   .container > .slicerContainerMap.active {
-    bottom: -6%;
+    bottom: 0;
     z-index: 10;
   }
 
