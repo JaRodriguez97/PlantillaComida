@@ -9,9 +9,9 @@ import {
 } from '@angular/core';
 import { Router } from '@angular/router';
 // import { Campus } from '@app/bd/campus.model';
+import { faStar } from '@fortawesome/free-solid-svg-icons';
 import { campusInterface } from '@models/campus.interface';
 import { TiendasService } from '@service/Tiendas/tiendas.service';
-import { faStar } from '@fortawesome/free-solid-svg-icons';
 import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
@@ -24,6 +24,7 @@ export class TiendasComponent implements OnInit {
   @ViewChild('container') container!: ElementRef;
   @ViewChild('containerMap') containerMap!: ElementRef;
   @ViewChild('slicerContainerMap') slicerContainerMap!: ElementRef;
+  @ViewChild('hideSilceMap') hideSilceMap!: ElementRef;
 
   map!: google.maps.Map;
   campus!: campusInterface[];
@@ -35,7 +36,7 @@ export class TiendasComponent implements OnInit {
   window: Window = window;
   faStar = faStar;
   marker!: google.maps.Marker;
-  tiendaSeleccionada!: campusInterface;
+  tiendaSeleccionada!: campusInterface | undefined;
 
   constructor(
     private mapsAPILoader: MapsAPILoader,
@@ -47,9 +48,14 @@ export class TiendasComponent implements OnInit {
 
   @HostListener('window:scroll')
   scrolling(): void {
-    if (this.window.scrollY > 0) {
-      // return this.renderer.removeClass(this.container.nativeElement, 'sticky');
-    }
+    // if (this.window.scrollY < 30) {
+    //   this.renderer.removeClass(
+    //     this.slicerContainerMap.nativeElement,
+    //     'active'
+    //   );
+    //   this.renderer.removeClass(this.container.nativeElement, 'sticky');
+    //   this.renderer.removeClass(this.body.nativeElement, 'sticky');
+    // }
     // this.renderer.removeClass(this.header.nativeElement, 'sticky');
   }
 
@@ -132,66 +138,57 @@ export class TiendasComponent implements OnInit {
     this.spinner
       .show()
       .then(() => {
-        if (this.window.innerWidth < 991) {
-          // window.scrollBy({
-          //   left: 0,
-          //   top: -window.innerHeight,
-          //   behavior: 'smooth',
-          // });
+        setTimeout(() => {
+          if (this.window.innerWidth < 991) {
+            this.tiendaSeleccionada = tienda;
 
-          this.tiendaSeleccionada = tienda;
+            this.renderer.addClass(
+              this.slicerContainerMap.nativeElement,
+              'active'
+            );
 
-          this.renderer.addClass(
-            this.slicerContainerMap.nativeElement,
-            'active'
-          );
-          this.renderer.addClass(this.container.nativeElement, 'sticky');
-          this.renderer.addClass(this.body.nativeElement, 'sticky');
+            this.renderer.addClass(this.container.nativeElement, 'sticky');
+            this.renderer.addClass(this.body.nativeElement, 'sticky');
+            this.map.setZoom(12.4);
+          } else this.map.setZoom(13.4);
 
-          this.renderer.listen(
-            this.body.nativeElement,
-            'click',
-            this.outMap.bind(this)
-          );
-          this.map.setZoom(12.4);
-        } else this.map.setZoom(13.4);
+          let position = new google.maps.LatLng(tienda.coordenadas),
+            title = `Sede: ${tienda.sede}`;
 
-        let position = new google.maps.LatLng(tienda.coordenadas),
-          title = `Sede: ${tienda.sede}`;
+          if (!this.marker) {
+            this.marker = new google.maps.Marker({
+              map: this.map,
+              position,
+              title,
+            });
+          } else this.marker.setPosition(position);
 
-        if (!this.marker) {
-          this.marker = new google.maps.Marker({
-            map: this.map,
-            position,
-            title,
+          this.window.navigator.geolocation.getCurrentPosition((e) => {
+            let lat = e.coords.latitude,
+              lng = e.coords.longitude,
+              coordLat = tienda.coordenadas.lat - lat,
+              coordLng = tienda.coordenadas.lng - lng,
+              center;
+
+            lat = coordLat / 2 + lat;
+            lng = coordLng / 2 + lng;
+
+            center = new google.maps.LatLng(lat, lng);
+
+            this.map.setCenter(center);
           });
-        } else this.marker.setPosition(position);
 
-        this.window.navigator.geolocation.getCurrentPosition((e) => {
-          let lat = e.coords.latitude,
-            lng = e.coords.longitude,
-            coordLat = tienda.coordenadas.lat - lat,
-            coordLng = tienda.coordenadas.lng - lng,
-            center;
+          // this.renderer.setAttribute(
+          //   this.slicerContainerMap,
+          //   'innerHTML',
+          //   `<p>¿Cómo llegar a ${tienda.sede}?</p>`
+          // );
+          // if (this.slicerContainerMap.innerHTML.indexOf(ubicacion) === -1) {
+          //   this.slicerContainerMap.innerHTML += `<p>¿Cómo llegar a ${ubicacion}?</p>`;
 
-          lat = coordLat / 2 + lat;
-          lng = coordLng / 2 + lng;
-
-          center = new google.maps.LatLng(lat, lng);
-
-          this.map.setCenter(center);
-        });
-
-        // this.renderer.setAttribute(
-        //   this.slicerContainerMap,
-        //   'innerHTML',
-        //   `<p>¿Cómo llegar a ${tienda.sede}?</p>`
-        // );
-        // if (this.slicerContainerMap.innerHTML.indexOf(ubicacion) === -1) {
-        //   this.slicerContainerMap.innerHTML += `<p>¿Cómo llegar a ${ubicacion}?</p>`;
-
-        //   // (this.container[0] as HTMLElement).onclick = this.outMap;
-        // }
+          //   // (this.container[0] as HTMLElement).onclick = this.outMap;
+          // }
+        }, 500);
       })
       .then(() => setTimeout(() => this.spinner.hide(), 1000));
   }
@@ -200,5 +197,6 @@ export class TiendasComponent implements OnInit {
     this.renderer.removeClass(this.slicerContainerMap.nativeElement, 'active');
     this.renderer.removeClass(this.container.nativeElement, 'sticky');
     this.renderer.removeClass(this.body.nativeElement, 'sticky');
+    this.tiendaSeleccionada = undefined;
   }
 }

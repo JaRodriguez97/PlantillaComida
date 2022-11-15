@@ -60,9 +60,13 @@
       </ul>
     </div>
   </div>
+  <div class="hideSilceMap" *ngIf="tiendaSeleccionada" (click)="outMap()">
+    <div class="closeSlide"></div>
+    CERRAR
+  </div>
   <div class="slicerContainerMap" #slicerContainerMap>
     <div class="title" *ngIf="tiendaSeleccionada">
-      <h2>{{ tiendaSeleccionada.sede }}</h2>
+      <h2 class="titleSlice">{{ tiendaSeleccionada.sede }}</h2>
     </div>
   </div>
 </section>
