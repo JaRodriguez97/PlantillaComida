@@ -1,4 +1,10 @@
 section {
-  height: 100vh;
+  position: relative;
   width: 100%;
+  min-height: 100vh;
+  padding: 0 100px;
+  flex-direction: column;
+  display: flex;
+  justify-content: center;
+  background: linear-gradient(#151415, #404040);
 }
