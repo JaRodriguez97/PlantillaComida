@@ -355,13 +355,6 @@ body {
   background: linear-gradient(45deg, #b85402, #db0000);
 }
 
-footer {
-  bottom: 0;
-  left: 0;
-  padding: 4%;
-  width: 100%;
-}
-
 /*
 * Responsive
 */

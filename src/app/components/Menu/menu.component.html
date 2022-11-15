@@ -34,6 +34,7 @@
                 <div class="price-table">
                   <div
                     class="price-head"
+                    (click)="getDetails(combo._id)"
                     style="background: url('{{ combo.img }}');"
                   >
                     <h4>Combo {{ i + 1 }}</h4>
@@ -104,6 +105,7 @@
             <div class="price-table">
               <div
                 class="price-head"
+                (click)="getDetails(combo._id)"
                 style="background: url('{{ combo.img }}');"
               >
                 <h4>Combo {{ i + 1 }}</h4>
@@ -180,9 +182,9 @@
       <div class="content">
         <div class="productName">
           <h3>{{ card.nombre }}</h3>
-          <label for="ref"
-            >Referencia:<span id="ref"> {{ card.REF }}</span></label
-          >
+          <label for="ref">
+            REF:<span id="ref"> {{ card.REF }}</span>
+          </label>
         </div>
         <div class="priceRating">
           <h3>{{ card.precio }}<span> C/U</span></h3>

@@ -11,6 +11,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { environment } from '@env/environment';
 
 @NgModule({
   declarations: [AppComponent],
@@ -22,9 +23,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     FooterModule,
     ScrollingModule,
     FontAwesomeModule,
-    AgmCoreModule.forRoot({
-      apiKey: 'AIzaSyANPMMk_LmctJkbG61fjRkLJ5HQHLqYEwc',
-    }),
+    AgmCoreModule.forRoot({ apiKey: environment.apiKey }),
     NgxLocalstorageDirectiveModule,
     BrowserAnimationsModule,
     NgxSpinnerModule.forRoot({ type: 'ball-scale-multiple' }),

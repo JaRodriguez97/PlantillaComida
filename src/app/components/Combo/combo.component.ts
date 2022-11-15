@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { comboInterface } from '@models/combo.interface';
 import { CombosService } from '@service/Combos/combos.service';
 import { NgxSpinnerService } from 'ngx-spinner';
@@ -16,7 +16,8 @@ export class ComboComponent implements OnInit {
   constructor(
     private combosService: CombosService,
     private activatedRoute: ActivatedRoute,
-    private spinner: NgxSpinnerService
+    private spinner: NgxSpinnerService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {

@@ -5,7 +5,7 @@
 export const environment = {
   production: false,
   // backend: 'http://localhost:3000/',
-  backend: 'https://bdpc2.up.railway.app/',
+  backend: 'https://bdpc.up.railway.app/',
   apiKey: 'AIzaSyANPMMk_LmctJkbG61fjRkLJ5HQHLqYEwc',
 };
 

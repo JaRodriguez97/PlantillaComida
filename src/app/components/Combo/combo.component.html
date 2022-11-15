@@ -1,4 +1,5 @@
 <section class="banner">
+  <a class="banner__back" [routerLink]="'/menu'">Atrás</a>
   <div class="banner__content" *ngIf="combo">
     <div class="banner__content--contentBx">
       <h2>{{ combo.nombre }}</h2>
@@ -16,4 +17,10 @@
       <img [src]="combo.img" [alt]="combo.nombre" />
     </div>
   </div>
+</section>
+<section>
+  <app-comentarios></app-comentarios>
+</section>
+<section>
+  <app-footer></app-footer>
 </section>
