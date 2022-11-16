@@ -6,6 +6,17 @@ section {
   align-items: center;
   min-height: 100vh;
   background: linear-gradient(#151415, #404040);
+  flex-direction: column;
+}
+
+.title {
+  position: absolute;
+  top: 100vh;
+}
+
+.title__h2 {
+  color: #fff;
+  text-decoration: underline;
 }
 
 .container {
@@ -26,13 +37,16 @@ section {
 .container__box {
   position: relative;
   padding: 80px 40px 40px;
-  transition: 500ms;
+  transition: 1000ms;
   text-align: center;
-  background: #fff;
+  border-radius: 10px;
+  background: linear-gradient(rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 1));
 }
 
 .container__box:hover {
-  background: #ff0057;
+  background: rgb(255, 0, 87);
+  background: linear-gradient(rgba(255, 255, 255, 0.5), rgb(255, 0, 87));
+  transition: 1000ms;
 }
 
 .container__box::before {
@@ -44,14 +58,16 @@ section {
   height: 80px;
   background: url("../../../assets/images/icons/quotes.png");
   background-size: contain;
-  transition: 500ms;
+  transition: 1000ms;
   pointer-events: none;
   opacity: 0.05;
+  transform: rotate(180deg);
 }
 
 .container__box:hover::before {
   transform: translateY(-60px) rotate(180deg);
   opacity: 1;
+  transition: 1000ms;
 }
 
 .container__box::after {
@@ -63,72 +79,17 @@ section {
   height: 80px;
   background: url("../../../assets/images/icons/quotes.png");
   background-size: contain;
-  transition: 500ms;
-  pointer-events: none;
-  opacity: 0.05;
-  transform: translateY(0px) rotate(180deg);
-}
-
-.container__box:hover::after {
-  transform: translateY(60px);
-  opacity: 1;
-}
-
-/* !!!!!!!!!! */
-
-.container__box2 {
-  position: relative;
-  padding: 80px 40px 40px;
-  transition: 500ms;
-  text-align: center;
-  background: #fff;
-}
-
-.container__box2:hover {
-  background: #ff0057;
-}
-
-.container__box2::before {
-  content: "";
-  position: absolute;
-  top: 20px;
-  right: 0;
-  width: 160px;
-  height: 80px;
-  background: url("../../../assets/images/icons/quotes.png");
-  background-size: contain;
-  transition: 500ms;
-  pointer-events: none;
-  opacity: 0.05;
-  transform: rotate(180deg);
-}
-
-.container__box2:hover::before {
-  transform: translateY(-60px) rotate(180deg);
-  opacity: 1;
-}
-
-.container__box2::after {
-  content: "";
-  position: absolute;
-  bottom: 20px;
-  left: 0;
-  width: 160px;
-  height: 80px;
-  background: url("../../../assets/images/icons/quotes.png");
-  background-size: contain;
-  transition: 500ms;
+  transition: 1000ms;
   pointer-events: none;
   opacity: 0.05;
   transform: translateY(0px);
 }
 
-.container__box2:hover::after {
+.container__box:hover::after {
   transform: translateY(60px);
   opacity: 1;
+  transition: 1000ms;
 }
-
-/* !!!!!!!!!! */
 
 .container__box--imgBox {
   position: absolute;
@@ -150,7 +111,7 @@ section {
 .container__box > p {
   margin: 0;
   padding: 0;
-  transition: 500ms;
+  transition: 1000ms;
 }
 
 .container__box > h3 {
@@ -165,12 +126,24 @@ section {
 .container__box > h3 > span {
   font-weight: 600;
   font-size: 12px;
-  color: #c5c5c5;
-  transition: 500ms;
+  color: rgb(150, 150, 150);
+  transition: 1000ms;
 }
 
 .container__box:hover > p,
 .container__box:hover > h3,
 .container__box:hover > h3 > span {
   color: #fff;
+  transition: 1000ms;
+}
+
+@media (max-width: 768px) {
+  section {
+    flex-direction: row;
+    padding: 50px 0;
+  }
+
+  .container__box {
+    margin-top: 80px;
+  }
 }
