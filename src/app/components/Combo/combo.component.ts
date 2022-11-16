@@ -11,7 +11,6 @@ import Swal from 'sweetalert2';
 })
 export class ComboComponent implements OnInit {
   combo!: comboInterface;
-  _id!: String;
 
   constructor(
     private combosService: CombosService,
@@ -22,10 +21,9 @@ export class ComboComponent implements OnInit {
 
   ngOnInit(): void {
     this.spinner.show().then(() => {
-      let params = this.activatedRoute.snapshot.params;
-      this._id = params['id'];
+      let { id } = this.activatedRoute.snapshot.params;
 
-      this.combosService.getCombo(this._id).subscribe(
+      this.combosService.getCombo(id).subscribe(
         (res) => (this.combo = res),
         (err) =>
           this.spinner.hide().then(() => {
@@ -36,7 +34,7 @@ export class ComboComponent implements OnInit {
               html: err.error.message,
             });
           }),
-        () => this.spinner.hide()
+        () => setTimeout(() => this.spinner.hide(), 500)
       );
     });
   }

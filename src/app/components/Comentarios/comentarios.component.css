@@ -1,10 +1,176 @@
 section {
-  position: relative;
-  width: 100%;
-  min-height: 100vh;
-  padding: 0 100px;
-  flex-direction: column;
+  margin: 0;
+  padding: 0;
   display: flex;
   justify-content: center;
+  align-items: center;
+  min-height: 100vh;
   background: linear-gradient(#151415, #404040);
+}
+
+.container {
+  width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  grid-gap: 20px;
+  box-sizing: border-box;
+  padding: 20px;
+}
+
+.container::after,
+.container::before {
+  display: none;
+}
+
+.container__box {
+  position: relative;
+  padding: 80px 40px 40px;
+  transition: 500ms;
+  text-align: center;
+  background: #fff;
+}
+
+.container__box:hover {
+  background: #ff0057;
+}
+
+.container__box::before {
+  content: "";
+  position: absolute;
+  top: 20px;
+  right: 0;
+  width: 160px;
+  height: 80px;
+  background: url("../../../assets/images/icons/quotes.png");
+  background-size: contain;
+  transition: 500ms;
+  pointer-events: none;
+  opacity: 0.05;
+}
+
+.container__box:hover::before {
+  transform: translateY(-60px) rotate(180deg);
+  opacity: 1;
+}
+
+.container__box::after {
+  content: "";
+  position: absolute;
+  bottom: 20px;
+  left: 0;
+  width: 160px;
+  height: 80px;
+  background: url("../../../assets/images/icons/quotes.png");
+  background-size: contain;
+  transition: 500ms;
+  pointer-events: none;
+  opacity: 0.05;
+  transform: translateY(0px) rotate(180deg);
+}
+
+.container__box:hover::after {
+  transform: translateY(60px);
+  opacity: 1;
+}
+
+/* !!!!!!!!!! */
+
+.container__box2 {
+  position: relative;
+  padding: 80px 40px 40px;
+  transition: 500ms;
+  text-align: center;
+  background: #fff;
+}
+
+.container__box2:hover {
+  background: #ff0057;
+}
+
+.container__box2::before {
+  content: "";
+  position: absolute;
+  top: 20px;
+  right: 0;
+  width: 160px;
+  height: 80px;
+  background: url("../../../assets/images/icons/quotes.png");
+  background-size: contain;
+  transition: 500ms;
+  pointer-events: none;
+  opacity: 0.05;
+  transform: rotate(180deg);
+}
+
+.container__box2:hover::before {
+  transform: translateY(-60px) rotate(180deg);
+  opacity: 1;
+}
+
+.container__box2::after {
+  content: "";
+  position: absolute;
+  bottom: 20px;
+  left: 0;
+  width: 160px;
+  height: 80px;
+  background: url("../../../assets/images/icons/quotes.png");
+  background-size: contain;
+  transition: 500ms;
+  pointer-events: none;
+  opacity: 0.05;
+  transform: translateY(0px);
+}
+
+.container__box2:hover::after {
+  transform: translateY(60px);
+  opacity: 1;
+}
+
+/* !!!!!!!!!! */
+
+.container__box--imgBox {
+  position: absolute;
+  top: -60px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  overflow: hidden;
+}
+
+.container__box--imgBox > img {
+  width: 120px;
+  height: 120px;
+}
+
+.container__box > h3,
+.container__box > p {
+  margin: 0;
+  padding: 0;
+  transition: 500ms;
+}
+
+.container__box > h3 {
+  margin: 20px 0 0;
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 20px;
+  text-transform: uppercase;
+  color: #ff0057;
+}
+
+.container__box > h3 > span {
+  font-weight: 600;
+  font-size: 12px;
+  color: #c5c5c5;
+  transition: 500ms;
+}
+
+.container__box:hover > p,
+.container__box:hover > h3,
+.container__box:hover > h3 > span {
+  color: #fff;
 }

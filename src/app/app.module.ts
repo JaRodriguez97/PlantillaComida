@@ -4,6 +4,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FooterModule } from '@components/Footer/footer.module';
+import { ComentariosModule } from '@components/Comentarios/comentarios.module';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { NgxLocalstorageDirectiveModule } from 'ngx-localstorage';
 import { SwiperModule } from 'swiper/angular';
@@ -27,6 +28,7 @@ import { environment } from '@env/environment';
     NgxLocalstorageDirectiveModule,
     BrowserAnimationsModule,
     NgxSpinnerModule.forRoot({ type: 'ball-scale-multiple' }),
+    ComentariosModule,
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   providers: [],

@@ -18,8 +18,8 @@
     </div>
   </div>
 </section>
-<section>
-  <app-comentarios></app-comentarios>
+<section *ngIf="combo">
+  <app-comentarios [comentarios]="combo.comentarios"></app-comentarios>
 </section>
 <section>
   <app-footer></app-footer>

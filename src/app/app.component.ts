@@ -1,7 +1,10 @@
 import {
   Component,
   ElementRef,
-  HostListener, OnInit, Renderer2, ViewChild
+  HostListener,
+  OnInit,
+  Renderer2,
+  ViewChild,
 } from '@angular/core';
 import { Router } from '@angular/router';
 import { userInterface } from '@models/users.interface';
@@ -38,6 +41,15 @@ export class AppComponent implements OnInit {
 
   ngOnInit(): void {
     this.user = this.localStorageService.get('user', {})!;
+  }
+
+  onActivate(event: Event) {
+    if (event.constructor.name === 'ComboComponent')
+      window.scroll({
+        top: 0,
+        left: 0,
+        behavior: 'smooth',
+      });
   }
   // Menú toggle
   toogleMenu() {
