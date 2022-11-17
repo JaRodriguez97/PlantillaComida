@@ -44,6 +44,14 @@ footer {
   padding-right: 2%;
   border-radius: 50px;
   margin: 0;
+  cursor: pointer;
+  text-decoration: none;
+  transition: 500ms;
+}
+
+.copyrightText:hover {
+  opacity: 1;
+  letter-spacing: 3px;
 }
 
 /* !!! RESPONSIVE !!! */
