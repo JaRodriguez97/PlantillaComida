@@ -50,7 +50,7 @@ export class AppComponent implements OnInit {
         left: 0,
         behavior: 'smooth',
       });
-      alert(window.scroll);
+      console.log(window.scroll());
     }
   }
   // Menú toggle
