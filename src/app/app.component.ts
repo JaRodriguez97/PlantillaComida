@@ -44,6 +44,14 @@ export class AppComponent implements OnInit {
   }
 
   public onActivate(event: Event) {
+    console.log(
+      '🚀 ~ file: app.component.ts ~ line 48 ~ AppComponent ~ onActivate ~ event.constructor.name',
+      event.constructor.name
+    );
+    console.log(
+      '🚀 ~ file: app.component.ts ~ line 49 ~ AppComponent ~ onActivate ~ window',
+      window
+    );
     if (event.constructor.name === 'ComboComponent') {
       window.scroll({
         top: 0,
@@ -51,7 +59,6 @@ export class AppComponent implements OnInit {
         behavior: 'smooth',
       });
     }
-    console.log(event);
   }
   // Menú toggle
   toogleMenu() {
