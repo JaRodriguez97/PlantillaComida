@@ -5,10 +5,8 @@ import { ngExpressEngine } from '@nguniversal/express-engine';
 import * as express from 'express';
 import { existsSync } from 'fs';
 import { join } from 'path';
-import { createWindow } from 'domino';
 
 import { AppServerModule } from './src/main.server';
-import { readFileSync } from 'fs';
 
 // The Express app is exported so that it can be used by serverless Functions.
 export function app(): express.Express {
@@ -17,11 +15,6 @@ export function app(): express.Express {
   const indexHtml = existsSync(join(distFolder, 'index.original.html'))
     ? 'index.original.html'
     : 'index.html';
-
-  const template = readFileSync(join(distFolder, 'index.html')).toString();
-  const win = createWindow(template);
-  (global.window as any) = win;
-  global.document = win.document;
 
   // Our Universal express-engine (found @ https://github.com/angular/universal/tree/main/modules/express-engine)
   server.engine(

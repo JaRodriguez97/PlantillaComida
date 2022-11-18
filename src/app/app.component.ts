@@ -45,15 +45,12 @@ export class AppComponent implements OnInit {
   }
 
   onActivate(event: Event) {
-    console.log(
-      '🚀 ~ file: app.component.ts ~ line 50 ~ AppComponent ~ onActivate ~ event.constructor.name',
-      getWindow()
-    );
-    getWindow().scroll({
-      top: 0,
-      left: 0,
-      behavior: 'smooth',
-    });
+    if (getWindow().scroll)
+      getWindow().scroll({
+        top: 0,
+        left: 0,
+        behavior: 'smooth',
+      });
   }
 
   // Menú toggle
