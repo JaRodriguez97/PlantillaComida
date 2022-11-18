@@ -23,6 +23,7 @@ export class AppComponent implements OnInit {
   @ViewChild('header') header!: ElementRef;
   @ViewChild('toggle') menuToggle!: ElementRef;
   @ViewChild('menu') menu!: ElementRef;
+  window: Window = window;
 
   constructor(
     private renderer: Renderer2,
@@ -50,10 +51,10 @@ export class AppComponent implements OnInit {
     );
     console.log(
       '🚀 ~ file: app.component.ts ~ line 49 ~ AppComponent ~ onActivate ~ window',
-      window
+      this.window
     );
     if (event.constructor.name === 'ComboComponent') {
-      window.scroll({
+      this.window.scroll({
         top: 0,
         left: 0,
         behavior: 'smooth',
