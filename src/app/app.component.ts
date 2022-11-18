@@ -43,15 +43,15 @@ export class AppComponent implements OnInit {
     this.user = this.localStorageService.get('user', {})!;
   }
 
-  onActivate(event: Event) {
+  public onActivate(event: Event) {
     if (event.constructor.name === 'ComboComponent') {
       window.scroll({
         top: 0,
         left: 0,
         behavior: 'smooth',
       });
-      console.log(window.scroll());
     }
+    console.log(event);
   }
   // Menú toggle
   toogleMenu() {
