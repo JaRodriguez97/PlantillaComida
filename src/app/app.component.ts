@@ -48,7 +48,7 @@ export class AppComponent implements OnInit {
   public onActivate(event: Event) {
     console.log(
       '🚀 ~ file: app.component.ts ~ line 50 ~ AppComponent ~ onActivate ~ event.constructor.name',
-      typeof event.constructor.name
+      event.constructor.name
     );
     if (event.constructor.name === 'ComboComponent') {
       console.log(
