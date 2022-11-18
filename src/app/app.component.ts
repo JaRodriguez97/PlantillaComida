@@ -1,7 +1,9 @@
+import { DOCUMENT } from '@angular/common';
 import {
   Component,
   ElementRef,
   HostListener,
+  Inject,
   OnInit,
   Renderer2,
   ViewChild,
@@ -29,7 +31,8 @@ export class AppComponent implements OnInit {
     private renderer: Renderer2,
     public router: Router,
     private localStorageService: LocalStorageService,
-    private spinner: NgxSpinnerService
+    private spinner: NgxSpinnerService,
+    @Inject(DOCUMENT) private document: Document
   ) {}
 
   @HostListener('window:scroll')
@@ -51,15 +54,15 @@ export class AppComponent implements OnInit {
     );
     console.log(
       '🚀 ~ file: app.component.ts ~ line 49 ~ AppComponent ~ onActivate ~ window',
-      this.window
+      this.document
     );
-    if (event.constructor.name === 'ComboComponent') {
-      this.window.scroll({
-        top: 0,
-        left: 0,
-        behavior: 'smooth',
-      });
-    }
+    // if (event.constructor.name === 'ComboComponent') {
+    // this.document.scroll({
+    //   top: 0,
+    //   left: 0,
+    //   behavior: 'smooth',
+    // });
+    // }
   }
   // Menú toggle
   toogleMenu() {
