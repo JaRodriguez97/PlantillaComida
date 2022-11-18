@@ -45,8 +45,8 @@ export class AppComponent implements OnInit {
   }
 
   onActivate(event: Event) {
-    if (getWindow().scroll)
-      getWindow().scroll({
+    if (window.scroll)
+      window.scroll({
         top: 0,
         left: 0,
         behavior: 'smooth',
