@@ -44,12 +44,14 @@ export class AppComponent implements OnInit {
   }
 
   onActivate(event: Event) {
-    if (event.constructor.name === 'ComboComponent')
+    if (event.constructor.name === 'ComboComponent') {
       window.scroll({
         top: 0,
         left: 0,
         behavior: 'smooth',
       });
+      alert(window.scroll);
+    }
   }
   // Menú toggle
   toogleMenu() {
