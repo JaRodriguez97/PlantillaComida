@@ -25,7 +25,7 @@ export class AppComponent implements OnInit {
   @ViewChild('header') header!: ElementRef;
   @ViewChild('toggle') menuToggle!: ElementRef;
   @ViewChild('menu') menu!: ElementRef;
-  window: Window = window;
+  // window: Window = window;
 
   constructor(
     private renderer: Renderer2,
