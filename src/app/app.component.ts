@@ -45,7 +45,11 @@ export class AppComponent implements OnInit {
     this.user = this.localStorageService.get('user', {})!;
   }
 
-  public onActivate(event: Event) {
+  onActivate(event: Event) {
+    console.log(
+      '🚀 ~ file: app.component.ts ~ line 50 ~ AppComponent ~ onActivate ~ event.constructor.name',
+      event.constructor.name
+    );
     getWindow().scroll({
       top: 0,
       left: 0,
