@@ -10,8 +10,8 @@ import { Router } from '@angular/router';
 import { userInterface } from '@models/users.interface';
 import { LocalStorageService } from 'ngx-localstorage';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { getWindow, ssrWindow } from 'ssr-window';
 import Swal from 'sweetalert2';
-import { getWindow } from 'ssr-window';
 
 @Component({
   selector: 'app-root',
@@ -24,7 +24,6 @@ export class AppComponent implements OnInit {
   @ViewChild('header') header!: ElementRef;
   @ViewChild('toggle') menuToggle!: ElementRef;
   @ViewChild('menu') menu!: ElementRef;
-  // window: Window = getWindow;
 
   constructor(
     private renderer: Renderer2,
@@ -48,7 +47,7 @@ export class AppComponent implements OnInit {
   onActivate(event: Event) {
     console.log(
       '🚀 ~ file: app.component.ts ~ line 50 ~ AppComponent ~ onActivate ~ event.constructor.name',
-      event.constructor.name
+      getWindow().scroll
     );
     getWindow().scroll({
       top: 0,
@@ -78,13 +77,6 @@ export class AppComponent implements OnInit {
     this.spinner.show().then(() => {
       this.renderer.removeClass(this.menuToggle.nativeElement, 'active');
       this.renderer.removeClass(this.menu.nativeElement, 'active');
-
-      // this.spinner.spinnerObservable.subscribe(
-      //   (res) => {
-      //     if (res.show) this.spinner.hide();
-      //   },
-      //   (err) => console.error(err)
-      // );
       this.router.navigate([str]);
     });
   }
