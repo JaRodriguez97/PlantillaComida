@@ -10,7 +10,7 @@ import { Router } from '@angular/router';
 import { userInterface } from '@models/users.interface';
 import { LocalStorageService } from 'ngx-localstorage';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { getWindow, ssrWindow } from 'ssr-window';
+import { getWindow } from 'ssr-window';
 import Swal from 'sweetalert2';
 
 @Component({

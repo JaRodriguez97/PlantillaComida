@@ -34,5 +34,65 @@
         <span>Creative Director</span>
       </h3>
     </div>
+    <!-- !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! -->
+  </div>
+  <div class="formBox">
+    <form
+      name="contact"
+      data-netlify="true"
+      class="formBox__form"
+      (ngSubmit)="handleSubmit()"
+      [formGroup]="contactForm"
+    >
+      <label class="formBox__form--label" for="name">
+        Your Name:
+        <input
+          class="formBox__form--label-input"
+          type="text"
+          name="name"
+          id="name"
+          formControlName="name"
+        />
+      </label>
+      <label class="formBox__form--label" for="email">
+        Your Email:
+        <input
+          class="formBox__form--label-input"
+          type="email"
+          name="email"
+          id="email"
+          formControlName="email"
+        />
+      </label>
+      <label class="formBox__form--label">
+        Your Role:
+        <select
+          name="role[]"
+          multiple
+          formControlName="rol"
+          id="rol"
+          class="formBox__form--label-select"
+        >
+          <option value="leader">Leader</option>
+          <option value="follower">Follower</option>
+        </select>
+      </label>
+      <label class="formBox__form--label">
+        Comentario:
+        <textarea required
+          name="comentario"
+          formControlName="comentario"
+          id="comentario"
+          class="formBox__form--label-texArea"
+        ></textarea>
+      </label>
+      <button
+        type="submit"
+        class="formBox__form--btn"
+        [disabled]="contactForm.invalid"
+      >
+        Send
+      </button>
+    </form>
   </div>
 </section>

@@ -1,17 +1,19 @@
 section {
   margin: 0;
   padding: 0;
-  display: flex;
+  display: grid;
+  gap: 10%;
   justify-content: center;
   align-items: center;
   min-height: 100vh;
+  height: 110vh;
   background: linear-gradient(#151415, #404040);
   flex-direction: column;
 }
 
 .title {
-  position: absolute;
   top: 100vh;
+  text-align: center;
 }
 
 .title__h2 {
@@ -137,6 +139,21 @@ section {
   transition: 1000ms;
 }
 
+.formBox {
+  height: 20vw;
+  width: 100%;
+  padding: 2%;
+  border: 1px solid #ff0057;
+  border-radius: 20px;
+}
+
+.formBox__form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
 @media (max-width: 768px) {
   section {
     flex-direction: row;
