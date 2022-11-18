@@ -11,6 +11,7 @@ import { userInterface } from '@models/users.interface';
 import { LocalStorageService } from 'ngx-localstorage';
 import { NgxSpinnerService } from 'ngx-spinner';
 import Swal from 'sweetalert2';
+import { getWindow } from 'ssr-window';
 
 @Component({
   selector: 'app-root',
@@ -23,7 +24,7 @@ export class AppComponent implements OnInit {
   @ViewChild('header') header!: ElementRef;
   @ViewChild('toggle') menuToggle!: ElementRef;
   @ViewChild('menu') menu!: ElementRef;
-  window: Window = window;
+  // window: Window = getWindow;
 
   constructor(
     private renderer: Renderer2,
@@ -46,21 +47,22 @@ export class AppComponent implements OnInit {
 
   public onActivate(event: Event) {
     console.log(
-      '🚀 ~ file: app.component.ts ~ line 48 ~ AppComponent ~ onActivate ~ event.constructor.name',
-      event.constructor.name
-    );
-    console.log(
-      '🚀 ~ file: app.component.ts ~ line 49 ~ AppComponent ~ onActivate ~ window',
-      this.window
+      '🚀 ~ file: app.component.ts ~ line 50 ~ AppComponent ~ onActivate ~ event.constructor.name',
+      typeof event.constructor.name
     );
     if (event.constructor.name === 'ComboComponent') {
-      this.window.scroll({
+      console.log(
+        '🚀 ~ file: app.component.ts ~ line 50 ~ AppComponent ~ onActivate ~ event.constructor.name',
+        event.constructor.name
+      );
+      getWindow().scroll({
         top: 0,
         left: 0,
         behavior: 'smooth',
       });
     }
   }
+
   // Menú toggle
   toogleMenu() {
     let toggleMenu = this.menuToggle.nativeElement,

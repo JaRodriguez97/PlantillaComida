@@ -18,20 +18,11 @@ export function app(): express.Express {
     ? 'index.original.html'
     : 'index.html';
 
-  function startWindow() {
-    console.log('reseting windows...');
-    const win = createWindow(indexHtml);
+  const template = readFileSync(join(distFolder, 'index.html')).toString();
+  const win = createWindow(template);
+  (global.window as any) = win;
+  global.document = win.document;
 
-    // Polyfills
-    (global as any).window = win;
-    (global as any).document = win.document;
-    (global as any).navigator = win.navigator;
-    (global as any).location = win.location;
-    (global as any)['window']['isMobileOnServer'] = true;
-    // global['localStorage'] = localStorage;
-  }
-
-  startWindow();
   // Our Universal express-engine (found @ https://github.com/angular/universal/tree/main/modules/express-engine)
   server.engine(
     'html',
