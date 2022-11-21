@@ -1,9 +1,9 @@
- <!--<section class="banner">
+<section class="banner">
   <a class="banner__back" [routerLink]="'/menu'">Atrás</a>
   <div class="banner__content" *ngIf="combo">
     <div class="banner__content--contentBx">
       <h2>{{ combo.nombre }}</h2>
-    !!!  existentes:  REF:  estrellas: !!!
+      <!--  !!!  existentes:  REF:  estrellas: !!!-->
       <p>
         Nuestro combo está hecho con "{{ combo.ingredientes }}" además incluye
         "{{ combo.incluye }}", tinene un peso de "{{ combo.peso }}"
@@ -17,7 +17,7 @@
       <img [src]="combo.img" [alt]="combo.nombre" />
     </div>
   </div>
-</section> -->
+</section>
 <section *ngIf="combo">
   <app-comentarios [comentarios]="combo.comentarios"></app-comentarios>
 </section>

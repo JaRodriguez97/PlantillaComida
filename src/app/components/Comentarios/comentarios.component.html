@@ -35,64 +35,118 @@
       </h3>
     </div>
     <!-- !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! -->
+    <div class="container__box">
+      <div class="container__box--imgBox">
+        <img src="../../../assets/images/cards/aperitivos.jpg" alt="" />
+      </div>
+      <p>
+        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Exercitationem
+        dolorem possimus, harum officiis ipsa cupiditate tenetur molestias
+        blanditiis. Omnis quo odio vitae perferendis ea nulla numquam commodi!
+        Consectetur, eaque doloribus?
+      </p>
+      <h3>
+        Some Famous <br />
+        <span>Creative Director</span>
+      </h3>
+    </div>
+    <!-- !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! -->
+    <div class="container__box">
+      <div class="container__box--imgBox">
+        <img src="../../../assets/images/cards/aperitivos.jpg" alt="" />
+      </div>
+      <p>
+        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Exercitationem
+        dolorem possimus, harum officiis ipsa cupiditate tenetur molestias
+        blanditiis. Omnis quo odio vitae perferendis ea nulla numquam commodi!
+        Consectetur, eaque doloribus?
+      </p>
+      <h3>
+        Some Famous <br />
+        <span>Creative Director</span>
+      </h3>
+    </div>
+    <!-- !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! -->
   </div>
-  <div class="formBox">
-    <form
-      name="contact"
-      data-netlify="true"
-      class="formBox__form"
-      (ngSubmit)="handleSubmit()"
-      [formGroup]="contactForm"
-    >
-      <label class="formBox__form--label" for="name">
-        Your Name:
+  <form
+    name="contact"
+    data-netlify="true"
+    class="formBox"
+    (ngSubmit)="handleSubmit()"
+    [formGroup]="contactForm"
+  >
+    <h2 class="formBox__h2">Comenta el combo</h2>
+    <div class="formBox__row">
+      <div class="formBox__row--col">
+        <div class="formBox__row--col-inputBox">
+          <input
+            type="text"
+            name="nombres"
+            required
+            formControlName="nombres"
+          />
+          <span class="text">Nombres</span>
+          <span class="line"></span>
+        </div>
+      </div>
+      <div class="formBox__row--col">
+        <div class="formBox__row--col-inputBox">
+          <input
+            type="text"
+            name="apellidos"
+            required
+            formControlName="apellidos"
+          />
+          <span class="text">Apellidos</span>
+          <span class="line"></span>
+        </div>
+      </div>
+    </div>
+    <div class="formBox__row">
+      <div class="formBox__row--col">
+        <div class="formBox__row--col-inputBox">
+          <input type="email" name="email" required formControlName="email" />
+          <span class="text">Email</span>
+          <span class="line"></span>
+        </div>
+      </div>
+      <div class="formBox__row--col">
+        <div class="formBox__row--col-inputBox">
+          <input
+            type="number"
+            name="Celular"
+            required
+            formControlName="celular"
+          />
+          <span class="text">Celular</span>
+          <span class="line"></span>
+        </div>
+      </div>
+    </div>
+    <div class="formBox__row">
+      <div class="formBox__row--col">
+        <div class="formBox__row--col-inputBox textarea">
+          <textarea
+            name="comentario"
+            id="comentario"
+            cols="30"
+            rows="10"
+            formControlName="comentario"
+            required
+          ></textarea>
+          <span class="text">Escribe tu comentario</span>
+          <span class="line"></span>
+        </div>
+      </div>
+    </div>
+    <div class="formBox__row">
+      <div class="formBox__row--col">
         <input
-          class="formBox__form--label-input"
-          type="text"
-          name="name"
-          id="name"
-          formControlName="name"
+          type="submit"
+          value="Comentar"
+          [disabled]="contactForm.invalid"
         />
-      </label>
-      <label class="formBox__form--label" for="email">
-        Your Email:
-        <input
-          class="formBox__form--label-input"
-          type="email"
-          name="email"
-          id="email"
-          formControlName="email"
-        />
-      </label>
-      <label class="formBox__form--label">
-        Your Role:
-        <select
-          name="role[]"
-          multiple
-          formControlName="rol"
-          id="rol"
-          class="formBox__form--label-select"
-        >
-          <option value="leader">Leader</option>
-          <option value="follower">Follower</option>
-        </select>
-      </label>
-      <label class="formBox__form--label">
-        Comentario:
-        <textarea required
-          name="comentario"
-          formControlName="comentario"
-          id="comentario"
-          class="formBox__form--label-texArea"
-        ></textarea>
-      </label>
-      <button
-        type="submit"
-        class="formBox__form--btn"
-        [disabled]="contactForm.invalid"
-      >
-        Send
-      </button>
-    </form>
-  </div>
+      </div>
+    </div>
+  </form>
 </section>

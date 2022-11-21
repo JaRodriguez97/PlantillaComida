@@ -1,12 +1,11 @@
 section {
   margin: 0;
   padding: 0;
-  display: grid;
-  gap: 10%;
+  display: flex;
   justify-content: center;
   align-items: center;
   min-height: 100vh;
-  height: 110vh;
+  height: max-content;
   background: linear-gradient(#151415, #404040);
   flex-direction: column;
 }
@@ -14,6 +13,8 @@ section {
 .title {
   top: 100vh;
   text-align: center;
+  width: 100%;
+  margin: 2%;
 }
 
 .title__h2 {
@@ -22,8 +23,8 @@ section {
 }
 
 .container {
-  width: 1200px;
-  margin: 0 auto;
+  width: 80%;
+  margin: 5% auto;
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
   grid-gap: 20px;
@@ -39,6 +40,7 @@ section {
 .container__box {
   position: relative;
   padding: 80px 40px 40px;
+  margin-top: 80px;
   transition: 1000ms;
   text-align: center;
   border-radius: 10px;
@@ -140,20 +142,124 @@ section {
 }
 
 .formBox {
-  height: 20vw;
-  width: 100%;
+  width: 80%;
   padding: 2%;
-  border: 1px solid #ff0057;
-  border-radius: 20px;
 }
 
-.formBox__form {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  gap: 10px;
+.formBox__h2 {
+  width: 100%;
+  color: #ff3f54;
+  font-size: 5vh;
+  text-align: center;
+  margin: 1% 0;
 }
+
+.formBox__row {
+  position: relative;
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+}
+
+.formBox__row--col {
+  position: relative;
+  width: 100%;
+  padding: 0 2%;
+  margin: 6% 0 2%;
+  transition: 500ms;
+}
+
+.formBox__row--col-inputBox {
+  position: relative;
+  width: 100%;
+  height: 40px;
+  color: #ff3f54;
+}
+
+.formBox__row--col-inputBox > input,
+.formBox__row--col-inputBox.textarea > textarea {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: transparent;
+  box-shadow: none;
+  border: none;
+  outline: none;
+  font-size: 2.5vh;
+  padding: 0 2%;
+  z-index: 1;
+  color: #000;
+}
+
+.formBox__row--col-inputBox > .text {
+  position: absolute;
+  top: 0;
+  left: 0;
+  line-height: 40px;
+  font-size: 2.5vh;
+  padding: 0 2%;
+  display: block;
+  transition: 500ms;
+  pointer-events: none;
+}
+
+.formBox__row--col-inputBox > input:focus + .text,
+.formBox__row--col-inputBox > input:valid + .text {
+  top: -100%;
+  left: -3%;
+}
+
+.formBox__row--col-inputBox > .line {
+  position: absolute;
+  bottom: 0;
+  display: block;
+  width: 100%;
+  height: 2px;
+  background-color: #fff;
+  transition: 500ms;
+  border-radius: 2px;
+  pointer-events: none;
+}
+
+.formBox__row--col-inputBox > input:focus ~ .line,
+.formBox__row--col-inputBox > input:valid ~ .line {
+  height: 100%;
+}
+
+.formBox__row--col-inputBox.textarea {
+  position: relative;
+  width: 100%;
+  height: 100px;
+  padding: 10px 0;
+}
+
+.formBox__row--col-inputBox.textarea > textarea {
+  height: 100%;
+  resize: none;
+}
+
+.formBox__row--col-inputBox > textarea:focus + .text,
+.formBox__row--col-inputBox > textarea:valid + .text {
+  top: -35px;
+  left: -3%;
+}
+
+.formBox__row--col-inputBox > textarea:focus ~ .line,
+.formBox__row--col-inputBox > textarea:valid ~ .line {
+  height: 100%;
+}
+
+.formBox__row--col > input[type="submit"] {
+  border: none;
+  padding: 7px 35px;
+  cursor: pointer;
+  outline: none;
+  background: #ff3f54;
+  color: #fff;
+  font-size: 3vh;
+  border-radius: 5px;
+}
+
 @media (max-width: 768px) {
   section {
     flex-direction: row;
