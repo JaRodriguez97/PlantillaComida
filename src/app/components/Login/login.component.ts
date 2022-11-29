@@ -6,7 +6,7 @@ import {
   Renderer2,
   ViewChild,
 } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { userInterface } from '@app/models/users.interface';
 import { UsersService } from '@service/Users/users.service';
 import { LocalStorageService } from 'ngx-localstorage';
@@ -29,9 +29,11 @@ export class LoginComponent implements OnInit, AfterViewInit {
   nombres!: String;
   apellidos!: String;
   email!: String;
+  idCombo!: String;
 
   constructor(
     private renderer: Renderer2,
+    private activatedRoute: ActivatedRoute,
     private usersService: UsersService,
     private router: Router,
     private localStorageService: LocalStorageService,
@@ -73,8 +75,19 @@ export class LoginComponent implements OnInit, AfterViewInit {
 
         this.usersService.getLogin(form).subscribe(
           (res) => {
+            let { id } = this.activatedRoute?.snapshot?.params || undefined,
+              pedidos = this.localStorageService.get('pedido', {})!;
+
             this.localStorageService.set<userInterface>('user', res, {});
-            this.router.navigate(['/landing']);
+
+            if (id && !pedidos) {
+              this.localStorageService.set('pedido', [{ id, cantidad: 1 }], {});
+              this.router.navigate(['/menu']);
+            } else {
+              // peticion post a base de datos para almacenar
+              // this.localStorageService.set('pedido', { [id]: 1 }, {});
+              this.router.navigate(['/landing']);
+            }
           },
           (err) =>
             this.spinner.hide().then(() => {

@@ -92,7 +92,24 @@
                     </ul>
                   </div>
                   <div class="price-button">
-                    <a href="#">Agregar</a>
+                    <div
+                      (click)="addToCar(combo._id)"
+                      *ngIf="existeComboPedido(combo._id, pedidos)"
+                    >
+                      Agregar
+                    </div>
+                    <div
+                      class="addRestCar"
+                      *ngIf="!existeComboPedido(combo._id, pedidos)"
+                    >
+                      <div class="restCar" (click)="restCar(combo._id)">-</div>
+                      <input
+                        type="number"
+                        [value]="getCantidadCombos(combo._id)"
+                        disabled
+                      />
+                      <div class="addCar" (click)="addCar(combo._id)">+</div>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -148,7 +165,24 @@
                 </ul>
               </div>
               <div class="price-button">
-                <a href="#">Agregar</a>
+                <div
+                  (click)="addToCar(combo._id)"
+                  *ngIf="existeComboPedido(combo._id, pedidos)"
+                >
+                  Agregar
+                </div>
+                <div
+                  class="addRestCar"
+                  *ngIf="!existeComboPedido(combo._id, pedidos)"
+                >
+                  <div class="restCar" (click)="restCar(combo._id)">-</div>
+                  <input
+                    type="number"
+                    [value]="getCantidadCombos(combo._id)"
+                    disabled
+                  />
+                  <div class="addCar" (click)="addCar(combo._id)">+</div>
+                </div>
               </div>
             </div>
           </div>
@@ -173,7 +207,7 @@
             <span>Ver Detalles</span>
           </li>
           <li>
-            <i class="fa fa-shopping-cart" aria-hidden="true"></i>
+            <!-- <i class="fa fa-shopping-cart" aria-hidden="true"></i> -->
             <fa-icon [icon]="faShoppingCart" aria-hidden="true"></fa-icon>
             <span>Agregar al Carrito</span>
           </li>

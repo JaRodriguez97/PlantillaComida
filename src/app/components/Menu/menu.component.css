@@ -340,20 +340,71 @@ body {
   padding: 30px;
 }
 
-.price-button a:active {
+.price-button div:active {
   box-shadow: inset 5em 5em 5em 5em rgba(0, 0, 0, 0.2);
 }
 
-.price-button a {
+.price-button div:not(.addRestCar) {
   padding: 5% 10%;
-  background: #000;
   color: #fff !important;
   border-radius: 25px;
   font-size: 18px;
   text-transform: uppercase;
   text-decoration: none !important;
   background: linear-gradient(45deg, #b85402, #db0000);
+  cursor: pointer;
+  transition: 500ms;
 }
+
+.price-button div.addRestCar {
+  padding: 5% 10%;
+  background: transparent;
+  z-index: 0;
+}
+
+.price-button div .restCar {
+  left: 15%;
+}
+
+.price-button div.addCar {
+  right: 15%;
+}
+
+.price-button div.addCar,
+.price-button div.restCar {
+  background: linear-gradient(45deg, #b85402, #db0000);
+  height: 10vh;
+  width: 10vh;
+  border-radius: 50%;
+  padding: 10px;
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  bottom: 7%;
+}
+
+.price-button input {
+  width: 30%;
+  height: 100%;
+  border-radius: 10px;
+  padding: 2% 0 2% 6%;
+  text-align: center;
+}
+
+/* 
+.price-button div fa-icon {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0px);
+}
+
+.price-button div fa-icon.outIcon {
+  transition-delay: 1s;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(200px);
+} */
 
 /*
 * Responsive

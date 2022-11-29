@@ -4,7 +4,7 @@ import {
   HostListener,
   OnInit,
   Renderer2,
-  ViewChild,
+  ViewChild
 } from '@angular/core';
 import { Router } from '@angular/router';
 import { userInterface } from '@models/users.interface';

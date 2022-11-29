@@ -10,4 +10,5 @@ export interface userInterface {
   nombres?: String;
   numeroTelefono: Number;
   userName?: String;
+  pedido?: String;//PedidoInterface
 }
