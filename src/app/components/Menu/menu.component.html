@@ -93,22 +93,25 @@
                   </div>
                   <div class="price-button">
                     <div
-                      (click)="addToCar(combo._id)"
-                      *ngIf="existeComboPedido(combo._id, pedidos)"
+                      (click)="addToCar(combo.REF)"
+                      *ngIf="existeComboPedido(combo.REF, pedidos)"
                     >
                       Agregar
                     </div>
                     <div
                       class="addRestCar"
-                      *ngIf="!existeComboPedido(combo._id, pedidos)"
+                      *ngIf="!existeComboPedido(combo.REF, pedidos)"
                     >
-                      <div class="restCar" (click)="restCar(combo._id)">-</div>
+                      <div class="title">
+                        <h5>Cantidad:</h5>
+                      </div>
+                      <div class="restCar" (click)="restCar(combo.REF)">-</div>
                       <input
                         type="number"
-                        [value]="getCantidadCombos(combo._id)"
+                        [value]="getCantidadCombos(combo.REF)"
                         disabled
                       />
-                      <div class="addCar" (click)="addCar(combo._id)">+</div>
+                      <div class="addCar" (click)="addCar(combo.REF)">+</div>
                     </div>
                   </div>
                 </div>
@@ -166,7 +169,7 @@
               </div>
               <div class="price-button">
                 <div
-                  (click)="addToCar(combo._id)"
+                  (click)="addToCar(combo.REF)"
                   *ngIf="existeComboPedido(combo._id, pedidos)"
                 >
                   Agregar
@@ -175,13 +178,16 @@
                   class="addRestCar"
                   *ngIf="!existeComboPedido(combo._id, pedidos)"
                 >
-                  <div class="restCar" (click)="restCar(combo._id)">-</div>
+                  <div class="title">
+                    <h5>Cantidad:</h5>
+                  </div>
+                  <div class="restCar" (click)="restCar(combo.REF)">-</div>
                   <input
                     type="number"
-                    [value]="getCantidadCombos(combo._id)"
+                    [value]="getCantidadCombos(combo.REF)"
                     disabled
                   />
-                  <div class="addCar" (click)="addCar(combo._id)">+</div>
+                  <div class="addCar" (click)="addCar(combo.REF)">+</div>
                 </div>
               </div>
             </div>
@@ -203,7 +209,10 @@
             active: !existeComboPedido(card._id, pedidos)
           }"
         >
-          <li>
+          <li
+            (click)="addFavorite(card._id)"
+            [ngClass]="{ active: card.favorito }"
+          >
             <fa-icon [icon]="faHeart" aria-hidden="true"></fa-icon>
             <span>Agregar a Favoritos</span>
           </li>
@@ -212,7 +221,7 @@
             <span>Ver Detalles</span>
           </li>
           <li
-            (click)="addToCar(card._id, i)"
+            (click)="addToCar(card.REF, i)"
             *ngIf="existeComboPedido(card._id, pedidos)"
           >
             <fa-icon [icon]="faShoppingCart" aria-hidden="true"></fa-icon>
@@ -220,13 +229,14 @@
             <span>Agregar al Carrito</span>
           </li>
           <li class="addRestCar" *ngIf="!existeComboPedido(card._id, pedidos)">
-            <div class="restCar" (click)="restCar(card._id)">-</div>
+            <div class="restCar" (click)="restCar(card.REF)">-</div>
             <input
               type="number"
-              [value]="getCantidadCombos(card._id)"
+              [value]="getCantidadCombos(card.REF)"
               disabled
             />
-            <div class="addCar" (click)="addCar(card._id)">+</div>
+            <div class="addCar" (click)="addCar(card.REF)">+</div>
+            <span>Cantidad</span>
           </li>
         </ul>
       </div>

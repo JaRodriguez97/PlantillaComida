@@ -196,14 +196,6 @@ body {
   text-align: center;
   padding: 0 0 0 10px;
 }
-/* 
-.action > li.addRestCar > .restCar {
-  left: 15%;
-}
-
-.action > li.addRestCar > .addCar {
-  right: 15%;
-} */
 
 .action > li.addRestCar > .addCar,
 .action > li.addRestCar > .restCar {
@@ -237,6 +229,10 @@ body {
 .action > li:hover > span {
   transform: translateY(-50%) translateX(0px);
   opacity: 1;
+}
+
+.action > li.addRestCar:hover > span {
+  transform: translateY(-50%) translateX(-80px);
 }
 
 .action > li > span::before {
@@ -383,39 +379,47 @@ body {
   padding: 30px;
 }
 
-.price-button div:active {
+.price-button > div:active {
   box-shadow: inset 5em 5em 5em 5em rgba(0, 0, 0, 0.2);
 }
 
-.price-button div:not(.addRestCar) {
+.price-button > div:not(.title, .addRestCar) {
   padding: 5% 10%;
-  color: #fff !important;
+  color: #fff;
   border-radius: 25px;
   font-size: 18px;
   text-transform: uppercase;
-  text-decoration: none !important;
+  text-decoration: none;
   background: linear-gradient(45deg, #b85402, #db0000);
   cursor: pointer;
   transition: 500ms;
+  transition-delay: 0.5s;
 }
 
-.price-button div.addRestCar {
-  padding: 5% 10%;
-  background: transparent;
+.price-button > .addRestCar {
+  display: flex;
   z-index: 0;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
 }
 
-.price-button div .restCar {
+.price-button > .addRestCar > .restCar {
   left: 15%;
 }
 
-.price-button div.addCar {
+.price-button > .addRestCar > .addCar {
   right: 15%;
 }
 
-.price-button div.addCar,
-.price-button div.restCar {
-  background: linear-gradient(45deg, #b85402, #db0000);
+.price-button > .addRestCar > .title {
+  position: absolute;
+  left: 0;
+  transform: translate(200%, -100%);
+}
+
+.price-button > .addRestCar > .addCar,
+.price-button > .addRestCar > .restCar {
   height: 10vh;
   width: 10vh;
   border-radius: 50%;
@@ -425,9 +429,12 @@ body {
   justify-content: center;
   align-items: center;
   bottom: 7%;
+  background: linear-gradient(45deg, #b85402, #db0000);
+  color: #fff;
+  cursor: pointer;
 }
 
-.price-button input {
+.price-button > .addRestCar > input {
   width: 30%;
   height: 100%;
   border-radius: 10px;
@@ -489,12 +496,29 @@ body {
     right: 0;
   }
 
-  .action > li.addRestCar > input {
-    padding: 0;
+  .price-button > .addRestCar > .title {
+    position: absolute;
+    right: 0;
+    transform: translateY(-100%);
   }
-  /* span de listas miniaturas  */
-  /* .action > li > span {
-    transform: translateY(-50%) translateX(0px);
-    opacity: 1;
-  } */
+
+  .price-button > .addRestCar > input {
+    padding: 2%;
+    text-align: center;
+  }
+
+  .price-button > .addRestCar > .addCar,
+  .price-button > .addRestCar > .restCar {
+    height: 15vh;
+    width: 15vh;
+    bottom: 2%;
+  }
+}
+@media (max-width: 770px) {
+  .price-button > .addRestCar > .addCar,
+  .price-button > .addRestCar > .restCar {
+    height: 10vh;
+    width: 10vh;
+    bottom: 4%;
+  }
 }

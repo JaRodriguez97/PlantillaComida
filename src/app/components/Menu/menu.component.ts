@@ -63,6 +63,7 @@ export class MenuComponent implements OnInit {
     this.spinner.show().then(() => {
       this.combosService.getCombos().subscribe(
         (res) => {
+          this.user = this.localStorageService.get('user', {})!;
           this.CombosBD = res.filter((combo) => combo.estrellas === 5);
           this.cards = res.filter((combo) => combo.estrellas !== 5);
           this.pedidos = this.localStorageService.get<[pedidoInterface]>(
@@ -96,10 +97,7 @@ export class MenuComponent implements OnInit {
     this.spinner.show().then(() => this.router.navigate(['/combo', _id]));
   }
 
-  addToCar(id: String, i?: number) {
-    let cantidadCombos: number;
-
-    this.user = this.localStorageService.get('user', {})!;
+  addToCar(REF: String, i?: number) {
     this.pedidos = this.localStorageService.get<[pedidoInterface]>(
       'pedido',
       {}
@@ -112,13 +110,7 @@ export class MenuComponent implements OnInit {
     }
 
     if (this.pedidos) {
-      this.pedidos.forEach((pedido) => {
-        if (pedido.id === id) {
-          cantidadCombos = pedido.cantidad!;
-        }
-      });
-
-      if (!cantidadCombos!) this.pedidos.push({ id, cantidad: 1 });
+      this.pedidos.push({ REF, cantidad: 1 });
 
       this.localStorageService.set('pedido', this.pedidos, {});
     } else if (!this.user)
@@ -133,49 +125,58 @@ export class MenuComponent implements OnInit {
         confirmButtonText: 'SÍ',
         scrollbarPadding: false,
       }).then((response) => {
-        if (response.isConfirmed) this.router.navigate(['/login', id]);
+        if (response.isConfirmed) this.router.navigate(['/login', REF]);
         else {
-          this.localStorageService.set('pedido', [{ id, cantidad: 1 }], {});
+          this.localStorageService.set('pedido', [{ REF, cantidad: 1 }], {});
           this.ngOnInit();
         }
       });
   }
 
-  existeComboPedido(_id: String, pedidos: pedidoInterface[]): Boolean {
+  existeComboPedido(REF: String, pedidos: pedidoInterface[]): Boolean {
     if (pedidos?.length)
-      pedidos = pedidos.filter((pedido) => pedido.id === _id);
+      pedidos = pedidos.filter((pedido) => pedido.REF === REF);
 
     return !pedidos?.length;
   }
 
-  restCar(id: String) {
-    this.pedidos = this.pedidos.map((pedido) => {
-      if (pedido.id === id) {
-        pedido.cantidad!--;
-      }
+  restCar(REF: String) {
+    this.pedidos = this.pedidos.filter((pedido) => {
+      if (pedido.REF === REF && pedido.cantidad! > 1) pedido.cantidad!--;
+      else if (pedido.REF === REF && pedido.cantidad! == 1) return false;
+
       return pedido;
     });
 
     this.localStorageService.set('pedido', this.pedidos, {});
   }
 
-  addCar(id: String) {
+  addCar(REF: String) {
     this.pedidos = this.pedidos.map((pedido) => {
-      if (pedido.id === id) {
-        pedido.cantidad!++;
-      }
+      if (pedido.REF === REF) pedido.cantidad!++;
+
       return pedido;
     });
 
     this.localStorageService.set('pedido', this.pedidos, {});
   }
 
-  getCantidadCombos(id: String) {
+  getCantidadCombos(REF: String) {
     let cantidad;
     this.pedidos.forEach((pedido) => {
-      if (pedido.id === id) cantidad = pedido.cantidad;
+      if (pedido.REF === REF) cantidad = pedido.cantidad;
     });
 
     return cantidad;
+  }
+
+  addFavorite(id: String) {
+    this.spinner
+      .show()
+      .then(() =>
+        this.combosService
+          .addRemoveFavorite(id)
+          .subscribe((res) => this.ngOnInit())
+      );
   }
 }

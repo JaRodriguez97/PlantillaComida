@@ -30,4 +30,9 @@ export class CombosService {
 
     return this.http.get<comboInterface>(this.URL + _id, { headers });
   }
+
+  addRemoveFavorite(id: String, token?: string): Observable<comboInterface> {
+    let headers = this.headers(token);
+    return this.http.put<comboInterface>(this.URL, { id }, { headers });
+  }
 }
