@@ -67,7 +67,7 @@ header > ul > li > a {
 @media (max-width: 770px) {
   header,
   header.sticky {
-    padding: 1%;
+    padding: 3%;
     z-index: 1000;
   }
 
