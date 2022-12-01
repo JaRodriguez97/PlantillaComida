@@ -197,7 +197,12 @@
     <div class="card" *ngFor="let card of cards; let i = index">
       <div class="imgBx">
         <div class="img" style="background-image: url('{{ card.img }}');"></div>
-        <ul class="action">
+        <ul
+          [ngClass]="{
+            action: true,
+            active: !existeComboPedido(card._id, pedidos)
+          }"
+        >
           <li>
             <fa-icon [icon]="faHeart" aria-hidden="true"></fa-icon>
             <span>Agregar a Favoritos</span>
@@ -206,10 +211,22 @@
             <fa-icon [icon]="faEye" aria-hidden="true"></fa-icon>
             <span>Ver Detalles</span>
           </li>
-          <li>
-            <!-- <i class="fa fa-shopping-cart" aria-hidden="true"></i> -->
+          <li
+            (click)="addToCar(card._id, i)"
+            *ngIf="existeComboPedido(card._id, pedidos)"
+          >
             <fa-icon [icon]="faShoppingCart" aria-hidden="true"></fa-icon>
+
             <span>Agregar al Carrito</span>
+          </li>
+          <li class="addRestCar" *ngIf="!existeComboPedido(card._id, pedidos)">
+            <div class="restCar" (click)="restCar(card._id)">-</div>
+            <input
+              type="number"
+              [value]="getCantidadCombos(card._id)"
+              disabled
+            />
+            <div class="addCar" (click)="addCar(card._id)">+</div>
           </li>
         </ul>
       </div>

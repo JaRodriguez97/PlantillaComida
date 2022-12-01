@@ -67,7 +67,7 @@ header > ul > li > a {
 @media (max-width: 770px) {
   header,
   header.sticky {
-    padding: 3%;
+    padding: 1%;
     z-index: 1000;
   }
 
@@ -92,6 +92,7 @@ header > ul > li > a {
   }
 
   .menu.active {
+    top: 12%;
     left: 0;
     transition: 500ms;
   }
@@ -122,10 +123,6 @@ header > ul > li > a {
 }
 
 @media (max-width: 566px) {
-  .menu {
-    top: 8.5%;
-  }
-
   header > ul > li > a {
     margin: 15% !important;
   }
@@ -136,5 +133,11 @@ header > ul > li > a {
 
   .toggle.active {
     background-size: 60%;
+  }
+}
+
+@media (max-width: 450px) {
+  .menu.active {
+    top: 10%;
   }
 }

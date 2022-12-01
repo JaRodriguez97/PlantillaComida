@@ -128,9 +128,10 @@ body {
   right: 10px;
 }
 
-.containerBg > .card:active > .imgBx > .action > li,
-.containerBg > .card:focus > .imgBx > .action > li,
-.containerBg > .card:hover > .imgBx > .action > li {
+.containerBg > .card > .imgBx > .action.active > li:not(.addRestCar),
+.containerBg > .card:active > .imgBx > .action > li:not(.addRestCar),
+.containerBg > .card:focus > .imgBx > .action > li:not(.addRestCar),
+.containerBg > .card:hover > .imgBx > .action > li:not(.addRestCar) {
   transform: translateX(0);
 }
 
@@ -169,9 +170,51 @@ body {
   transition-delay: 0ms;
 }
 
+.action > li:hover > div.restCar,
+.action > li:hover > div.addCar {
+  background: #fff;
+  color: #ff2020;
+  transition-delay: 0ms;
+}
+
 .action > li.active {
   background: #ff2020;
   color: #fff;
+}
+
+.action > li.addRestCar {
+  position: absolute;
+  width: max-content;
+  height: 40px;
+  right: 10vh;
+  padding: 1vh;
+  gap: 1vh;
+}
+
+.action > li.addRestCar > input {
+  width: 50px;
+  text-align: center;
+  padding: 0 0 0 10px;
+}
+/* 
+.action > li.addRestCar > .restCar {
+  left: 15%;
+}
+
+.action > li.addRestCar > .addCar {
+  right: 15%;
+} */
+
+.action > li.addRestCar > .addCar,
+.action > li.addRestCar > .restCar {
+  background: linear-gradient(45deg, #b85402, #db0000);
+  height: 3vh;
+  width: 3vh;
+  border-radius: 50%;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  padding: 10px;
 }
 
 .action > li > span {
@@ -416,7 +459,7 @@ body {
   }
 }
 
-@media (max-width: 769px) {
+@media (max-width: 770px) {
   .wrap {
     padding: 10% 0;
   }
@@ -441,9 +484,17 @@ body {
   .col-sm-4 > .price-table {
     box-shadow: none;
   }
+
+  .action > li.addRestCar {
+    right: 0;
+  }
+
+  .action > li.addRestCar > input {
+    padding: 0;
+  }
   /* span de listas miniaturas  */
-  .action > li > span {
+  /* .action > li > span {
     transform: translateY(-50%) translateX(0px);
     opacity: 1;
-  }
+  } */
 }

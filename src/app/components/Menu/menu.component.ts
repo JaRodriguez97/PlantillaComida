@@ -1,6 +1,8 @@
+import { DOCUMENT } from '@angular/common';
 import {
   Component,
   ElementRef,
+  Inject,
   OnInit,
   Renderer2,
   ViewChild,
@@ -53,7 +55,8 @@ export class MenuComponent implements OnInit {
     private combosService: CombosService,
     private router: Router,
     private localStorageService: LocalStorageService,
-    private spinner: NgxSpinnerService
+    private spinner: NgxSpinnerService,
+    @Inject(DOCUMENT) private document: Document
   ) {}
 
   ngOnInit(): void {
@@ -93,7 +96,7 @@ export class MenuComponent implements OnInit {
     this.spinner.show().then(() => this.router.navigate(['/combo', _id]));
   }
 
-  addToCar(id: String) {
+  addToCar(id: String, i?: number) {
     let cantidadCombos: number;
 
     this.user = this.localStorageService.get('user', {})!;
@@ -101,6 +104,12 @@ export class MenuComponent implements OnInit {
       'pedido',
       {}
     )!;
+
+    if (i) {
+      let list = this.document.querySelectorAll('.action')[i];
+
+      this.renderer.addClass(list, 'active');
+    }
 
     if (this.pedidos) {
       this.pedidos.forEach((pedido) => {
@@ -126,13 +135,8 @@ export class MenuComponent implements OnInit {
       }).then((response) => {
         if (response.isConfirmed) this.router.navigate(['/login', id]);
         else {
-          this.localStorageService.set(
-            'pedido',
-            [{ id, cantidad: 1 }],
-            {}
-          );
+          this.localStorageService.set('pedido', [{ id, cantidad: 1 }], {});
           this.ngOnInit();
-          // this.renderer.addClass(this.iconCheck, 'outIcon');
         }
       });
   }

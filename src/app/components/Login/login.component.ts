@@ -1,3 +1,4 @@
+import { AppComponent } from '@app/app.component';
 import {
   AfterViewInit,
   Component,
@@ -32,6 +33,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
   idCombo!: String;
 
   constructor(
+    private appComponent: AppComponent,
     private renderer: Renderer2,
     private activatedRoute: ActivatedRoute,
     private usersService: UsersService,
@@ -64,9 +66,9 @@ export class LoginComponent implements OnInit, AfterViewInit {
     this.spinner
       .show()
       .then(() => {
-        if (!this.telefono) throw new Error('diligenciar campo telefono');
+        if (!this.telefono) throw new Error('Diligenciar campo telefono');
         else if (!this.contrasena)
-          throw new Error('diligenciar campo contraseña');
+          throw new Error('Diligenciar campo contraseña');
 
         let form = {
           numeroTelefono: this.telefono,
@@ -78,6 +80,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
             let { id } = this.activatedRoute?.snapshot?.params || undefined,
               pedidos = this.localStorageService.get('pedido', {})!;
 
+            this.appComponent.user = res;
             this.localStorageService.set<userInterface>('user', res, {});
 
             if (id && !pedidos) {
