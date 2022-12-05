@@ -1,5 +1,4 @@
 export interface pedidoInterface {
-  _id?: String;
-  REF: String;
+  _id: String;
   cantidad?: number;
 }

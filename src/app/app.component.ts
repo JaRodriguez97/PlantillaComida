@@ -4,7 +4,7 @@ import {
   HostListener,
   OnInit,
   Renderer2,
-  ViewChild
+  ViewChild,
 } from '@angular/core';
 import { Router } from '@angular/router';
 import { userInterface } from '@models/users.interface';
@@ -12,6 +12,7 @@ import { LocalStorageService } from 'ngx-localstorage';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { getWindow } from 'ssr-window';
 import Swal from 'sweetalert2';
+import { UsersService } from './services/Users/users.service';
 
 @Component({
   selector: 'app-root',
@@ -21,6 +22,7 @@ import Swal from 'sweetalert2';
 export class AppComponent implements OnInit {
   title = 'PlantillaComida';
   user!: userInterface | undefined;
+  userID!: String;
   @ViewChild('header') header!: ElementRef;
   @ViewChild('toggle') menuToggle!: ElementRef;
   @ViewChild('menu') menu!: ElementRef;
@@ -29,6 +31,7 @@ export class AppComponent implements OnInit {
     private renderer: Renderer2,
     public router: Router,
     private localStorageService: LocalStorageService,
+    private usersService: UsersService,
     private spinner: NgxSpinnerService
   ) {}
 
@@ -41,7 +44,22 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.user = this.localStorageService.get('user', {})!;
+    this.userID = this.localStorageService.get('userID', {})!;
+
+    this.usersService.getUser(this.userID).subscribe(
+      (res) => (this.user = res),
+      (err) =>
+        this.spinner.hide().then(() => {
+          console.error(err);
+          Swal.fire({
+            confirmButtonColor: '#000',
+            icon: 'error',
+            html: err.error.message,
+            scrollbarPadding: false,
+          });
+        }),
+      () => {}
+    );
   }
 
   onActivate(event: Event) {
@@ -85,6 +103,7 @@ export class AppComponent implements OnInit {
       confirmButtonColor: '#000',
       confirmButtonAriaLabel: '',
       html: '<b>Sesión Cerrada Exitosamente</b>',
+      scrollbarPadding: false,
     })
       .then(() => this.redirectTo('/login'))
       .then(() => (this.user = undefined))

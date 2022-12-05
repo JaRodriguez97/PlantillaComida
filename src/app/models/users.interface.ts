@@ -1,7 +1,8 @@
 import { LowerCasePipe } from '@angular/common';
+import { pedidoInterface } from './pedido.interface';
 
 export interface userInterface {
-  _id?: 'string';
+  _id?: String;
   apellidos?: String;
   contraseña: String;
   email?: String | LowerCasePipe;
@@ -10,5 +11,6 @@ export interface userInterface {
   nombres?: String;
   numeroTelefono: Number;
   userName?: String;
-  pedido?: String;//PedidoInterface
+  pedido?: pedidoInterface[];
+  favoritos?: String[];
 }

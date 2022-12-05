@@ -93,25 +93,25 @@
                   </div>
                   <div class="price-button">
                     <div
-                      (click)="addToCar(combo.REF)"
-                      *ngIf="existeComboPedido(combo.REF, pedidos)"
+                      (click)="addToCar(combo._id)"
+                      *ngIf="existeComboPedido(combo._id, pedidos)"
                     >
                       Agregar
                     </div>
                     <div
                       class="addRestCar"
-                      *ngIf="!existeComboPedido(combo.REF, pedidos)"
+                      *ngIf="!existeComboPedido(combo._id, pedidos)"
                     >
                       <div class="title">
                         <h5>Cantidad:</h5>
                       </div>
-                      <div class="restCar" (click)="restCar(combo.REF)">-</div>
+                      <div class="restCar" (click)="restCar(combo._id)">-</div>
                       <input
                         type="number"
-                        [value]="getCantidadCombos(combo.REF)"
+                        [value]="getCantidadCombos(combo._id)"
                         disabled
                       />
-                      <div class="addCar" (click)="addCar(combo.REF)">+</div>
+                      <div class="addCarCantidad" (click)="addCarCantidad(combo._id)">+</div>
                     </div>
                   </div>
                 </div>
@@ -169,7 +169,7 @@
               </div>
               <div class="price-button">
                 <div
-                  (click)="addToCar(combo.REF)"
+                  (click)="addToCar(combo._id)"
                   *ngIf="existeComboPedido(combo._id, pedidos)"
                 >
                   Agregar
@@ -181,13 +181,13 @@
                   <div class="title">
                     <h5>Cantidad:</h5>
                   </div>
-                  <div class="restCar" (click)="restCar(combo.REF)">-</div>
+                  <div class="restCar" (click)="restCar(combo._id)">-</div>
                   <input
                     type="number"
-                    [value]="getCantidadCombos(combo.REF)"
+                    [value]="getCantidadCombos(combo._id)"
                     disabled
                   />
-                  <div class="addCar" (click)="addCar(combo.REF)">+</div>
+                  <div class="addCarCantidad" (click)="addCarCantidad(combo._id)">+</div>
                 </div>
               </div>
             </div>
@@ -211,17 +211,18 @@
         >
           <li
             (click)="addFavorite(card._id)"
-            [ngClass]="{ active: card.favorito }"
+            [ngClass]="{ active: validateFavorite(card._id) }"
           >
             <fa-icon [icon]="faHeart" aria-hidden="true"></fa-icon>
-            <span>Agregar a Favoritos</span>
+            <span *ngIf="!validateFavorite(card._id)">Agregar a Favoritos</span>
+            <span *ngIf="validateFavorite(card._id)">Quitar de Favoritos</span>
           </li>
           <li (click)="getDetails(card._id)">
             <fa-icon [icon]="faEye" aria-hidden="true"></fa-icon>
             <span>Ver Detalles</span>
           </li>
           <li
-            (click)="addToCar(card.REF, i)"
+            (click)="addToCar(card._id, i)"
             *ngIf="existeComboPedido(card._id, pedidos)"
           >
             <fa-icon [icon]="faShoppingCart" aria-hidden="true"></fa-icon>
@@ -229,13 +230,13 @@
             <span>Agregar al Carrito</span>
           </li>
           <li class="addRestCar" *ngIf="!existeComboPedido(card._id, pedidos)">
-            <div class="restCar" (click)="restCar(card.REF)">-</div>
+            <div class="restCar" (click)="restCar(card._id)">-</div>
             <input
               type="number"
-              [value]="getCantidadCombos(card.REF)"
+              [value]="getCantidadCombos(card._id)"
               disabled
             />
-            <div class="addCar" (click)="addCar(card.REF)">+</div>
+            <div class="addCarCantidad" (click)="addCarCantidad(card._id)">+</div>
             <span>Cantidad</span>
           </li>
         </ul>
@@ -243,8 +244,8 @@
       <div class="content">
         <div class="productName">
           <h3>{{ card.nombre }}</h3>
-          <label for="ref">
-            REF:<span id="ref"> {{ card.REF }}</span>
+          <label for="_id">
+            _id:<span id="_id"> {{ card._id }}</span>
           </label>
         </div>
         <div class="priceRating">

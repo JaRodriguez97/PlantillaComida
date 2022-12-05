@@ -19,12 +19,10 @@ export class UsersService {
     });
   }
 
-  getUser(_id: String, token?: string): Observable<userInterface> {
+  getUser(id: String, token?: string): Observable<userInterface> {
     let headers = this.headers(token);
 
-    return this.http.post<userInterface>(`${this.URL}login`, _id, {
-      headers,
-    });
+    return this.http.post<userInterface>(`${this.URL}`, { id }, { headers });
   }
 
   getLogin(form: userInterface, token?: string): Observable<userInterface> {
@@ -41,5 +39,20 @@ export class UsersService {
     return this.http.post<userInterface>(`${this.URL}singUp`, form, {
       headers,
     });
+  }
+
+  updateUser(
+    id: String | undefined,
+    dataUpdate: any,
+    NamePropUpdate: String,
+    token?: string
+  ): Observable<userInterface> {
+    let headers = this.headers(token);
+
+    return this.http.put<userInterface>(
+      this.URL,
+      { id, dataUpdate, NamePropUpdate },
+      { headers }
+    );
   }
 }

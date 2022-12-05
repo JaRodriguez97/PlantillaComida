@@ -78,19 +78,17 @@ export class LoginComponent implements OnInit, AfterViewInit {
         this.usersService.getLogin(form).subscribe(
           (res) => {
             let { id } = this.activatedRoute?.snapshot?.params || undefined,
-              pedidos = this.localStorageService.get('pedido', {})!;
+              pedidos = res.pedido;
 
             this.appComponent.user = res;
-            this.localStorageService.set<userInterface>('user', res, {});
+            this.localStorageService.set<String>('userID', res._id!, {});
 
-            if (id && !pedidos) {
+            if (id && !pedidos)
               this.localStorageService.set('pedido', [{ id, cantidad: 1 }], {});
-              this.router.navigate(['/menu']);
-            } else {
-              // peticion post a base de datos para almacenar
-              // this.localStorageService.set('pedido', { [id]: 1 }, {});
-              this.router.navigate(['/landing']);
-            }
+
+            this.router.navigate(['/menu']);
+            // peticion post a base de datos para almacenar
+            // this.localStorageService.set('pedido', { [id]: 1 }, {});
           },
           (err) =>
             this.spinner.hide().then(() => {

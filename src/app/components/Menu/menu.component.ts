@@ -1,24 +1,19 @@
 import { DOCUMENT } from '@angular/common';
-import {
-  Component,
-  ElementRef,
-  Inject,
-  OnInit,
-  Renderer2,
-  ViewChild,
-} from '@angular/core';
+import { Component, Inject, OnInit, Renderer2 } from '@angular/core';
 import { Router } from '@angular/router';
-import { comboInterface } from '@app/models/combo.interface';
-import { pedidoInterface } from '@app/models/pedido.interface';
+import { AppComponent } from '@app/app.component';
 import {
+  faCheckCircle,
   faEye,
   faHeart,
   faShoppingCart,
   faStar,
-  faCheckCircle,
 } from '@fortawesome/free-solid-svg-icons';
+import { comboInterface } from '@models/combo.interface';
+import { pedidoInterface } from '@models/pedido.interface';
 import { userInterface } from '@models/users.interface';
 import { CombosService } from '@service/Combos/combos.service';
+import { UsersService } from '@service/Users/users.service';
 import { LocalStorageService } from 'ngx-localstorage';
 import { NgxSpinnerService } from 'ngx-spinner';
 import Swal from 'sweetalert2';
@@ -49,9 +44,12 @@ export class MenuComponent implements OnInit {
   wrapper!: HTMLElement;
   window: Window = window;
   user!: userInterface | undefined;
+  userID!: String;
 
   constructor(
+    private appComponent: AppComponent,
     private renderer: Renderer2,
+    private usersService: UsersService,
     private combosService: CombosService,
     private router: Router,
     private localStorageService: LocalStorageService,
@@ -61,15 +59,12 @@ export class MenuComponent implements OnInit {
 
   ngOnInit(): void {
     this.spinner.show().then(() => {
+      this.userID = this.localStorageService.get<String>('userID', {})!;
+
       this.combosService.getCombos().subscribe(
         (res) => {
-          this.user = this.localStorageService.get('user', {})!;
           this.CombosBD = res.filter((combo) => combo.estrellas === 5);
           this.cards = res.filter((combo) => combo.estrellas !== 5);
-          this.pedidos = this.localStorageService.get<[pedidoInterface]>(
-            'pedido',
-            {}
-          )!;
 
           if (!this.CombosBD.length) {
             res.sort(function (a: any, b: any) {
@@ -86,9 +81,36 @@ export class MenuComponent implements OnInit {
               confirmButtonColor: '#000',
               icon: 'error',
               html: err.error.message,
+              scrollbarPadding: false,
             });
           }),
-        () => this.spinner.hide()
+        () => {
+          if (this.userID)
+            this.usersService.getUser(this.userID).subscribe(
+              (res) => {
+                this.user = res;
+                this.appComponent.user = res;
+                this.pedidos = this.user.pedido! || [];
+              },
+              (err) =>
+                this.spinner.hide().then(() => {
+                  console.error(err);
+                  Swal.fire({
+                    confirmButtonColor: '#000',
+                    icon: 'error',
+                    html: err.error.message,
+                    scrollbarPadding: false,
+                  });
+                }),
+              () => this.spinner.hide()
+            );
+          else {
+            this.pedidos =
+              this.localStorageService.get<[pedidoInterface]>('pedido', {})! ||
+              [];
+            this.spinner.hide();
+          }
+        }
       );
     });
   }
@@ -97,23 +119,20 @@ export class MenuComponent implements OnInit {
     this.spinner.show().then(() => this.router.navigate(['/combo', _id]));
   }
 
-  addToCar(REF: String, i?: number) {
-    this.pedidos = this.localStorageService.get<[pedidoInterface]>(
-      'pedido',
-      {}
-    )!;
-
-    if (i) {
+  addToCar(_id: String, i?: number) {
+    if (typeof i == 'number') {
       let list = this.document.querySelectorAll('.action')[i];
 
       this.renderer.addClass(list, 'active');
     }
 
-    if (this.pedidos) {
-      this.pedidos.push({ REF, cantidad: 1 });
+    this.pedidos.push({ _id, cantidad: 1 });
+    console.log(
+      '🚀 ~ file: menu.component.ts:135 ~ MenuComponent ~ addToCar ~ this.pedidos',
+      this.pedidos
+    );
 
-      this.localStorageService.set('pedido', this.pedidos, {});
-    } else if (!this.user)
+    if (!this.user)
       Swal.fire({
         icon: 'question',
         title: 'NO ESTÁ REGISTRADO',
@@ -125,25 +144,35 @@ export class MenuComponent implements OnInit {
         confirmButtonText: 'SÍ',
         scrollbarPadding: false,
       }).then((response) => {
-        if (response.isConfirmed) this.router.navigate(['/login', REF]);
+        if (response.isConfirmed) this.router.navigate(['/login', _id]);
         else {
-          this.localStorageService.set('pedido', [{ REF, cantidad: 1 }], {});
+          this.localStorageService.set('pedido', this.pedidos, {});
           this.ngOnInit();
         }
       });
+    else {
+      this.usersService
+        .updateUser(this.userID, this.pedidos, 'pedidos')
+        .subscribe((res) => {
+          console.log(
+            '🚀 ~ file: menu.component.ts:139 ~ MenuComponent ~ .subscribe ~ res',
+            res
+          );
+        });
+    }
   }
 
-  existeComboPedido(REF: String, pedidos: pedidoInterface[]): Boolean {
+  existeComboPedido(_id: String, pedidos: pedidoInterface[]): Boolean {
     if (pedidos?.length)
-      pedidos = pedidos.filter((pedido) => pedido.REF === REF);
+      pedidos = pedidos.filter((pedido) => pedido._id === _id);
 
     return !pedidos?.length;
   }
 
-  restCar(REF: String) {
+  restCar(_id: String) {
     this.pedidos = this.pedidos.filter((pedido) => {
-      if (pedido.REF === REF && pedido.cantidad! > 1) pedido.cantidad!--;
-      else if (pedido.REF === REF && pedido.cantidad! == 1) return false;
+      if (pedido._id === _id && pedido.cantidad! > 1) pedido.cantidad!--;
+      else if (pedido._id === _id && pedido.cantidad! == 1) return false;
 
       return pedido;
     });
@@ -151,9 +180,9 @@ export class MenuComponent implements OnInit {
     this.localStorageService.set('pedido', this.pedidos, {});
   }
 
-  addCar(REF: String) {
+  addCarCantidad(_id: String) {
     this.pedidos = this.pedidos.map((pedido) => {
-      if (pedido.REF === REF) pedido.cantidad!++;
+      if (pedido._id === _id) pedido.cantidad!++;
 
       return pedido;
     });
@@ -161,22 +190,64 @@ export class MenuComponent implements OnInit {
     this.localStorageService.set('pedido', this.pedidos, {});
   }
 
-  getCantidadCombos(REF: String) {
+  getCantidadCombos(_id: String) {
     let cantidad;
     this.pedidos.forEach((pedido) => {
-      if (pedido.REF === REF) cantidad = pedido.cantidad;
+      if (pedido._id === _id) cantidad = pedido.cantidad;
     });
 
     return cantidad;
   }
 
-  addFavorite(id: String) {
-    this.spinner
-      .show()
-      .then(() =>
-        this.combosService
-          .addRemoveFavorite(id)
-          .subscribe((res) => this.ngOnInit())
-      );
+  addFavorite(_id: String) {
+    this.spinner.show().then(() => {
+      if (this.user) {
+        if (this.user.favoritos) {
+          if (this.user.favoritos.length) {
+            let index = this.user.favoritos.indexOf(_id);
+
+            if (index == -1) this.user.favoritos.push(_id);
+            else this.user.favoritos!.splice(index, 1);
+          } else this.user.favoritos.push(_id);
+        } else {
+          this.user.favoritos = [];
+          this.user.favoritos.push(_id);
+        }
+
+        this.usersService
+          .updateUser(this.user._id, this.user.favoritos, 'favoritos')
+          .subscribe(
+            (res) => this.ngOnInit(),
+            (err) =>
+              this.spinner.hide().then(() => {
+                console.error(err);
+                Swal.fire({
+                  confirmButtonColor: '#000',
+                  icon: 'error',
+                  html: err.error.message,
+                  scrollbarPadding: false,
+                });
+              })
+          );
+      } else {
+        this.spinner.hide();
+        Swal.fire({
+          icon: 'question',
+          title: 'NO HAS INICIADO SESIÓN',
+          text: 'Registrate antes para poder marcar como favorito',
+          showCancelButton: true,
+          scrollbarPadding: false,
+        }).then((response) => {
+          if (response.value) this.router.navigate(['/login']);
+        });
+      }
+    });
+  }
+
+  validateFavorite(_id: String): Boolean {
+    if (this.user && this.user.favoritos && this.user.favoritos.length)
+      if (this.user.favoritos.indexOf(_id) !== -1) return true;
+
+    return false;
   }
 }
