@@ -47,7 +47,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    if (this.localStorageService.get<userInterface>('user', {}))
+    if (this.localStorageService.get<String>('userID', {}))
       this.router.navigate(['/landing']);
 
     this.renderer.listen(this.signUpBtn.nativeElement, 'click', () => {
@@ -77,14 +77,19 @@ export class LoginComponent implements OnInit, AfterViewInit {
 
         this.usersService.getLogin(form).subscribe(
           (res) => {
-            let { id } = this.activatedRoute?.snapshot?.params || undefined,
-              pedidos = res.pedido;
+            let { id } = this.activatedRoute?.snapshot?.params || undefined;
 
             this.appComponent.user = res;
             this.localStorageService.set<String>('userID', res._id!, {});
 
-            if (id && !pedidos)
-              this.localStorageService.set('pedido', [{ id, cantidad: 1 }], {});
+            if (id && !res.pedido?.length)
+              this.usersService
+                .updateUser(res._id!, [{ _id: id, cantidad: 1 }], 'pedido')
+                .subscribe((res) =>
+                  console.log('🚀 ~ line:89 ~ LoginComponent ~ User', res)
+                );
+            else if (id && res.pedido?.length) {
+            }
 
             this.router.navigate(['/menu']);
             // peticion post a base de datos para almacenar
@@ -143,8 +148,12 @@ export class LoginComponent implements OnInit, AfterViewInit {
                 res.nombres || res.numeroTelefono
               }</b>`,
             }).then(() => {
-              this.localStorageService.set<userInterface>('user', res, {});
-              this.router.navigate(['/landing']);
+              this.spinner.show().then(() => {
+                // this.localStorageService.set<String>('userID', res._id!, {});
+                this.renderer.removeClass(this.formBx.nativeElement, 'active');
+                this.renderer.removeClass(this.body.nativeElement, 'active');
+                setTimeout(() => this.spinner.hide(), 500);
+              });
             });
           },
           (err) =>

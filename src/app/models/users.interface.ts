@@ -12,5 +12,6 @@ export interface userInterface {
   numeroTelefono: Number;
   userName?: String;
   pedido?: pedidoInterface[];
+  pedidosRealizados?: [{ pedido: pedidoInterface[]; fecha: Date }];
   favoritos?: String[];
 }

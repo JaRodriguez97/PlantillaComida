@@ -111,7 +111,12 @@
                         [value]="getCantidadCombos(combo._id)"
                         disabled
                       />
-                      <div class="addCarCantidad" (click)="addCarCantidad(combo._id)">+</div>
+                      <div
+                        class="addCarCantidad"
+                        (click)="addCarCantidad(combo._id)"
+                      >
+                        +
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -187,7 +192,12 @@
                     [value]="getCantidadCombos(combo._id)"
                     disabled
                   />
-                  <div class="addCarCantidad" (click)="addCarCantidad(combo._id)">+</div>
+                  <div
+                    class="addCar"
+                    (click)="addCarCantidad(combo._id)"
+                  >
+                    +
+                  </div>
                 </div>
               </div>
             </div>
@@ -236,7 +246,9 @@
               [value]="getCantidadCombos(card._id)"
               disabled
             />
-            <div class="addCarCantidad" (click)="addCarCantidad(card._id)">+</div>
+            <div class="addCar" (click)="addCarCantidad(card._id)">
+              +
+            </div>
             <span>Cantidad</span>
           </li>
         </ul>
@@ -245,7 +257,7 @@
         <div class="productName">
           <h3>{{ card.nombre }}</h3>
           <label for="_id">
-            _id:<span id="_id"> {{ card._id }}</span>
+            REF:<span id="_id"> {{ card.REF }}</span>
           </label>
         </div>
         <div class="priceRating">

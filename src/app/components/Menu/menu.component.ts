@@ -90,7 +90,11 @@ export class MenuComponent implements OnInit {
               (res) => {
                 this.user = res;
                 this.appComponent.user = res;
-                this.pedidos = this.user.pedido! || [];
+                this.pedidos = this.user.pedido!;
+                console.log(
+                  '🚀 ~ file: menu.component.ts:94 ~ MenuComponent ~ this.spinner.show ~ this.pedidos',
+                  this.pedidos
+                );
               },
               (err) =>
                 this.spinner.hide().then(() => {
@@ -126,33 +130,35 @@ export class MenuComponent implements OnInit {
       this.renderer.addClass(list, 'active');
     }
 
-    this.pedidos.push({ _id, cantidad: 1 });
-    console.log(
-      '🚀 ~ file: menu.component.ts:135 ~ MenuComponent ~ addToCar ~ this.pedidos',
-      this.pedidos
-    );
-
-    if (!this.user)
-      Swal.fire({
-        icon: 'question',
-        title: 'NO ESTÁ REGISTRADO',
-        html: `<h4>Desea ingresar antes de hacer su pedido?</h4>
-        <h6 style="font-size:5px">Si marca NO podrá hacer su pedido sin
+    if (!this.user) {
+      if (!this.pedidos.length)
+        Swal.fire({
+          icon: 'question',
+          title: 'NO ESTÁ REGISTRADO',
+          html: `<h4>Desea ingresar antes de hacer su pedido?</h4>
+        <h6 style="font-size:6px">Si marca NO podrá hacer su pedido sin
         ningún problema, pero de manera anónima.</h6>`,
-        showCancelButton: true,
-        cancelButtonText: 'NO',
-        confirmButtonText: 'SÍ',
-        scrollbarPadding: false,
-      }).then((response) => {
-        if (response.isConfirmed) this.router.navigate(['/login', _id]);
-        else {
-          this.localStorageService.set('pedido', this.pedidos, {});
-          this.ngOnInit();
-        }
-      });
-    else {
+          showCancelButton: true,
+          cancelButtonText: 'NO',
+          confirmButtonText: 'SÍ',
+          scrollbarPadding: false,
+        }).then((response) => {
+          if (response.isConfirmed) this.router.navigate(['/login', _id]);
+          else {
+            this.localStorageService.set('pedido', this.pedidos, {});
+            this.ngOnInit();
+          }
+        });
+      else {
+        this.pedidos.push({ _id, cantidad: 1 });
+        this.localStorageService.set('pedido', this.pedidos, {});
+        this.ngOnInit();
+      }
+    } else {
+      this.pedidos.push({ _id, cantidad: 1 });
+
       this.usersService
-        .updateUser(this.userID, this.pedidos, 'pedidos')
+        .updateUser(this.userID, this.pedidos, 'pedido')
         .subscribe((res) => {
           console.log(
             '🚀 ~ file: menu.component.ts:139 ~ MenuComponent ~ .subscribe ~ res',
@@ -163,10 +169,14 @@ export class MenuComponent implements OnInit {
   }
 
   existeComboPedido(_id: String, pedidos: pedidoInterface[]): Boolean {
-    if (pedidos?.length)
+    if (pedidos.length)
       pedidos = pedidos.filter((pedido) => pedido._id === _id);
 
-    return !pedidos?.length;
+    console.log(
+      '🚀 ~ file: menu.component.ts:177 ~ MenuComponent ~ !pedidos.length',
+      !pedidos.length
+    );
+    return !pedidos.length;
   }
 
   restCar(_id: String) {
