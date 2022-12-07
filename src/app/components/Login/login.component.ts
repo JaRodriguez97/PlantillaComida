@@ -1,3 +1,4 @@
+import { pedidoInterface } from '@models/pedido.interface';
 import { AppComponent } from '@app/app.component';
 import {
   AfterViewInit,
@@ -31,6 +32,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
   apellidos!: String;
   email!: String;
   idCombo!: String;
+  pedidos!: pedidoInterface[];
 
   constructor(
     private appComponent: AppComponent,
@@ -49,6 +51,11 @@ export class LoginComponent implements OnInit, AfterViewInit {
   ngAfterViewInit(): void {
     if (this.localStorageService.get<String>('userID', {}))
       this.router.navigate(['/landing']);
+
+    this.pedidos = this.localStorageService.get<pedidoInterface[]>(
+      'pedido',
+      {}
+    )!;
 
     this.renderer.listen(this.signUpBtn.nativeElement, 'click', () => {
       this.renderer.addClass(this.formBx.nativeElement, 'active');
@@ -80,20 +87,22 @@ export class LoginComponent implements OnInit, AfterViewInit {
             let { id } = this.activatedRoute?.snapshot?.params || undefined;
 
             this.appComponent.user = res;
-            this.localStorageService.set<String>('userID', res._id!, {});
 
-            if (id && !res.pedido?.length)
+            if (id && !res.pedido?.length && !this.pedidos.length)
               this.usersService
                 .updateUser(res._id!, [{ _id: id, cantidad: 1 }], 'pedido')
                 .subscribe((res) =>
                   console.log('🚀 ~ line:89 ~ LoginComponent ~ User', res)
                 );
-            else if (id && res.pedido?.length) {
+            else if (!id && !res.pedido?.length && this.pedidos.length) {
+              this.usersService
+                .updateUser(res._id!, this.pedidos, 'pedido')
+                .subscribe((res) =>
+                  console.log('🚀 ~ line:101 ~ LoginComponent ~ User', res)
+                );
             }
 
-            this.router.navigate(['/menu']);
-            // peticion post a base de datos para almacenar
-            // this.localStorageService.set('pedido', { [id]: 1 }, {});
+            this.localStorageService.remove('pedido');
           },
           (err) =>
             this.spinner.hide().then(() => {
@@ -103,7 +112,16 @@ export class LoginComponent implements OnInit, AfterViewInit {
                 icon: 'error',
                 html: err.error.message,
               });
-            })
+            }),
+          () => {
+            this.localStorageService.set<String>(
+              'userID',
+              this.appComponent.user?._id!,
+              {}
+            );
+
+            this.router.navigate(['/menu']);
+          }
         );
       })
       .catch((err) =>

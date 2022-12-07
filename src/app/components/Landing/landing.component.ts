@@ -24,7 +24,7 @@ export class LandingComponent implements OnInit {
 
   realizarPedido() {
     this.spinner.show().then(() => {
-      if (!this.localStorageService.get('user', {}))
+      if (!this.localStorageService.get('userID', {}))
         this.router.navigate(['/login']);
       else this.router.navigate(['/menu']);
     });

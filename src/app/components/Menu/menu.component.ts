@@ -145,6 +145,7 @@ export class MenuComponent implements OnInit {
         }).then((response) => {
           if (response.isConfirmed) this.router.navigate(['/login', _id]);
           else {
+            this.pedidos.push({ _id, cantidad: 1 });
             this.localStorageService.set('pedido', this.pedidos, {});
             this.ngOnInit();
           }
@@ -172,10 +173,6 @@ export class MenuComponent implements OnInit {
     if (pedidos.length)
       pedidos = pedidos.filter((pedido) => pedido._id === _id);
 
-    console.log(
-      '🚀 ~ file: menu.component.ts:177 ~ MenuComponent ~ !pedidos.length',
-      !pedidos.length
-    );
     return !pedidos.length;
   }
 
