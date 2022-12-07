@@ -89,11 +89,9 @@ export class AppComponent implements OnInit {
   }
 
   redirectTo(str: string) {
-    this.spinner.show().then(() => {
-      this.renderer.removeClass(this.menuToggle.nativeElement, 'active');
-      this.renderer.removeClass(this.menu.nativeElement, 'active');
-      this.router.navigate([str]);
-    });
+    this.renderer.removeClass(this.menuToggle.nativeElement, 'active');
+    this.renderer.removeClass(this.menu.nativeElement, 'active');
+    this.router.navigate([str]);
   }
 
   logOut() {

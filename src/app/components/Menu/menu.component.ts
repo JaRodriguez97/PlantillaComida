@@ -170,10 +170,10 @@ export class MenuComponent implements OnInit {
   }
 
   existeComboPedido(_id: String, pedidos: pedidoInterface[]): Boolean {
-    if (pedidos.length)
+    if (pedidos && pedidos.length)
       pedidos = pedidos.filter((pedido) => pedido._id === _id);
 
-    return !pedidos.length;
+    return !pedidos?.length;
   }
 
   restCar(_id: String) {
