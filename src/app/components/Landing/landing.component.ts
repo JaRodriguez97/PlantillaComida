@@ -19,12 +19,7 @@ export class LandingComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.spinner.show().then(() =>
-      setTimeout(() => {
-        console.log('stop');
-        this.spinner.hide();
-      }, 1000)
-    );
+    this.spinner.show().then(() => setTimeout(() => this.spinner.hide(), 1000));
   }
 
   realizarPedido() {

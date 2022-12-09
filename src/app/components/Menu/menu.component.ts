@@ -177,33 +177,84 @@ export class MenuComponent implements OnInit {
   }
 
   restCar(_id: String) {
-    this.pedidos = this.pedidos.filter((pedido) => {
-      if (pedido._id === _id && pedido.cantidad! > 1) pedido.cantidad!--;
-      else if (pedido._id === _id && pedido.cantidad! == 1) return false;
+    this.spinner
+      .show()
+      .then(() => {
+        this.pedidos = this.pedidos.filter((pedido) => {
+          if (pedido.cantidad)
+            if (pedido._id === _id && pedido.cantidad > 1) {
+              pedido.cantidad--;
+            } else if (pedido._id === _id && pedido.cantidad == 1) return false;
 
-      return pedido;
-    });
-
-    this.localStorageService.set('pedido', this.pedidos, {});
+          return pedido;
+        });
+      })
+      .then(() => {
+        if (this.userID)
+          this.usersService
+            .updateUser(this.userID, this.pedidos, 'pedido')
+            .subscribe(
+              (res) => {
+                console.log(
+                  '🚀 ~ file: menu.component.ts:199 ~ MenuComponent ~ .subscribe ~ res',
+                  res
+                );
+              },
+              (err) =>
+                this.spinner.hide().then(() => {
+                  console.error(err);
+                  Swal.fire({
+                    confirmButtonColor: '#000',
+                    icon: 'error',
+                    html: err.error.message,
+                    scrollbarPadding: false,
+                  });
+                }),
+              () => this.spinner.hide()
+            );
+        else this.localStorageService.set('pedido', this.pedidos, {});
+      });
   }
 
   addCarCantidad(_id: String) {
-    this.pedidos = this.pedidos.map((pedido) => {
-      if (pedido._id === _id) pedido.cantidad!++;
+    this.spinner
+      .show()
+      .then(() => {
+        this.pedidos = this.pedidos.map((pedido) => {
+          if (pedido.cantidad && pedido._id === _id) pedido.cantidad++;
 
-      return pedido;
-    });
-
-    this.localStorageService.set('pedido', this.pedidos, {});
+          return pedido;
+        });
+      })
+      .then(() => {
+        if (this.userID)
+          this.usersService
+            .updateUser(this.userID, this.pedidos, 'pedido')
+            .subscribe(
+              (res) => {
+                console.log(
+                  '🚀 ~ file: menu.component.ts:236 ~ MenuComponent ~ .subscribe ~ res',
+                  res
+                );
+              },
+              (err) =>
+                this.spinner.hide().then(() => {
+                  console.error(err);
+                  Swal.fire({
+                    confirmButtonColor: '#000',
+                    icon: 'error',
+                    html: err.error.message,
+                    scrollbarPadding: false,
+                  });
+                }),
+              () => this.spinner.hide()
+            );
+        else this.localStorageService.set('pedido', this.pedidos, {});
+      });
   }
 
   getCantidadCombos(_id: String) {
-    let cantidad;
-    this.pedidos.forEach((pedido) => {
-      if (pedido._id === _id) cantidad = pedido.cantidad;
-    });
-
-    return cantidad;
+    return this.pedidos.filter((pedido) => pedido._id === _id)[0].cantidad;
   }
 
   addFavorite(_id: String) {
