@@ -38,13 +38,13 @@
                     style="background: url('{{ combo.img }}');"
                   >
                     <h4>Combo {{ i + 1 }}</h4>
-                    <h2>{{ combo.precio }}<span>C/U</span></h2>
+                    <h2>$ {{ combo.precio }}<span>C/U</span></h2>
                   </div>
                   <div class="price-content">
                     <ul>
-                      <li><u>Peso:</u>{{ combo.peso }}</li>
-                      <li><u>Ingredientes:</u>{{ combo.ingredientes }}</li>
-                      <li><u>Incluye:</u>{{ combo.incluye }}</li>
+                      <li><u>Peso: </u>{{ combo.peso }}</li>
+                      <li><u>Ingredientes: </u>{{ combo.ingredientes }}</li>
+                      <li><u>Incluye: </u>{{ combo.incluye }}</li>
                       <li>
                         <div class="rating">
                           <fa-icon
@@ -111,10 +111,7 @@
                         [value]="getCantidadCombos(combo._id)"
                         disabled
                       />
-                      <div
-                        class="addCar"
-                        (click)="addCarCantidad(combo._id)"
-                      >
+                      <div class="addCar" (click)="addCarCantidad(combo._id)">
                         +
                       </div>
                     </div>
@@ -134,13 +131,13 @@
                 style="background: url('{{ combo.img }}');"
               >
                 <h4>Combo {{ i + 1 }}</h4>
-                <h2>{{ combo.precio }}<span>C/U</span></h2>
+                <h2>$ {{ combo.precio }}<span>C/U</span></h2>
               </div>
               <div class="price-content">
                 <ul>
-                  <li><u>Peso:</u>{{ combo.peso }}</li>
-                  <li><u>Ingredientes:</u>{{ combo.ingredientes }}</li>
-                  <li><u>Incluye:</u>{{ combo.incluye }}</li>
+                  <li><u>Peso: </u>{{ combo.peso }}</li>
+                  <li><u>Ingredientes: </u>{{ combo.ingredientes }}</li>
+                  <li><u>Incluye: </u>{{ combo.incluye }}</li>
                   <li>
                     <div class="rating">
                       <fa-icon
@@ -192,10 +189,7 @@
                     [value]="getCantidadCombos(combo._id)"
                     disabled
                   />
-                  <div
-                    class="addCar"
-                    (click)="addCarCantidad(combo._id)"
-                  >
+                  <div class="addCar" (click)="addCarCantidad(combo._id)">
                     +
                   </div>
                 </div>
@@ -246,9 +240,7 @@
               [value]="getCantidadCombos(card._id)"
               disabled
             />
-            <div class="addCar" (click)="addCarCantidad(card._id)">
-              +
-            </div>
+            <div class="addCar" (click)="addCarCantidad(card._id)">+</div>
             <span>Cantidad</span>
           </li>
         </ul>
@@ -261,7 +253,7 @@
           </label>
         </div>
         <div class="priceRating">
-          <h3>{{ card.precio }}<span> C/U</span></h3>
+          <h3>$ {{ card.precio }}<span> C/U</span></h3>
           <div class="rating">
             <fa-icon
               [icon]="faStar"

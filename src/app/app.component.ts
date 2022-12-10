@@ -1,3 +1,5 @@
+import { CombosService } from './services/Combos/combos.service';
+import { pedidoInterface } from './models/pedido.interface';
 import {
   Component,
   ElementRef,
@@ -21,16 +23,20 @@ import { UsersService } from './services/Users/users.service';
 })
 export class AppComponent implements OnInit {
   title = 'PlantillaComida';
+  totalPedido!: number;
+  pedidosLength!: number;
   user!: userInterface | undefined;
   userID!: String;
   @ViewChild('header') header!: ElementRef;
   @ViewChild('toggle') menuToggle!: ElementRef;
   @ViewChild('menu') menu!: ElementRef;
+  @ViewChild('pedido') pedidoSection!: ElementRef;
 
   constructor(
     private renderer: Renderer2,
+    private combosService: CombosService,
     public router: Router,
-    private localStorageService: LocalStorageService,
+    public localStorageService: LocalStorageService,
     private usersService: UsersService,
     private spinner: NgxSpinnerService
   ) {}
@@ -44,22 +50,57 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.totalPedido = 0;
+    this.pedidosLength = 1;
+
+    let pedidoStorage = this.localStorageService.get<pedidoInterface[]>(
+      'pedido',
+      {}
+    );
     this.userID = this.localStorageService.get('userID', {})!;
 
-    this.usersService.getUser(this.userID).subscribe(
-      (res) => (this.user = res),
-      (err) =>
-        this.spinner.hide().then(() => {
-          console.error(err);
-          Swal.fire({
-            confirmButtonColor: '#000',
-            icon: 'error',
-            html: err.error.message,
-            scrollbarPadding: false,
-          });
-        }),
-      () => {}
-    );
+    if (this.userID && this.userID.length)
+      this.usersService.getUser(this.userID).subscribe(
+        (res) => (this.user = res),
+        (err) =>
+          this.spinner.hide().then(() => {
+            console.error(err);
+            Swal.fire({
+              confirmButtonColor: '#000',
+              icon: 'error',
+              html: err.error.message,
+              scrollbarPadding: false,
+            });
+          }),
+        () => {
+          this.combosService
+            .getTotalPedido(this.user?.pedido?.map((pedido) => pedido._id)!)
+            .subscribe((res) => {
+              this.totalPedido = res.reduce((accumulator, currentValue) => {
+                this.pedidosLength = this.user?.pedido?.length!;
+                this.user?.pedido?.forEach((combo) => {
+                  if (combo._id == currentValue._id)
+                    currentValue.precio = combo.cantidad! * currentValue.precio;
+                });
+                return accumulator + currentValue.precio;
+              }, this.totalPedido);
+            });
+        }
+      );
+    else if (pedidoStorage && pedidoStorage.length) {
+      this.combosService
+        .getTotalPedido(pedidoStorage.map((pedido) => pedido._id))
+        .subscribe((res) => {
+          this.totalPedido = res.reduce((accumulator, currentValue) => {
+            this.pedidosLength = pedidoStorage?.length!;
+            pedidoStorage?.forEach((combo) => {
+              if (combo._id == currentValue._id)
+                currentValue.precio = combo.cantidad! * currentValue.precio;
+            });
+            return accumulator + currentValue.precio;
+          }, this.totalPedido);
+        });
+    }
   }
 
   onActivate(event: Event) {
@@ -106,5 +147,20 @@ export class AppComponent implements OnInit {
       .then(() => this.redirectTo('/login'))
       .then(() => (this.user = undefined))
       .then(() => this.localStorageService.clear());
+  }
+
+  activePedido(): Boolean {
+    let pedi = this.localStorageService.get<pedidoInterface[]>('pedido', {});
+    if (this.user && this.user.pedido && this.user.pedido.length) return true;
+
+    if (pedi && pedi.length) return true;
+
+    return false;
+  }
+
+  screenPedido(): void {
+    if (!this.pedidoSection.nativeElement.classList.contains('screen'))
+      this.renderer.addClass(this.pedidoSection.nativeElement, 'screen');
+    else this.renderer.removeClass(this.pedidoSection.nativeElement, 'screen');
   }
 }

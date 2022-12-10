@@ -148,12 +148,14 @@ export class MenuComponent implements OnInit {
             this.pedidos.push({ _id, cantidad: 1 });
             this.localStorageService.set('pedido', this.pedidos, {});
             this.ngOnInit();
+            this.appComponent.ngOnInit();
           }
         });
       else {
         this.pedidos.push({ _id, cantidad: 1 });
         this.localStorageService.set('pedido', this.pedidos, {});
         this.ngOnInit();
+        this.appComponent.ngOnInit();
       }
     } else {
       this.pedidos.push({ _id, cantidad: 1 });
@@ -210,9 +212,16 @@ export class MenuComponent implements OnInit {
                     scrollbarPadding: false,
                   });
                 }),
-              () => this.spinner.hide()
+              () => {
+                this.ngOnInit();
+                this.appComponent.ngOnInit();
+              }
             );
-        else this.localStorageService.set('pedido', this.pedidos, {});
+        else {
+          this.localStorageService.set('pedido', this.pedidos, {});
+          this.ngOnInit();
+          this.appComponent.ngOnInit();
+        }
       });
   }
 
@@ -247,9 +256,16 @@ export class MenuComponent implements OnInit {
                     scrollbarPadding: false,
                   });
                 }),
-              () => this.spinner.hide()
+              () => {
+                this.ngOnInit();
+                this.appComponent.ngOnInit();
+              }
             );
-        else this.localStorageService.set('pedido', this.pedidos, {});
+        else {
+          this.localStorageService.set('pedido', this.pedidos, {});
+          this.ngOnInit();
+          this.appComponent.ngOnInit();
+        }
       });
   }
 

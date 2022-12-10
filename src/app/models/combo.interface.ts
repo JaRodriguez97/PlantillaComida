@@ -1,6 +1,6 @@
 export interface comboInterface {
   _id: String;
-  precio: String;
+  precio: number;
   peso: String;
   ingredientes: String;
   incluye: String;

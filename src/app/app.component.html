@@ -33,3 +33,29 @@
 <div>
   <router-outlet (activate)="onActivate($event)"></router-outlet>
 </div>
+<!-- !!! PEDIDO !!! -->
+<section
+  #pedido
+  [ngClass]="{
+    sectionPedido: true,
+    active: activePedido()
+  }"
+  (click)="screenPedido()"
+>
+  <div class="sectionPedido__divTitle">
+    <h3 class="sectionPedido__divTitle--title">Pedido</h3>
+  </div>
+  <div class="sectionPedido__labelTotalPedido">
+    <label class="sectionPedido__labelTotalPedido--label">Total:</label>
+  </div>
+  <div class="sectionPedido__totalPedido">
+    <strong class="sectionPedido__totalPedido--strong"
+      >${{ totalPedido }}</strong
+    >
+  </div>
+  <div class="sectionPedido__divIcon">
+    <i class="sectionPedido__divIcon--i">{{ pedidosLength }}</i>
+  </div>
+</section>
+
+<!-- screen: screenPedido() -->

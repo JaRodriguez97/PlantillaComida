@@ -30,4 +30,13 @@ export class CombosService {
 
     return this.http.get<comboInterface>(this.URL + _id, { headers });
   }
+
+  getTotalPedido(
+    arrayID: String[],
+    token?: string
+  ): Observable<comboInterface[]> {
+    let headers = this.headers(token);
+
+    return this.http.post<comboInterface[]>(this.URL, { arrayID }, { headers });
+  }
 }
