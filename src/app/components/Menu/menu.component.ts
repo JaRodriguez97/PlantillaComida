@@ -162,12 +162,25 @@ export class MenuComponent implements OnInit {
 
       this.usersService
         .updateUser(this.userID, this.pedidos, 'pedido')
-        .subscribe((res) => {
-          console.log(
-            '🚀 ~ file: menu.component.ts:139 ~ MenuComponent ~ .subscribe ~ res',
-            res
-          );
-        });
+        .subscribe(
+          (res) => {
+            console.log('🚀 ~ res', res);
+          },
+          (err) =>
+            this.spinner.hide().then(() => {
+              console.error(err);
+              Swal.fire({
+                confirmButtonColor: '#000',
+                icon: 'error',
+                html: err.error.message,
+                scrollbarPadding: false,
+              });
+            }),
+          () => {
+            this.ngOnInit();
+            this.appComponent.ngOnInit();
+          }
+        );
     }
   }
 

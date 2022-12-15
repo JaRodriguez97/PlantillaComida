@@ -1,3 +1,4 @@
+import { comboInterface } from './models/combo.interface';
 import { CombosService } from './services/Combos/combos.service';
 import { pedidoInterface } from './models/pedido.interface';
 import {
@@ -27,6 +28,8 @@ export class AppComponent implements OnInit {
   pedidosLength!: number;
   user!: userInterface | undefined;
   userID!: String;
+  sectionContentPedido!: Boolean;
+  combosPedido!: comboInterface[];
   @ViewChild('header') header!: ElementRef;
   @ViewChild('toggle') menuToggle!: ElementRef;
   @ViewChild('menu') menu!: ElementRef;
@@ -76,6 +79,7 @@ export class AppComponent implements OnInit {
           this.combosService
             .getTotalPedido(this.user?.pedido?.map((pedido) => pedido._id)!)
             .subscribe((res) => {
+              this.combosPedido = res;
               this.totalPedido = res.reduce((accumulator, currentValue) => {
                 this.pedidosLength = this.user?.pedido?.length!;
                 this.user?.pedido?.forEach((combo) => {
@@ -159,8 +163,12 @@ export class AppComponent implements OnInit {
   }
 
   screenPedido(): void {
-    if (!this.pedidoSection.nativeElement.classList.contains('screen'))
+    if (!this.pedidoSection.nativeElement.classList.contains('screen')) {
       this.renderer.addClass(this.pedidoSection.nativeElement, 'screen');
-    else this.renderer.removeClass(this.pedidoSection.nativeElement, 'screen');
+      this.sectionContentPedido = true;
+    } else {
+      this.renderer.removeClass(this.pedidoSection.nativeElement, 'screen');
+      this.sectionContentPedido = false;
+    }
   }
 }

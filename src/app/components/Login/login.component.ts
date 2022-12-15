@@ -94,7 +94,11 @@ export class LoginComponent implements OnInit, AfterViewInit {
                 .subscribe((res) =>
                   console.log('🚀 ~ line:89 ~ LoginComponent ~ User', res)
                 );
-            else if (!id && !res.pedido?.length && this.pedidos.length) {
+            else if (
+              !id &&
+              (!res.pedido || !res.pedido.length) &&
+              this.pedidos.length
+            ) {
               this.usersService
                 .updateUser(res._id!, this.pedidos, 'pedido')
                 .subscribe((res) =>

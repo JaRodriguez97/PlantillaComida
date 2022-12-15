@@ -56,6 +56,17 @@
   <div class="sectionPedido__divIcon">
     <i class="sectionPedido__divIcon--i">{{ pedidosLength }}</i>
   </div>
+  <div class="sectionPedido__content" *ngIf="sectionContentPedido">
+    <div
+      class="sectionPedido__content--divCombo"
+      *ngFor="let combo of combosPedido"
+    >
+      <div class="sectionPedido__content--divCombo-title">{{ combo.nombre }}</div>
+      <div class="sectionPedido__content--divCombo-title">{{ combo.precio }}</div>
+      <div class="sectionPedido__content--divCombo-title">{{ combo.img }}</div>
+      <div class="sectionPedido__content--divCombo-title">{{ combo.favorito }}</div>
+    </div>
+  </div>
 </section>
 
 <!-- screen: screenPedido() -->
