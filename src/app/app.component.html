@@ -61,10 +61,20 @@
       class="sectionPedido__content--divCombo"
       *ngFor="let combo of combosPedido"
     >
-      <div class="sectionPedido__content--divCombo-title">{{ combo.nombre }}</div>
-      <div class="sectionPedido__content--divCombo-title">{{ combo.precio }}</div>
-      <div class="sectionPedido__content--divCombo-title">{{ combo.img }}</div>
-      <div class="sectionPedido__content--divCombo-title">{{ combo.favorito }}</div>
+      <div class="sectionPedido__content--divCombo-title">
+        {{ combo.nombre }}
+      </div>
+      <div class="sectionPedido__content--divCombo-title">
+        {{ combo.precio }}
+      </div>
+      <img
+        class="sectionPedido__content--divCombo-title"
+        [src]="combo.img"
+        [alt]="combo.nombre"
+      />
+      <div class="sectionPedido__content--divCombo-title">
+        {{ combo.favorito }}
+      </div>
     </div>
   </div>
 </section>
