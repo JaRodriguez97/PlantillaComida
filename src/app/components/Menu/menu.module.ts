@@ -19,6 +19,7 @@ import { CombosService } from '@service/Combos/combos.service';
     ScrollingModule,
     FontAwesomeModule,
   ],
+  exports: [MenuComponent],
   providers: [CombosService],
 })
 export class MenuModule {}

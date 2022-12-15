@@ -47,7 +47,7 @@ export class MenuComponent implements OnInit {
   userID!: String;
 
   constructor(
-    private appComponent: AppComponent,
+    public appComponent: AppComponent,
     private renderer: Renderer2,
     private usersService: UsersService,
     private combosService: CombosService,
@@ -124,64 +124,69 @@ export class MenuComponent implements OnInit {
   }
 
   addToCar(_id: String, i?: number) {
-    if (typeof i == 'number') {
-      let list = this.document.querySelectorAll('.action')[i];
+    this.spinner.show().then(() => {
+      if (typeof i == 'number') {
+        let list = this.document.querySelectorAll('.action')[i];
 
-      this.renderer.addClass(list, 'active');
-    }
+        this.renderer.addClass(list, 'active');
+      }
 
-    if (!this.user) {
-      if (!this.pedidos.length)
-        Swal.fire({
-          icon: 'question',
-          title: 'NO ESTÁ REGISTRADO',
-          html: `<h4>Desea ingresar antes de hacer su pedido?</h4>
+      if (!this.user) {
+        if (!this.pedidos.length)
+          Swal.fire({
+            icon: 'question',
+            title: 'NO ESTÁ REGISTRADO',
+            html: `<h4>Desea ingresar antes de hacer su pedido?</h4>
         <h6 style="font-size:6px">Si marca NO podrá hacer su pedido sin
         ningún problema, pero de manera anónima.</h6>`,
-          showCancelButton: true,
-          cancelButtonText: 'NO',
-          confirmButtonText: 'SÍ',
-          scrollbarPadding: false,
-        }).then((response) => {
-          if (response.isConfirmed) this.router.navigate(['/login', _id]);
-          else {
-            this.pedidos.push({ _id, cantidad: 1 });
-            this.localStorageService.set('pedido', this.pedidos, {});
-            this.ngOnInit();
-            this.appComponent.ngOnInit();
-          }
-        });
-      else {
+            showCancelButton: true,
+            cancelButtonText: 'NO',
+            confirmButtonText: 'SÍ',
+            scrollbarPadding: false,
+          }).then((response) => {
+            if (response.isConfirmed) this.router.navigate(['/login', _id]);
+            else {
+              this.pedidos.push({ _id, cantidad: 1 });
+              this.localStorageService.set('pedido', this.pedidos, {});
+              this.ngOnInit();
+              this.appComponent.ngOnInit();
+            }
+          });
+        else {
+          this.pedidos.push({ _id, cantidad: 1 });
+          this.localStorageService.set('pedido', this.pedidos, {});
+          this.ngOnInit();
+          this.appComponent.ngOnInit();
+        }
+      } else {
         this.pedidos.push({ _id, cantidad: 1 });
-        this.localStorageService.set('pedido', this.pedidos, {});
-        this.ngOnInit();
-        this.appComponent.ngOnInit();
-      }
-    } else {
-      this.pedidos.push({ _id, cantidad: 1 });
 
-      this.usersService
-        .updateUser(this.userID, this.pedidos, 'pedido')
-        .subscribe(
-          (res) => {
-            console.log('🚀 ~ res', res);
-          },
-          (err) =>
-            this.spinner.hide().then(() => {
-              console.error(err);
-              Swal.fire({
-                confirmButtonColor: '#000',
-                icon: 'error',
-                html: err.error.message,
-                scrollbarPadding: false,
-              });
-            }),
-          () => {
-            this.ngOnInit();
-            this.appComponent.ngOnInit();
-          }
-        );
-    }
+        this.usersService
+          .updateUser(this.userID, this.pedidos, 'pedido')
+          .subscribe(
+            (res) => {
+              console.log(
+                '🚀 ~ file: menu.component.ts:184 ~ MenuComponent ~ addToCar ~ res',
+                res
+              );
+            },
+            (err) =>
+              this.spinner.hide().then(() => {
+                console.error(err);
+                Swal.fire({
+                  confirmButtonColor: '#000',
+                  icon: 'error',
+                  html: err.error.message,
+                  scrollbarPadding: false,
+                });
+              }),
+            () => {
+              this.ngOnInit();
+              this.appComponent.ngOnInit();
+            }
+          );
+      }
+    });
   }
 
   existeComboPedido(_id: String, pedidos: pedidoInterface[]): Boolean {
@@ -192,98 +197,13 @@ export class MenuComponent implements OnInit {
   }
 
   restCar(_id: String) {
-    this.spinner
-      .show()
-      .then(() => {
-        this.pedidos = this.pedidos.filter((pedido) => {
-          if (pedido.cantidad)
-            if (pedido._id === _id && pedido.cantidad > 1) {
-              pedido.cantidad--;
-            } else if (pedido._id === _id && pedido.cantidad == 1) return false;
-
-          return pedido;
-        });
-      })
-      .then(() => {
-        if (this.userID)
-          this.usersService
-            .updateUser(this.userID, this.pedidos, 'pedido')
-            .subscribe(
-              (res) => {
-                console.log(
-                  '🚀 ~ file: menu.component.ts:199 ~ MenuComponent ~ .subscribe ~ res',
-                  res
-                );
-              },
-              (err) =>
-                this.spinner.hide().then(() => {
-                  console.error(err);
-                  Swal.fire({
-                    confirmButtonColor: '#000',
-                    icon: 'error',
-                    html: err.error.message,
-                    scrollbarPadding: false,
-                  });
-                }),
-              () => {
-                this.ngOnInit();
-                this.appComponent.ngOnInit();
-              }
-            );
-        else {
-          this.localStorageService.set('pedido', this.pedidos, {});
-          this.ngOnInit();
-          this.appComponent.ngOnInit();
-        }
-      });
+    this.appComponent.restCar(_id).then(() => this.ngOnInit());
+    // .then(() => this.spinner.hide());
   }
 
   addCarCantidad(_id: String) {
-    this.spinner
-      .show()
-      .then(() => {
-        this.pedidos = this.pedidos.map((pedido) => {
-          if (pedido.cantidad && pedido._id === _id) pedido.cantidad++;
-
-          return pedido;
-        });
-      })
-      .then(() => {
-        if (this.userID)
-          this.usersService
-            .updateUser(this.userID, this.pedidos, 'pedido')
-            .subscribe(
-              (res) => {
-                console.log(
-                  '🚀 ~ file: menu.component.ts:236 ~ MenuComponent ~ .subscribe ~ res',
-                  res
-                );
-              },
-              (err) =>
-                this.spinner.hide().then(() => {
-                  console.error(err);
-                  Swal.fire({
-                    confirmButtonColor: '#000',
-                    icon: 'error',
-                    html: err.error.message,
-                    scrollbarPadding: false,
-                  });
-                }),
-              () => {
-                this.ngOnInit();
-                this.appComponent.ngOnInit();
-              }
-            );
-        else {
-          this.localStorageService.set('pedido', this.pedidos, {});
-          this.ngOnInit();
-          this.appComponent.ngOnInit();
-        }
-      });
-  }
-
-  getCantidadCombos(_id: String) {
-    return this.pedidos.filter((pedido) => pedido._id === _id)[0].cantidad;
+    this.appComponent.addCarCantidad(_id).then(() => this.ngOnInit());
+    // .then(() => this.spinner.hide());
   }
 
   addFavorite(_id: String) {

@@ -108,7 +108,7 @@
                       <div class="restCar" (click)="restCar(combo._id)">-</div>
                       <input
                         type="number"
-                        [value]="getCantidadCombos(combo._id)"
+                        [value]="appComponent.getCantidadCombos(combo._id)"
                         disabled
                       />
                       <div class="addCar" (click)="addCarCantidad(combo._id)">
@@ -186,7 +186,7 @@
                   <div class="restCar" (click)="restCar(combo._id)">-</div>
                   <input
                     type="number"
-                    [value]="getCantidadCombos(combo._id)"
+                    [value]="appComponent.getCantidadCombos(combo._id)"
                     disabled
                   />
                   <div class="addCar" (click)="addCarCantidad(combo._id)">
@@ -237,7 +237,7 @@
             <div class="restCar" (click)="restCar(card._id)">-</div>
             <input
               type="number"
-              [value]="getCantidadCombos(card._id)"
+              [value]="appComponent.getCantidadCombos(card._id)"
               disabled
             />
             <div class="addCar" (click)="addCarCantidad(card._id)">+</div>

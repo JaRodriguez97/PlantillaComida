@@ -40,8 +40,8 @@
     sectionPedido: true,
     active: activePedido()
   }"
-  (click)="screenPedido()"
 >
+  <div #screenEvent class="sectionPedido__screen" (click)="screenPedido()"></div>
   <div class="sectionPedido__divTitle">
     <h3 class="sectionPedido__divTitle--title">Pedido</h3>
   </div>
@@ -50,7 +50,7 @@
   </div>
   <div class="sectionPedido__totalPedido">
     <strong class="sectionPedido__totalPedido--strong"
-      >${{ totalPedido }}</strong
+      >${{ totalPedido | number : "1.0" : "en-US" }}</strong
     >
   </div>
   <div class="sectionPedido__divIcon">
@@ -59,23 +59,40 @@
   <div class="sectionPedido__content" *ngIf="sectionContentPedido">
     <div
       class="sectionPedido__content--divCombo"
-      *ngFor="let combo of combosPedido"
+      *ngFor="let combo of combosPedido; let i = index"
     >
       <div class="sectionPedido__content--divCombo-title">
         {{ combo.nombre }}
       </div>
-      <div class="sectionPedido__content--divCombo-title">
-        {{ combo.precio }}
+      <div class="sectionPedido__content--divCombo-price">
+        <div>${{ combo.precio | number : "1.0" : "en-US" }}</div>
+        <div class="sectionPedido__content--divCombo-cantidad">
+          <div class="restCar" (click)="restCar(combo._id)">-</div>
+          <input
+            type="number"
+            [value]="getCantidadCombos(combo._id)"
+            disabled
+          />
+          <div class="addCar" (click)="addCarCantidad(combo._id)">+</div>
+          X
+          {{ pedidos[i].cantidad }}
+          Unidad(es)
+        </div>
       </div>
       <img
-        class="sectionPedido__content--divCombo-title"
+        class="sectionPedido__content--divCombo-img"
         [src]="combo.img"
         [alt]="combo.nombre"
       />
-      <div class="sectionPedido__content--divCombo-title">
+      <div class="sectionPedido__content--divCombo-favorito">
         {{ combo.favorito }}
       </div>
     </div>
+  </div>
+  <div class="sectionPedido__button" *ngIf="sectionContentPedido">
+    <button class="sectionPedido__button--btn" (click)="terminarPedido()">
+      Finalizar Pedido
+    </button>
   </div>
 </section>
 

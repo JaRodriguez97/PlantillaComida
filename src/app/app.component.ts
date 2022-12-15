@@ -1,6 +1,3 @@
-import { comboInterface } from './models/combo.interface';
-import { CombosService } from './services/Combos/combos.service';
-import { pedidoInterface } from './models/pedido.interface';
 import {
   Component,
   ElementRef,
@@ -10,12 +7,15 @@ import {
   ViewChild,
 } from '@angular/core';
 import { Router } from '@angular/router';
+import { comboInterface } from '@models/combo.interface';
+import { pedidoInterface } from '@models/pedido.interface';
 import { userInterface } from '@models/users.interface';
+import { CombosService } from '@service/Combos/combos.service';
+import { UsersService } from '@service/Users/users.service';
 import { LocalStorageService } from 'ngx-localstorage';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { getWindow } from 'ssr-window';
 import Swal from 'sweetalert2';
-import { UsersService } from './services/Users/users.service';
 
 @Component({
   selector: 'app-root',
@@ -24,6 +24,7 @@ import { UsersService } from './services/Users/users.service';
 })
 export class AppComponent implements OnInit {
   title = 'PlantillaComida';
+  pedidos!: pedidoInterface[];
   totalPedido!: number;
   pedidosLength!: number;
   user!: userInterface | undefined;
@@ -34,6 +35,7 @@ export class AppComponent implements OnInit {
   @ViewChild('toggle') menuToggle!: ElementRef;
   @ViewChild('menu') menu!: ElementRef;
   @ViewChild('pedido') pedidoSection!: ElementRef;
+  @ViewChild('screenEvent') screenEvent!: ElementRef;
 
   constructor(
     private renderer: Renderer2,
@@ -76,31 +78,42 @@ export class AppComponent implements OnInit {
             });
           }),
         () => {
-          this.combosService
-            .getTotalPedido(this.user?.pedido?.map((pedido) => pedido._id)!)
-            .subscribe((res) => {
-              this.combosPedido = res;
-              this.totalPedido = res.reduce((accumulator, currentValue) => {
-                this.pedidosLength = this.user?.pedido?.length!;
-                this.user?.pedido?.forEach((combo) => {
-                  if (combo._id == currentValue._id)
-                    currentValue.precio = combo.cantidad! * currentValue.precio;
-                });
-                return accumulator + currentValue.precio;
-              }, this.totalPedido);
-            });
+          if (this.user) {
+            if (this.user.pedido && this.user.pedido?.length) {
+              this.pedidosLength = this.user.pedido.length;
+              this.pedidos = this.user.pedido;
+            }
+            this.combosService
+              .getTotalPedido(this.user.pedido?.map((pedido) => pedido._id)!)
+              .subscribe((res) => {
+                this.combosPedido = res;
+                this.totalPedido = res.reduce((accumulator, currentValue) => {
+                  if (this.user)
+                    this.user.pedido?.forEach((combo) => {
+                      if (combo._id == currentValue._id)
+                        currentValue.precio =
+                          combo.cantidad! * currentValue.precio;
+                    });
+                  return accumulator + currentValue.precio;
+                }, this.totalPedido);
+              });
+          }
         }
       );
     else if (pedidoStorage && pedidoStorage.length) {
+      this.pedidosLength = pedidoStorage.length;
+      this.pedidos = pedidoStorage;
       this.combosService
         .getTotalPedido(pedidoStorage.map((pedido) => pedido._id))
         .subscribe((res) => {
+          this.combosPedido = res;
           this.totalPedido = res.reduce((accumulator, currentValue) => {
-            this.pedidosLength = pedidoStorage?.length!;
-            pedidoStorage?.forEach((combo) => {
-              if (combo._id == currentValue._id)
-                currentValue.precio = combo.cantidad! * currentValue.precio;
-            });
+            if (pedidoStorage) {
+              pedidoStorage?.forEach((combo) => {
+                if (combo._id == currentValue._id)
+                  currentValue.precio = combo.cantidad! * currentValue.precio;
+              });
+            }
             return accumulator + currentValue.precio;
           }, this.totalPedido);
         });
@@ -165,10 +178,110 @@ export class AppComponent implements OnInit {
   screenPedido(): void {
     if (!this.pedidoSection.nativeElement.classList.contains('screen')) {
       this.renderer.addClass(this.pedidoSection.nativeElement, 'screen');
+      this.renderer.addClass(this.screenEvent.nativeElement, 'active');
       this.sectionContentPedido = true;
     } else {
       this.renderer.removeClass(this.pedidoSection.nativeElement, 'screen');
+      this.renderer.removeClass(this.screenEvent.nativeElement, 'active');
       this.sectionContentPedido = false;
     }
+    this.ngOnInit();
+  }
+
+  terminarPedido() {
+    this.router.navigate(['/pedido']);
+  }
+
+  getCantidadCombos(_id: String) {
+    return this.pedidos.filter((pedido) => pedido._id === _id)[0].cantidad;
+  }
+
+  restCar(_id: String) {
+    this.spinner
+      .show()
+      .then(() => {
+        this.pedidos = this.pedidos.filter((pedido) => {
+          if (pedido.cantidad)
+            if (pedido._id === _id && pedido.cantidad > 1) {
+              pedido.cantidad--;
+            } else if (pedido._id === _id && pedido.cantidad == 1) return false;
+
+          return pedido;
+        });
+      })
+      .then(() => {
+        if (this.userID)
+          this.usersService
+            .updateUser(this.userID, this.pedidos, 'pedido')
+            .subscribe(
+              (res) => {
+                console.log(
+                  '🚀 ~ file: app.component.ts:219 ~ AppComponent ~ .then ~ res',
+                  res
+                );
+              },
+              (err) =>
+                this.spinner.hide().then(() => {
+                  console.error(err);
+                  Swal.fire({
+                    confirmButtonColor: '#000',
+                    icon: 'error',
+                    html: err.error.message,
+                    scrollbarPadding: false,
+                  });
+                }),
+              () => {
+                this.ngOnInit();
+              }
+            );
+        else {
+          this.localStorageService.set('pedido', this.pedidos, {});
+          this.ngOnInit();
+        }
+      });
+    return this.spinner.show();
+  }
+
+  addCarCantidad(_id: String) {
+    this.spinner
+      .show()
+      .then(() => {
+        this.pedidos = this.pedidos.map((pedido) => {
+          if (pedido.cantidad && pedido._id === _id) pedido.cantidad++;
+
+          return pedido;
+        });
+      })
+      .then(() => {
+        if (this.userID)
+          this.usersService
+            .updateUser(this.userID, this.pedidos, 'pedido')
+            .subscribe(
+              (res) => {
+                console.log(
+                  '🚀 ~ file: app.component.ts:262 ~ AppComponent ~ .then ~ res',
+                  res
+                );
+              },
+              (err) =>
+                this.spinner.hide().then(() => {
+                  console.error(err);
+                  Swal.fire({
+                    confirmButtonColor: '#000',
+                    icon: 'error',
+                    html: err.error.message,
+                    scrollbarPadding: false,
+                  });
+                }),
+              () => {
+                this.ngOnInit();
+              }
+            );
+        else {
+          this.localStorageService.set('pedido', this.pedidos, {});
+          this.ngOnInit();
+        }
+      });
+    return this.spinner.show();
   }
 }
