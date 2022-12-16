@@ -41,7 +41,11 @@
     active: activePedido()
   }"
 >
-  <div #screenEvent class="sectionPedido__screen" (click)="screenPedido()"></div>
+  <div
+    #screenEvent
+    class="sectionPedido__screen"
+    (click)="screenPedido()"
+  ></div>
   <div class="sectionPedido__divTitle">
     <h3 class="sectionPedido__divTitle--title">Pedido</h3>
   </div>
@@ -65,17 +69,20 @@
         {{ combo.nombre }}
       </div>
       <div class="sectionPedido__content--divCombo-price">
-        <div>${{ combo.precio | number : "1.0" : "en-US" }}</div>
+        <div class="sectionPedido__content--divCombo-price____">
+          ${{ combo.precio | number : "1.0" : "en-US" }}
+        </div>
         <div class="sectionPedido__content--divCombo-cantidad">
-          <div class="restCar" (click)="restCar(combo._id)">-</div>
+          X
+          <div class="cantidad__restCar" (click)="restCar(combo._id)">-</div>
           <input
             type="number"
             [value]="getCantidadCombos(combo._id)"
             disabled
           />
-          <div class="addCar" (click)="addCarCantidad(combo._id)">+</div>
-          X
-          {{ pedidos[i].cantidad }}
+          <div class="cantidad__addCar" (click)="addCarCantidad(combo._id)">
+            +
+          </div>
           Unidad(es)
         </div>
       </div>

@@ -132,8 +132,8 @@ header > ul > li > a {
 
 .sectionPedido.active.screen {
   bottom: 0vh;
-  top: 20%;
-  height: 100vh;
+  top: 30%;
+  height: 70vh;
   padding: 5%;
   width: 95%;
   display: flex;
@@ -141,6 +141,9 @@ header > ul > li > a {
   animation: transitionPedidoScreen 1s ease-in;
   gap: 0;
   overflow-x: hidden;
+  border-radius: 0%;
+  border-top-right-radius: 15px;
+  border-top-left-radius: 15px;
 }
 
 @keyframes transitionPedidoScreen {
@@ -150,14 +153,13 @@ header > ul > li > a {
   }
   100% {
     bottom: 0vh;
-    top: 20%;
+    top: 30%;
     width: 95%;
   }
 }
 
 .sectionPedido.active.screen::-webkit-scrollbar {
   width: 10px;
-  margin: 2px;
 }
 
 .sectionPedido.active.screen::-webkit-scrollbar-thumb {
@@ -190,7 +192,7 @@ header > ul > li > a {
 .sectionPedido.active.screen > .sectionPedido__divIcon {
   position: absolute;
   left: 50%;
-  bottom: 50%;
+  bottom: 30%;
   height: 150px;
   width: -webkit-fill-available;
   align-items: flex-start;
@@ -212,21 +214,38 @@ header > ul > li > a {
 .sectionPedido.active.screen > .sectionPedido__screen.active {
   position: fixed;
   width: 5%;
-  height: max-content;
-  top: 25%;
+  height: 8%;
+  top: 35%;
   left: 90%;
   border-radius: 50%;
-  border: #000 2px solid;
   transition: 500ms;
   display: flex;
   justify-content: center;
-  padding-bottom: 0.5%;
+  align-items: center;
+  background-color: #fefef9;
+  transition-delay: 1.3s;
 }
 
+.sectionPedido.active.screen > .sectionPedido__screen.active:hover {
+  background-color: #f0f0f0;
+  transition-delay: 0s;
+}
+
+.sectionPedido.active.screen > .sectionPedido__screen.active::after,
 .sectionPedido.active.screen > .sectionPedido__screen.active::before {
-  content: "\2193";
-  font-size: 5vh;
-  color: #000;
+  content: "\\";
+  font-size: 2vw;
+  color: #ccc;
+  position: absolute;
+}
+
+.sectionPedido.active.screen > .sectionPedido__screen.active::after {
+  content: "/";
+}
+
+.sectionPedido.active.screen > .sectionPedido__screen.active::after:hover,
+.sectionPedido.active.screen > .sectionPedido__screen.active::before:hover {
+  color: #ccc;
 }
 
 .sectionPedido__content {
@@ -262,13 +281,46 @@ header > ul > li > a {
   filter: blur(10px);
 }
 
-.sectionPedido__content--divCombo-price {
+.sectionPedido__content--divCombo-cantidad {
   position: relative;
   width: 100%;
   height: max-content;
   top: 50%;
-  right: 30%;
+  left: 10%;
+  display: flex;
+  gap: 10%;
 }
+
+.sectionPedido__content--divCombo-cantidad > input {
+  width: max-content;
+  max-width: 50px;
+  border: none;
+  padding-left: 15px;
+  display: flex;
+}
+
+.sectionPedido__content--divCombo-img {
+  max-width: 100px;
+  border-radius: 10px;
+}
+
+.sectionPedido__content--divCombo-favorito {
+  position: absolute;
+  top: 70%;
+}
+
+.sectionPedido__content--divCombo-price {
+  position: relative;
+  width: 30%;
+  height: max-content;
+  top: 50%;
+  right: 30%;
+  display: flex;
+}
+
+/* .sectionPedido__content--divCombo-price____ {
+
+} */
 
 .sectionPedido__content--divCombo-title {
   position: relative;

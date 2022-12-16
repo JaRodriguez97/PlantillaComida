@@ -85,18 +85,33 @@ export class AppComponent implements OnInit {
             }
             this.combosService
               .getTotalPedido(this.user.pedido?.map((pedido) => pedido._id)!)
-              .subscribe((res) => {
-                this.combosPedido = res;
-                this.totalPedido = res.reduce((accumulator, currentValue) => {
-                  if (this.user)
-                    this.user.pedido?.forEach((combo) => {
-                      if (combo._id == currentValue._id)
-                        currentValue.precio =
-                          combo.cantidad! * currentValue.precio;
+              .subscribe(
+                (res) => {
+                  this.combosPedido = res;
+                  this.totalPedido = res.reduce((accumulator, currentValue) => {
+                    if (this.user)
+                      this.user.pedido?.forEach((combo) => {
+                        if (combo._id == currentValue._id)
+                          currentValue.precio =
+                            combo.cantidad! * currentValue.precio;
+                      });
+                    return accumulator + currentValue.precio;
+                  }, this.totalPedido);
+                },
+                (err) =>
+                  this.spinner.hide().then(() => {
+                    console.error(err);
+                    Swal.fire({
+                      confirmButtonColor: '#000',
+                      icon: 'error',
+                      html: err.error.message,
+                      scrollbarPadding: false,
                     });
-                  return accumulator + currentValue.precio;
-                }, this.totalPedido);
-              });
+                  }),
+                () => {
+                  if (this.sectionContentPedido) this.spinner.hide();
+                }
+              );
           }
         }
       );
@@ -105,18 +120,33 @@ export class AppComponent implements OnInit {
       this.pedidos = pedidoStorage;
       this.combosService
         .getTotalPedido(pedidoStorage.map((pedido) => pedido._id))
-        .subscribe((res) => {
-          this.combosPedido = res;
-          this.totalPedido = res.reduce((accumulator, currentValue) => {
-            if (pedidoStorage) {
-              pedidoStorage?.forEach((combo) => {
-                if (combo._id == currentValue._id)
-                  currentValue.precio = combo.cantidad! * currentValue.precio;
+        .subscribe(
+          (res) => {
+            this.combosPedido = res;
+            this.totalPedido = res.reduce((accumulator, currentValue) => {
+              if (pedidoStorage) {
+                pedidoStorage?.forEach((combo) => {
+                  if (combo._id == currentValue._id)
+                    currentValue.precio = combo.cantidad! * currentValue.precio;
+                });
+              }
+              return accumulator + currentValue.precio;
+            }, this.totalPedido);
+          },
+          (err) =>
+            this.spinner.hide().then(() => {
+              console.error(err);
+              Swal.fire({
+                confirmButtonColor: '#000',
+                icon: 'error',
+                html: err.error.message,
+                scrollbarPadding: false,
               });
-            }
-            return accumulator + currentValue.precio;
-          }, this.totalPedido);
-        });
+            }),
+          () => {
+            if (this.sectionContentPedido) this.spinner.hide();
+          }
+        );
     }
   }
 
@@ -242,7 +272,7 @@ export class AppComponent implements OnInit {
     return this.spinner.show();
   }
 
-  addCarCantidad(_id: String) {
+  async addCarCantidad(_id: String) {
     this.spinner
       .show()
       .then(() => {
@@ -273,15 +303,13 @@ export class AppComponent implements OnInit {
                     scrollbarPadding: false,
                   });
                 }),
-              () => {
-                this.ngOnInit();
-              }
+              () => this.ngOnInit()
             );
         else {
           this.localStorageService.set('pedido', this.pedidos, {});
           this.ngOnInit();
         }
       });
-    return this.spinner.show();
+    // return this.spinner.show();
   }
 }
