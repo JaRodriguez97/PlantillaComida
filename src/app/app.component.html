@@ -53,46 +53,55 @@
     <label class="sectionPedido__labelTotalPedido--label">Total:</label>
   </div>
   <div class="sectionPedido__totalPedido">
-    <strong class="sectionPedido__totalPedido--strong"
-      >${{ totalPedido | number : "1.0" : "en-US" }}</strong
-    >
+    <strong class="sectionPedido__totalPedido--strong">
+      ${{ totalPedido | number : "1.0" : "en-US" }}
+    </strong>
   </div>
   <div class="sectionPedido__divIcon">
     <i class="sectionPedido__divIcon--i">{{ pedidosLength }}</i>
   </div>
-  <div class="sectionPedido__content" *ngIf="sectionContentPedido">
+  <div class="sectionPedido__combos" *ngIf="sectionContentPedido">
     <div
-      class="sectionPedido__content--divCombo"
+      class="sectionPedido__combos--target"
       *ngFor="let combo of combosPedido; let i = index"
     >
-      <div class="sectionPedido__content--divCombo-title">
+      <div class="sectionPedido__combos--target-title">
         {{ combo.nombre }}
       </div>
-      <div class="sectionPedido__content--divCombo-price">
-        <div class="sectionPedido__content--divCombo-price____">
-          ${{ combo.precio | number : "1.0" : "en-US" }}
-        </div>
-        <div class="sectionPedido__content--divCombo-cantidad">
-          X
-          <div class="cantidad__restCar" (click)="restCar(combo._id)">-</div>
-          <input
-            type="number"
-            [value]="getCantidadCombos(combo._id)"
-            disabled
-          />
-          <div class="cantidad__addCar" (click)="addCarCantidad(combo._id)">
-            +
+      <div class="sectionPedido__combos--target-content">
+        <div class="content__price">
+          <div class="content__price--value">
+            ${{ combo.precio | number : "1.0" : "en-US" }}
           </div>
-          Unidad(es)
         </div>
-      </div>
-      <img
-        class="sectionPedido__content--divCombo-img"
-        [src]="combo.img"
-        [alt]="combo.nombre"
-      />
-      <div class="sectionPedido__content--divCombo-favorito">
-        {{ combo.favorito }}
+        <div class="sectionPedido__combos--target-cantidad">
+          <div class="sectionPedido__combos--target-cantidad">
+            X
+            <div class="cantidad__restCar" (click)="restCar(combo._id)">-</div>
+            <input
+              type="number"
+              [value]="getCantidadCombos(combo._id)"
+              disabled
+            />
+            <div class="cantidad__addCar" (click)="addCarCantidad(combo._id)">
+              +
+            </div>
+            Unidad(es)
+          </div>
+        </div>
+        <div class="sectionPedido__combos--target-divImg">
+          <img
+            class="sectionPedido__combos--target-divImg_img"
+            [src]="combo.img"
+            [alt]="combo.nombre"
+          />
+        </div>
+        <div
+          class="sectionPedido__combos--target-favorito"
+          [ngClass]="{ favoriteActive: validateFavorite(combo._id) }"
+        >
+          <!-- {{ combo.favorito }} -->
+        </div>
       </div>
     </div>
   </div>

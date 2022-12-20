@@ -6,7 +6,7 @@ import {
   Renderer2,
   ViewChild,
 } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { comboInterface } from '@models/combo.interface';
 import { pedidoInterface } from '@models/pedido.interface';
 import { userInterface } from '@models/users.interface';
@@ -14,6 +14,7 @@ import { CombosService } from '@service/Combos/combos.service';
 import { UsersService } from '@service/Users/users.service';
 import { LocalStorageService } from 'ngx-localstorage';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { map } from 'rxjs';
 import { getWindow } from 'ssr-window';
 import Swal from 'sweetalert2';
 
@@ -28,9 +29,11 @@ export class AppComponent implements OnInit {
   totalPedido!: number;
   pedidosLength!: number;
   user!: userInterface | undefined;
-  userID!: String;
+  userID!: String | null | undefined;
   sectionContentPedido!: Boolean;
   combosPedido!: comboInterface[];
+  window: Window = window;
+
   @ViewChild('header') header!: ElementRef;
   @ViewChild('toggle') menuToggle!: ElementRef;
   @ViewChild('menu') menu!: ElementRef;
@@ -39,6 +42,7 @@ export class AppComponent implements OnInit {
 
   constructor(
     private renderer: Renderer2,
+    private activatedRoute: ActivatedRoute,
     private combosService: CombosService,
     public router: Router,
     public localStorageService: LocalStorageService,
@@ -55,14 +59,16 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.totalPedido = 0;
-    this.pedidosLength = 1;
-
     let pedidoStorage = this.localStorageService.get<pedidoInterface[]>(
       'pedido',
       {}
     );
-    this.userID = this.localStorageService.get('userID', {})!;
+
+    // this.activatedRoute.url.subscribe((res) => console.log(res.join('')));
+
+    this.totalPedido = 0;
+    this.pedidosLength = 1;
+    this.userID = this.localStorageService.get('userID', {});
 
     if (this.userID && this.userID.length)
       this.usersService.getUser(this.userID).subscribe(
@@ -79,7 +85,7 @@ export class AppComponent implements OnInit {
           }),
         () => {
           if (this.user) {
-            if (this.user.pedido && this.user.pedido?.length) {
+            if (this.user.pedido && this.user.pedido.length) {
               this.pedidosLength = this.user.pedido.length;
               this.pedidos = this.user.pedido;
             }
@@ -125,7 +131,7 @@ export class AppComponent implements OnInit {
             this.combosPedido = res;
             this.totalPedido = res.reduce((accumulator, currentValue) => {
               if (pedidoStorage) {
-                pedidoStorage?.forEach((combo) => {
+                pedidoStorage.forEach((combo) => {
                   if (combo._id == currentValue._id)
                     currentValue.precio = combo.cantidad! * currentValue.precio;
                 });
@@ -147,7 +153,7 @@ export class AppComponent implements OnInit {
             if (this.sectionContentPedido) this.spinner.hide();
           }
         );
-    }
+    } else this.spinner.hide();
   }
 
   onActivate(event: Event) {
@@ -157,6 +163,12 @@ export class AppComponent implements OnInit {
         left: 0,
         behavior: 'smooth',
       });
+  }
+
+  reloadTo(uri: string) {
+    this.router
+      .navigateByUrl('/', { skipLocationChange: true })
+      .then(() => this.router.navigate([uri]));
   }
 
   // Menú toggle
@@ -214,6 +226,7 @@ export class AppComponent implements OnInit {
       this.renderer.removeClass(this.pedidoSection.nativeElement, 'screen');
       this.renderer.removeClass(this.screenEvent.nativeElement, 'active');
       this.sectionContentPedido = false;
+      this.reloadTo('/menu');
     }
     this.ngOnInit();
   }
@@ -223,10 +236,10 @@ export class AppComponent implements OnInit {
   }
 
   getCantidadCombos(_id: String) {
-    return this.pedidos.filter((pedido) => pedido._id === _id)[0].cantidad;
+    return this.pedidos.filter((pedido) => pedido._id === _id)[0]?.cantidad;
   }
 
-  restCar(_id: String) {
+  async restCar(_id: String) {
     this.spinner
       .show()
       .then(() => {
@@ -234,22 +247,29 @@ export class AppComponent implements OnInit {
           if (pedido.cantidad)
             if (pedido._id === _id && pedido.cantidad > 1) {
               pedido.cantidad--;
-            } else if (pedido._id === _id && pedido.cantidad == 1) return false;
+            } else if (pedido._id === _id && pedido.cantidad == 1) {
+              return false;
+            }
 
           return pedido;
         });
       })
       .then(() => {
+        if (!this.pedidos.length) {
+          this.sectionContentPedido = false;
+          this.renderer.removeClass(this.pedidoSection.nativeElement, 'screen');
+          this.renderer.removeClass(this.screenEvent.nativeElement, 'active');
+          this.reloadTo('/menu');
+        }
         if (this.userID)
           this.usersService
             .updateUser(this.userID, this.pedidos, 'pedido')
             .subscribe(
-              (res) => {
+              (res) =>
                 console.log(
-                  '🚀 ~ file: app.component.ts:219 ~ AppComponent ~ .then ~ res',
+                  '🚀 ~ file: app.component.ts:258 ~ AppComponent ~ .then ~ res',
                   res
-                );
-              },
+                ),
               (err) =>
                 this.spinner.hide().then(() => {
                   console.error(err);
@@ -260,16 +280,13 @@ export class AppComponent implements OnInit {
                     scrollbarPadding: false,
                   });
                 }),
-              () => {
-                this.ngOnInit();
-              }
+              () => this.ngOnInit()
             );
         else {
           this.localStorageService.set('pedido', this.pedidos, {});
           this.ngOnInit();
         }
       });
-    return this.spinner.show();
   }
 
   async addCarCantidad(_id: String) {
@@ -310,6 +327,12 @@ export class AppComponent implements OnInit {
           this.ngOnInit();
         }
       });
-    // return this.spinner.show();
+  }
+
+  validateFavorite(_id: String): Boolean {
+    if (this.user && this.user.favoritos && this.user.favoritos.length)
+      if (this.user.favoritos.indexOf(_id) !== -1) return true;
+
+    return false;
   }
 }

@@ -42,7 +42,7 @@ export class UsersService {
   }
 
   updateUser(
-    id: String | undefined,
+    id: String | null | undefined,
     dataUpdate: any,
     NamePropUpdate: String,
     token?: string

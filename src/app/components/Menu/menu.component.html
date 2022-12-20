@@ -38,7 +38,7 @@
                     style="background: url('{{ combo.img }}');"
                   >
                     <h4>Combo {{ i + 1 }}</h4>
-                    <h2>$ {{ combo.precio }}<span>C/U</span></h2>
+                    <h2>{{ combo.precio | currency : "$" : "symbol" : "4.0-0"}}<span>C/U</span></h2>
                   </div>
                   <div class="price-content">
                     <ul>
@@ -131,7 +131,7 @@
                 style="background: url('{{ combo.img }}');"
               >
                 <h4>Combo {{ i + 1 }}</h4>
-                <h2>$ {{ combo.precio }}<span>C/U</span></h2>
+                <h2>{{ combo.precio | currency : "$" : "symbol" : "4.0-0"}}<span>C/U</span></h2>
               </div>
               <div class="price-content">
                 <ul>
@@ -215,11 +215,15 @@
         >
           <li
             (click)="addFavorite(card._id)"
-            [ngClass]="{ active: validateFavorite(card._id) }"
+            [ngClass]="{ active: appComponent.validateFavorite(card._id) }"
           >
             <fa-icon [icon]="faHeart" aria-hidden="true"></fa-icon>
-            <span *ngIf="!validateFavorite(card._id)">Agregar a Favoritos</span>
-            <span *ngIf="validateFavorite(card._id)">Quitar de Favoritos</span>
+            <span *ngIf="!appComponent.validateFavorite(card._id)">
+              Agregar a Favoritos
+            </span>
+            <span *ngIf="appComponent.validateFavorite(card._id)">
+              Quitar de Favoritos
+            </span>
           </li>
           <li (click)="getDetails(card._id)">
             <fa-icon [icon]="faEye" aria-hidden="true"></fa-icon>
@@ -253,7 +257,10 @@
           </label>
         </div>
         <div class="priceRating">
-          <h3>$ {{ card.precio }}<span> C/U</span></h3>
+          <h3>
+            {{ card.precio | currency : "$" : "symbol" : "4.0-0" }}
+            <span> C/U</span>
+          </h3>
           <div class="rating">
             <fa-icon
               [icon]="faStar"

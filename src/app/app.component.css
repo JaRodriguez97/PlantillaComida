@@ -7,7 +7,7 @@ header {
   left: 0;
   width: 100%;
   padding: 1% 5%;
-  z-index: 1000;
+  z-index: 10;
   justify-content: space-between;
   align-items: center;
   transition: 0.5s ease-out;
@@ -18,6 +18,7 @@ header.sticky {
   padding: 20px 100px;
   box-shadow: 0 5px 20px rgba(255, 255, 255, 0.5);
 }
+
 .sectionPedido__divTitle--title,
 header > .logo {
   font-size: 40px;
@@ -26,7 +27,6 @@ header > .logo {
   -webkit-text-stroke: 1px #f87c00;
 }
 
-/* header.sticky ~ .sectionPedido__divTitle--title, */
 header.sticky > .logo {
   color: #fff;
 }
@@ -65,6 +65,8 @@ header > ul > li > a {
   cursor: pointer;
 }
 
+/* !!! PEDIDO !!! */
+
 .sectionPedido {
   position: fixed;
   display: flex;
@@ -81,7 +83,7 @@ header > ul > li > a {
   padding: 1%;
   animation: transitionPedidoBack 1s ease-in;
   transition: 1.5s;
-  z-index: 10;
+  z-index: 11;
 }
 
 @keyframes transitionPedidoBack {
@@ -132,29 +134,30 @@ header > ul > li > a {
 
 .sectionPedido.active.screen {
   bottom: 0vh;
-  top: 30%;
-  height: 70vh;
+  top: auto;
+  height: 100%;
   padding: 5%;
-  width: 95%;
+  width: 100%;
   display: flex;
   flex-direction: column;
   animation: transitionPedidoScreen 1s ease-in;
   gap: 0;
   overflow-x: hidden;
   border-radius: 0%;
-  border-top-right-radius: 15px;
-  border-top-left-radius: 15px;
 }
 
 @keyframes transitionPedidoScreen {
   0% {
-    bottom: -85vh;
-    width: 20%;
+    bottom: 5vh;
+    /* top: auto; */
+    width: 40%;
+    height: 10vh;
   }
   100% {
-    bottom: 0vh;
-    top: 30%;
-    width: 95%;
+    bottom: 0;
+    /* top: auto; */
+    width: 100%;
+    height: 100%;
   }
 }
 
@@ -192,11 +195,12 @@ header > ul > li > a {
 .sectionPedido.active.screen > .sectionPedido__divIcon {
   position: absolute;
   left: 50%;
-  bottom: 30%;
+  top: 20%;
   height: 150px;
   width: -webkit-fill-available;
   align-items: flex-start;
 }
+
 .sectionPedido.active.screen
   > .sectionPedido__divIcon
   > .sectionPedido__divIcon--i {
@@ -215,7 +219,7 @@ header > ul > li > a {
   position: fixed;
   width: 5%;
   height: 8%;
-  top: 35%;
+  top: 5%;
   left: 90%;
   border-radius: 50%;
   transition: 500ms;
@@ -248,7 +252,7 @@ header > ul > li > a {
   color: #ccc;
 }
 
-.sectionPedido__content {
+.sectionPedido__combos {
   position: relative;
   width: 90%;
   margin: 5%;
@@ -259,16 +263,17 @@ header > ul > li > a {
   align-items: center;
 }
 
-.sectionPedido__content--divCombo {
+.sectionPedido__combos--target {
   width: 100%;
   height: 20vh;
   display: flex;
-  padding: 5%;
+  padding: 3%;
   border-radius: 15px;
   background: linear-gradient(45deg, #ccc, transparent);
+  border: #ccc 1px solid;
 }
 
-.sectionPedido__content--divCombo::before {
+.sectionPedido__combos--target::before {
   content: "";
   position: absolute;
   margin-top: 100px;
@@ -281,17 +286,17 @@ header > ul > li > a {
   filter: blur(10px);
 }
 
-.sectionPedido__content--divCombo-cantidad {
+.sectionPedido__combos--target-cantidad {
   position: relative;
   width: 100%;
   height: max-content;
   top: 50%;
-  left: 10%;
+  left: 1%;
   display: flex;
-  gap: 10%;
+  gap: 5%;
 }
 
-.sectionPedido__content--divCombo-cantidad > input {
+.sectionPedido__combos--target-cantidad > input {
   width: max-content;
   max-width: 50px;
   border: none;
@@ -299,31 +304,39 @@ header > ul > li > a {
   display: flex;
 }
 
-.sectionPedido__content--divCombo-img {
-  max-width: 100px;
-  border-radius: 10px;
-}
-
-.sectionPedido__content--divCombo-favorito {
-  position: absolute;
-  top: 70%;
-}
-
-.sectionPedido__content--divCombo-price {
-  position: relative;
-  width: 30%;
-  height: max-content;
-  top: 50%;
-  right: 30%;
+.sectionPedido__combos--target-content {
+  width: 100%;
   display: flex;
 }
 
-/* .sectionPedido__content--divCombo-price____ {
-
-} */
-
-.sectionPedido__content--divCombo-title {
+.content__price {
   position: relative;
+  height: max-content;
+  top: 50%;
+  display: flex;
+}
+
+.content__price--value {
+  font-size: 3vh;
+}
+
+.sectionPedido__combos--target-divImg {
+  max-width: 30%;
+  position: relative;
+}
+
+.sectionPedido__combos--target-divImg_img {
+  width: 100%;
+  height: 100%;
+}
+
+.sectionPedido__combos--target-favorito {
+  /* position: absolute; */
+  /* top: 70%; */
+}
+
+.sectionPedido__combos--target-title {
+  position: absolute;
   width: 100%;
   height: max-content;
   display: flex;
@@ -352,9 +365,9 @@ header > ul > li > a {
   height: max-content;
   padding: 1vh;
   color: #fff;
-  font-size: 5px;
+  font-size: 8px;
   border-radius: 50%;
-  bottom: 2vh;
+  bottom: 3vh;
   left: 3vh;
 }
 

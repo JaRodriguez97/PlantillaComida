@@ -132,27 +132,29 @@ export class MenuComponent implements OnInit {
       }
 
       if (!this.user) {
-        if (!this.pedidos.length)
-          Swal.fire({
-            icon: 'question',
-            title: 'NO ESTÁ REGISTRADO',
-            html: `<h4>Desea ingresar antes de hacer su pedido?</h4>
-        <h6 style="font-size:6px">Si marca NO podrá hacer su pedido sin
+        if (!this.pedidos) {
+          this.spinner.hide().then(() => {
+            Swal.fire({
+              icon: 'question',
+              title: 'NO ESTÁ REGISTRADO',
+              html: `<h4>Desea ingresar antes de hacer su pedido?</h4>
+        <h6 style="font-size:10px">Si marca NO podrá hacer su pedido sin
         ningún problema, pero de manera anónima.</h6>`,
-            showCancelButton: true,
-            cancelButtonText: 'NO',
-            confirmButtonText: 'SÍ',
-            scrollbarPadding: false,
-          }).then((response) => {
-            if (response.isConfirmed) this.router.navigate(['/login', _id]);
-            else {
-              this.pedidos.push({ _id, cantidad: 1 });
-              this.localStorageService.set('pedido', this.pedidos, {});
-              this.ngOnInit();
-              this.appComponent.ngOnInit();
-            }
+              showCancelButton: true,
+              cancelButtonText: 'Quiero hacer mi pedido ya',
+              confirmButtonText: 'Deseo ingresar a mi cuenta',
+              scrollbarPadding: false,
+            }).then((response) => {
+              if (response.isConfirmed) this.router.navigate(['/login', _id]);
+              else {
+                this.pedidos.push({ _id, cantidad: 1 });
+                this.localStorageService.set('pedido', this.pedidos, {});
+                this.ngOnInit();
+                this.appComponent.ngOnInit();
+              }
+            });
           });
-        else {
+        } else {
           this.pedidos.push({ _id, cantidad: 1 });
           this.localStorageService.set('pedido', this.pedidos, {});
           this.ngOnInit();
@@ -166,7 +168,7 @@ export class MenuComponent implements OnInit {
           .subscribe(
             (res) => {
               console.log(
-                '🚀 ~ file: menu.component.ts:184 ~ MenuComponent ~ addToCar ~ res',
+                '🚀 ~ file: menu.component.ts:171 ~ MenuComponent ~ addToCar ~ res',
                 res
               );
             },
@@ -193,17 +195,15 @@ export class MenuComponent implements OnInit {
     if (pedidos && pedidos.length)
       pedidos = pedidos.filter((pedido) => pedido._id === _id);
 
-    return !pedidos?.length;
+    return !pedidos.length;
   }
 
   restCar(_id: String) {
     this.appComponent.restCar(_id).then(() => this.ngOnInit());
-    // .then(() => this.spinner.hide());
   }
 
   addCarCantidad(_id: String) {
     this.appComponent.addCarCantidad(_id).then(() => this.ngOnInit());
-    // .then(() => this.spinner.hide());
   }
 
   addFavorite(_id: String) {
@@ -249,12 +249,5 @@ export class MenuComponent implements OnInit {
         });
       }
     });
-  }
-
-  validateFavorite(_id: String): Boolean {
-    if (this.user && this.user.favoritos && this.user.favoritos.length)
-      if (this.user.favoritos.indexOf(_id) !== -1) return true;
-
-    return false;
   }
 }

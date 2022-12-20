@@ -1,3 +1,4 @@
+import { MenuComponent } from './components/Menu/menu.component';
 import { AgmCoreModule } from '@agm/core';
 import { ScrollingModule } from '@angular/cdk/scrolling';
 import { HttpClientModule } from '@angular/common/http';
@@ -16,15 +17,15 @@ import { AppComponent } from './app.component';
   declarations: [AppComponent],
   imports: [
     BrowserModule.withServerTransition({ appId: 'serverApp' }),
+    AgmCoreModule.forRoot({ apiKey: environment.apiKey }),
+    NgxSpinnerModule.forRoot({ type: 'ball-scale-multiple' }),
     AppRoutingModule,
     SwiperModule,
     HttpClientModule,
     ScrollingModule,
     FontAwesomeModule,
-    AgmCoreModule.forRoot({ apiKey: environment.apiKey }),
     NgxLocalstorageDirectiveModule,
     BrowserAnimationsModule,
-    NgxSpinnerModule.forRoot({ type: 'ball-scale-multiple' }),
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   providers: [],

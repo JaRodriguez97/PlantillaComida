@@ -10,5 +10,4 @@ export interface comboInterface {
   estrellas: Number;
   nombre: String;
   comentarios: [{ _id: String; texto: String }];
-  favorito?: Boolean;
 }
