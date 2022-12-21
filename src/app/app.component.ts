@@ -14,7 +14,6 @@ import { CombosService } from '@service/Combos/combos.service';
 import { UsersService } from '@service/Users/users.service';
 import { LocalStorageService } from 'ngx-localstorage';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { map } from 'rxjs';
 import { getWindow } from 'ssr-window';
 import Swal from 'sweetalert2';
 
@@ -32,7 +31,6 @@ export class AppComponent implements OnInit {
   userID!: String | null | undefined;
   sectionContentPedido!: Boolean;
   combosPedido!: comboInterface[];
-  window: Window = window;
 
   @ViewChild('header') header!: ElementRef;
   @ViewChild('toggle') menuToggle!: ElementRef;
