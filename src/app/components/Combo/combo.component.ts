@@ -4,6 +4,8 @@ import { comboInterface } from '@models/combo.interface';
 import { CombosService } from '@service/Combos/combos.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import Swal from 'sweetalert2';
+import { AppComponent } from '@app/app.component';
+
 @Component({
   selector: 'app-combo',
   templateUrl: './combo.component.html',
@@ -13,6 +15,7 @@ export class ComboComponent implements OnInit {
   combo!: comboInterface;
 
   constructor(
+    public appComponent: AppComponent,
     private combosService: CombosService,
     private activatedRoute: ActivatedRoute,
     private spinner: NgxSpinnerService,

@@ -290,6 +290,33 @@ section::after {
   border-radius: 5px;
 }
 
+.formBox__row--col > input:disabled {
+  cursor: not-allowed;
+  background: #4a1219;
+  color: #fff;
+}
+
+.formBox__row--col > input:disabled::before {
+  content: "Finaliza el formulario para poder comentar";
+  height: 10px;
+  width: 10px;
+  position: absolute;
+}
+
+.sinComentarios {
+  width: max-content;
+  position: relative;
+  display: flex;
+  padding: 3%;
+  margin: 3%;
+  justify-content: center;
+  align-items: center;
+}
+
+.sinComentarios__h3 {
+  color: #fff;
+}
+
 @media (max-width: 991px) {
   section::before {
     top: 150vh;

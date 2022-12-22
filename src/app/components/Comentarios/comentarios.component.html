@@ -1,78 +1,48 @@
 <section>
+  <!-- !!!COMENTARIOS!!! -->
   <div class="title">
     <h2 class="title__h2">COMENTARIOS</h2>
   </div>
-  <div class="container">
-    <div class="container__box">
+  <div class="container" *ngIf="comentarios">
+    <div
+      *ngFor="let comentario of comentarios; let i = index"
+      class="container__box"
+    >
       <div class="container__box--imgBox">
-        <img src="../../../assets/images/cards/aperitivos.jpg" alt="" />
+        <img
+          *ngIf="userArray[i] && userArray[i].img"
+          [src]="userArray[i].img || '../../../assets/images/user.png'"
+          [alt]="userArray[i].nombres || ''"
+        />
+        <img
+          *ngIf="userArray[i] && !userArray[i].img"
+          src="../../../assets/images/user.png"
+          [alt]="userArray[i].nombres || ''"
+        />
       </div>
-      <p>
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Exercitationem
-        dolorem possimus, harum officiis ipsa cupiditate tenetur molestias
-        blanditiis. Omnis quo odio vitae perferendis ea nulla numquam commodi!
-        Consectetur, eaque doloribus?
-      </p>
-      <h3>
-        Some Famous <br />
-        <span>Creative Director</span>
+      <p>{{ comentario.texto }}</p>
+      <h3 *ngIf="userArray[i] && userArray[i].nombres">
+        {{ userArray[i].nombres }} <br />
+        <span>{{ userArray[i].apellidos || "" }}</span>
+      </h3>
+      <h3 *ngIf="userArray[i] && !userArray[i].nombres">
+        Anonimo <br />
+        <span>Anonimo</span>
       </h3>
     </div>
-    <!-- !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! -->
-    <div class="container__box">
-      <div class="container__box--imgBox">
-        <img src="../../../assets/images/cards/aperitivos.jpg" alt="" />
-      </div>
-      <p>
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Exercitationem
-        dolorem possimus, harum officiis ipsa cupiditate tenetur molestias
-        blanditiis. Omnis quo odio vitae perferendis ea nulla numquam commodi!
-        Consectetur, eaque doloribus?
-      </p>
-      <h3>
-        Some Famous <br />
-        <span>Creative Director</span>
-      </h3>
-    </div>
-    <!-- !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! -->
-    <div class="container__box">
-      <div class="container__box--imgBox">
-        <img src="../../../assets/images/cards/aperitivos.jpg" alt="" />
-      </div>
-      <p>
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Exercitationem
-        dolorem possimus, harum officiis ipsa cupiditate tenetur molestias
-        blanditiis. Omnis quo odio vitae perferendis ea nulla numquam commodi!
-        Consectetur, eaque doloribus?
-      </p>
-      <h3>
-        Some Famous <br />
-        <span>Creative Director</span>
-      </h3>
-    </div>
-    <!-- !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! -->
-    <div class="container__box">
-      <div class="container__box--imgBox">
-        <img src="../../../assets/images/cards/aperitivos.jpg" alt="" />
-      </div>
-      <p>
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Exercitationem
-        dolorem possimus, harum officiis ipsa cupiditate tenetur molestias
-        blanditiis. Omnis quo odio vitae perferendis ea nulla numquam commodi!
-        Consectetur, eaque doloribus?
-      </p>
-      <h3>
-        Some Famous <br />
-        <span>Creative Director</span>
-      </h3>
-    </div>
-    <!-- !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! -->
   </div>
+
+  <div *ngIf="!comentarios" class="sinComentarios">
+    <h3 class="sinComentarios__h3">NO HAY COMENTARIOS PARA ESTE COMBO</h3>
+  </div>
+
+  <!-- !!! formulario !!! -->
+
   <form
     name="contact"
     data-netlify="true"
     class="formBox"
-    (ngSubmit)="handleSubmit()"
+    (ngSubmit)="handleSubmit(comentarioID)"
     [formGroup]="contactForm"
   >
     <h2 class="formBox__h2">Comenta el combo</h2>
@@ -127,11 +97,11 @@
       <div class="formBox__row--col">
         <div class="formBox__row--col-inputBox textarea">
           <textarea
-            name="comentario"
-            id="comentario"
+            name="comentarios"
+            id="comentarios"
             cols="30"
             rows="10"
-            formControlName="comentario"
+            formControlName="comentarios"
             required
           ></textarea>
           <span class="text">Escribe tu comentario</span>

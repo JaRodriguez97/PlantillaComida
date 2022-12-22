@@ -40,4 +40,13 @@ export class CombosService {
     return this.http.post<comboInterface[]>(this.URL, { arrayID }, { headers });
   }
 
+  updateComboComentario(id: String, contactForm: any, token?: string) {
+    let headers = this.headers(token);
+
+    return this.http.put<comboInterface>(
+      this.URL + 'createComent',
+      { id, contactForm },
+      { headers }
+    );
+  }
 }

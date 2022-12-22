@@ -10,7 +10,7 @@
       </p>
       <div class="banner__content--contentBx-inlineBlock">
         <a href="#">Buy Now</a>
-        <span>{{ combo.precio }}</span>
+        <span>{{ combo.precio | currency : "$" : "symbol" : "4.0-0" }}</span>
       </div>
     </div>
     <div class="banner__content--imgBx">
@@ -19,7 +19,10 @@
   </div>
 </section>
 <section *ngIf="combo">
-  <app-comentarios [comentarios]="combo.comentarios"></app-comentarios>
+  <app-comentarios
+    [comentarios]="combo.comentarios"
+    [comentarioID]="combo._id"
+  ></app-comentarios>
 </section>
 <section>
   <app-footer></app-footer>

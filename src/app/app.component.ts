@@ -6,7 +6,8 @@ import {
   Renderer2,
   ViewChild,
 } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { faHeart } from '@fortawesome/free-solid-svg-icons';
 import { comboInterface } from '@models/combo.interface';
 import { pedidoInterface } from '@models/pedido.interface';
 import { userInterface } from '@models/users.interface';
@@ -16,7 +17,6 @@ import { LocalStorageService } from 'ngx-localstorage';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { getWindow } from 'ssr-window';
 import Swal from 'sweetalert2';
-
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -31,6 +31,7 @@ export class AppComponent implements OnInit {
   userID!: String | null | undefined;
   sectionContentPedido!: Boolean;
   combosPedido!: comboInterface[];
+  faHeart = faHeart;
 
   @ViewChild('header') header!: ElementRef;
   @ViewChild('toggle') menuToggle!: ElementRef;
@@ -332,5 +333,50 @@ export class AppComponent implements OnInit {
       if (this.user.favoritos.indexOf(_id) !== -1) return true;
 
     return false;
+  }
+
+  addFavorite(_id: String) {
+    this.spinner.show().then(() => {
+      if (this.user) {
+        if (this.user.favoritos) {
+          if (this.user.favoritos.length) {
+            let index = this.user.favoritos.indexOf(_id);
+
+            if (index == -1) this.user.favoritos.push(_id);
+            else this.user.favoritos!.splice(index, 1);
+          } else this.user.favoritos.push(_id);
+        } else {
+          this.user.favoritos = [];
+          this.user.favoritos.push(_id);
+        }
+
+        this.usersService
+          .updateUser(this.user._id, this.user.favoritos, 'favoritos')
+          .subscribe(
+            (res) => this.ngOnInit(),
+            (err) =>
+              this.spinner.hide().then(() => {
+                console.error(err);
+                Swal.fire({
+                  confirmButtonColor: '#000',
+                  icon: 'error',
+                  html: err.error.message,
+                  scrollbarPadding: false,
+                });
+              })
+          );
+      } else {
+        this.spinner.hide();
+        Swal.fire({
+          icon: 'question',
+          title: 'NO HAS INICIADO SESIÓN',
+          text: 'Registrate antes para poder marcar como favorito',
+          showCancelButton: true,
+          scrollbarPadding: false,
+        }).then((response) => {
+          if (response.value) this.router.navigate(['/login']);
+        });
+      }
+    });
   }
 }

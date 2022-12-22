@@ -7,7 +7,7 @@ import {
   faEye,
   faHeart,
   faShoppingCart,
-  faStar,
+  faStar
 } from '@fortawesome/free-solid-svg-icons';
 import { comboInterface } from '@models/combo.interface';
 import { pedidoInterface } from '@models/pedido.interface';
@@ -21,7 +21,7 @@ import SwiperCore, {
   Autoplay,
   EffectCoverflow,
   Navigation,
-  Pagination,
+  Pagination
 } from 'swiper';
 
 SwiperCore.use([EffectCoverflow, Pagination, Navigation, Autoplay]);
@@ -195,7 +195,7 @@ export class MenuComponent implements OnInit {
     if (pedidos && pedidos.length)
       pedidos = pedidos.filter((pedido) => pedido._id === _id);
 
-    return !pedidos.length;
+    return !pedidos?.length || false;
   }
 
   restCar(_id: String) {
@@ -204,50 +204,5 @@ export class MenuComponent implements OnInit {
 
   addCarCantidad(_id: String) {
     this.appComponent.addCarCantidad(_id).then(() => this.ngOnInit());
-  }
-
-  addFavorite(_id: String) {
-    this.spinner.show().then(() => {
-      if (this.user) {
-        if (this.user.favoritos) {
-          if (this.user.favoritos.length) {
-            let index = this.user.favoritos.indexOf(_id);
-
-            if (index == -1) this.user.favoritos.push(_id);
-            else this.user.favoritos!.splice(index, 1);
-          } else this.user.favoritos.push(_id);
-        } else {
-          this.user.favoritos = [];
-          this.user.favoritos.push(_id);
-        }
-
-        this.usersService
-          .updateUser(this.user._id, this.user.favoritos, 'favoritos')
-          .subscribe(
-            (res) => this.ngOnInit(),
-            (err) =>
-              this.spinner.hide().then(() => {
-                console.error(err);
-                Swal.fire({
-                  confirmButtonColor: '#000',
-                  icon: 'error',
-                  html: err.error.message,
-                  scrollbarPadding: false,
-                });
-              })
-          );
-      } else {
-        this.spinner.hide();
-        Swal.fire({
-          icon: 'question',
-          title: 'NO HAS INICIADO SESIÓN',
-          text: 'Registrate antes para poder marcar como favorito',
-          showCancelButton: true,
-          scrollbarPadding: false,
-        }).then((response) => {
-          if (response.value) this.router.navigate(['/login']);
-        });
-      }
-    });
   }
 }

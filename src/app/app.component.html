@@ -54,7 +54,7 @@
   </div>
   <div class="sectionPedido__totalPedido">
     <strong class="sectionPedido__totalPedido--strong">
-      ${{ totalPedido | number : "1.0" : "en-US" }}
+      {{ totalPedido | currency : "$" : "symbol" : "4.0-0" }}
     </strong>
   </div>
   <div class="sectionPedido__divIcon">
@@ -69,39 +69,44 @@
         {{ combo.nombre }}
       </div>
       <div class="sectionPedido__combos--target-content">
-        <div class="content__price">
-          <div class="content__price--value">
-            ${{ combo.precio | number : "1.0" : "en-US" }}
+        <div class="content__cantidad">
+          <div
+            class="content__cantidad--addCar"
+            (click)="addCarCantidad(combo._id)"
+          >
+            +
           </div>
-        </div>
-        <div class="sectionPedido__combos--target-cantidad">
-          <div class="sectionPedido__combos--target-cantidad">
-            X
-            <div class="cantidad__restCar" (click)="restCar(combo._id)">-</div>
+          <div class="content__cantidad--input">
             <input
               type="number"
               [value]="getCantidadCombos(combo._id)"
               disabled
             />
-            <div class="cantidad__addCar" (click)="addCarCantidad(combo._id)">
-              +
-            </div>
-            Unidad(es)
+          </div>
+          <div class="content__cantidad--restCar" (click)="restCar(combo._id)">
+            -
+          </div>
+          Unidad(es)
+        </div>
+        <div class="content__price">
+          <div class="content__price--value">
+            {{ combo.precio | currency : "$" : "symbol" : "4.0-0" }}
           </div>
         </div>
-        <div class="sectionPedido__combos--target-divImg">
-          <img
-            class="sectionPedido__combos--target-divImg_img"
-            [src]="combo.img"
-            [alt]="combo.nombre"
-          />
-        </div>
-        <div
-          class="sectionPedido__combos--target-favorito"
-          [ngClass]="{ favoriteActive: validateFavorite(combo._id) }"
-        >
-          <!-- {{ combo.favorito }} -->
-        </div>
+      </div>
+      <div class="sectionPedido__combos--target-divImg">
+        <img
+          class="sectionPedido__combos--target-divImg_img"
+          [src]="combo.img"
+          [alt]="combo.nombre"
+        />
+      </div>
+      <div
+        (click)="addFavorite(combo._id)"
+        class="sectionPedido__combos--target-favorito"
+        [ngClass]="{ favoriteActive: validateFavorite(combo._id) }"
+      >
+        <fa-icon [icon]="faHeart" aria-hidden="true"></fa-icon>
       </div>
     </div>
   </div>

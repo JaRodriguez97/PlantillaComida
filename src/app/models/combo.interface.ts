@@ -9,5 +9,5 @@ export interface comboInterface {
   REF: String;
   estrellas: Number;
   nombre: String;
-  comentarios: [{ _id: String; texto: String }];
+  comentarios: [{ _idUser?: String; texto: String; fecha?: Date }];
 }
