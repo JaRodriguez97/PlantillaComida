@@ -3,7 +3,7 @@
   <div class="title">
     <h2 class="title__h2">COMENTARIOS</h2>
   </div>
-  <div class="container" *ngIf="comentarios">
+  <div class="container" *ngIf="comentarios && comentarios.length">
     <div
       *ngFor="let comentario of comentarios; let i = index"
       class="container__box"
@@ -25,14 +25,19 @@
         {{ userArray[i].nombres }} <br />
         <span>{{ userArray[i].apellidos || "" }}</span>
       </h3>
-      <h3 *ngIf="userArray[i] && !userArray[i].nombres">
+      <h3
+        *ngIf="
+          userArray[i] &&
+          (!userArray[i].nombres || !userArray[i].nombres?.length)
+        "
+      >
         Anonimo <br />
         <span>Anonimo</span>
       </h3>
     </div>
   </div>
 
-  <div *ngIf="!comentarios" class="sinComentarios">
+  <div *ngIf="!comentarios || !comentarios.length" class="sinComentarios">
     <h3 class="sinComentarios__h3">NO HAY COMENTARIOS PARA ESTE COMBO</h3>
   </div>
 

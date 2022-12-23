@@ -1,3 +1,5 @@
+import { ComentarioInterface } from './comentarios.interface';
+
 export interface comboInterface {
   _id: String;
   precio: number;
@@ -9,5 +11,5 @@ export interface comboInterface {
   REF: String;
   estrellas: Number;
   nombre: String;
-  comentarios: [{ _idUser?: String; texto: String; fecha?: Date }];
+  comentarios: ComentarioInterface[];
 }

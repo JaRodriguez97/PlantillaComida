@@ -95,10 +95,11 @@
   margin: 0 20% 0 0;
 }
 
-.banner__content--contentBx-inlineBlock > a {
+.banner__content--contentBx-inlineBlock > button {
   display: inline-block;
   border: solid 1px #fff;
   color: #fff;
+  background-color: transparent;
   padding: 10px 30px;
   text-transform: uppercase;
   text-decoration: none;
@@ -106,7 +107,7 @@
   min-width: max-content;
 }
 
-.banner__content--contentBx-inlineBlock > a:hover {
+.banner__content--contentBx-inlineBlock > button:hover {
   letter-spacing: 4px;
   background: #fff;
   color: #111;

@@ -1,5 +1,3 @@
-import { CombosService } from './../../services/Combos/combos.service';
-import { userInterface } from './../../models/users.interface';
 import { LowerCasePipe } from '@angular/common';
 import { Component, Input, OnInit } from '@angular/core';
 import {
@@ -8,8 +6,14 @@ import {
   ValidationErrors,
   Validators,
 } from '@angular/forms';
+import { AppComponent } from '@app/app.component';
+import { ComboComponent } from '@components/Combo/combo.component';
+import { ComentarioInterface } from '@models/comentarios.interface';
+import { userInterface } from '@models/users.interface';
+import { CombosService } from '@service/Combos/combos.service';
 import { UsersService } from '@service/Users/users.service';
 import { LocalStorageService } from 'ngx-localstorage';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-comentarios',
@@ -17,9 +21,10 @@ import { LocalStorageService } from 'ngx-localstorage';
   styleUrls: ['./comentarios.component.css'],
 })
 export class ComentariosComponent implements OnInit {
-  @Input() comentarios!: [{ _idUser?: String; texto: String; fecha?: Date }];
+  @Input() comentarios!: ComentarioInterface[];
   @Input() comentarioID!: String;
   contactForm!: FormGroup;
+  user!: userInterface;
   userArray: userInterface[] = [];
   usersComentarios!: userInterface;
 
@@ -27,16 +32,26 @@ export class ComentariosComponent implements OnInit {
     private readonly formBuilder: FormBuilder,
     private localStorageService: LocalStorageService,
     private usersService: UsersService,
-    private combosService: CombosService
+    private combosService: CombosService,
+    private spinner: NgxSpinnerService,
+    private comboComponent: ComboComponent,
+    private appComponent: AppComponent
   ) {}
 
   ngOnInit(): void {
-    if (this.comentarios)
+    if (this.comentarios && this.comentarios.length)
       this.comentarios.forEach((comentario) => {
-        this.usersService.getUser(comentario._idUser!).subscribe(
-          (res) => this.userArray.push(res),
-          (err) => console.error(err)
-        );
+        if (comentario._idUser)
+          this.usersService.getUser(comentario._idUser).subscribe(
+            (res) => this.userArray.push(res),
+            (err) => console.error(err)
+          );
+        else {
+          this.userArray.push({
+            nombres: comentario.nombres,
+            apellidos: comentario.apellidos,
+          });
+        }
       });
 
     let userID = this.localStorageService.get<String>('userID', {})!,
@@ -65,6 +80,7 @@ export class ComentariosComponent implements OnInit {
     if (userID) {
       this.usersService.getUser(userID).subscribe(
         (res) => {
+          this.user = res;
           groupForm.id = [];
           groupForm.id.push(userID);
           if (res.nombres)
@@ -107,7 +123,7 @@ export class ComentariosComponent implements OnInit {
       return this.formBuilder.group(groupForm);
 
     return this.formBuilder.group({
-      nombres: ['', [Validators.required, Validators.minLength(3)]],
+      nombres: ['', [Validators.required, Validators.minLength(3),]],
       email: ['', [Validators.required, Validators.minLength(5)]],
       apellidos: ['', [Validators.required, Validators.minLength(3)]],
       comentarios: [
@@ -123,9 +139,16 @@ export class ComentariosComponent implements OnInit {
   }
 
   handleSubmit(comentarioID: String) {
-    this.combosService
-      .updateComboComentario(comentarioID, this.contactForm.value)
-      .subscribe((res) => console.log(res));
+    this.spinner.show().then(() => {
+      console.log(this.contactForm.value);
+      this.combosService
+        .updateComboComentario(comentarioID, this.contactForm.value)
+        .subscribe(
+          (res) => console.log(res),
+          (err) => console.error(err),
+          () => this.appComponent.reloadTo('/combo/' + this.comentarioID)
+        );
+    });
   }
 
   getUserComent() {}

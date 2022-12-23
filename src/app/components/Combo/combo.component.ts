@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { AppComponent } from '@app/app.component';
 import { comboInterface } from '@models/combo.interface';
 import { CombosService } from '@service/Combos/combos.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import Swal from 'sweetalert2';
-import { AppComponent } from '@app/app.component';
 
 @Component({
   selector: 'app-combo',
@@ -40,5 +40,17 @@ export class ComboComponent implements OnInit {
         () => setTimeout(() => this.spinner.hide(), 500)
       );
     });
+  }
+
+  addToCar(_id: String, i?: number, realoadTo?: String) {
+    this.appComponent.addToCar(_id, i, realoadTo).then(() => this.ngOnInit());
+  }
+
+  restCar(_id: String, realoadTo?: String) {
+    this.appComponent.restCar(_id, realoadTo).then(() => this.ngOnInit());
+  }
+
+  addCarCantidad(_id: String) {
+    this.appComponent.addCarCantidad(_id).then(() => this.ngOnInit());
   }
 }

@@ -9,7 +9,38 @@
         "{{ combo.incluye }}", tinene un peso de "{{ combo.peso }}"
       </p>
       <div class="banner__content--contentBx-inlineBlock">
-        <a href="#">Buy Now</a>
+        <button
+          type="button"
+          (click)="addToCar(combo._id, undefined, '/combo/' + combo._id)"
+          *ngIf="
+            appComponent.existeComboPedido(combo._id, appComponent.pedidos)
+          "
+        >
+          Agregar
+        </button>
+        <div
+          class="addRestCar"
+          *ngIf="
+            !appComponent.existeComboPedido(combo._id, appComponent.pedidos)
+          "
+        >
+          <div class="title">
+            <h5>Cantidad:</h5>
+          </div>
+          <div
+            class="restCar"
+            (click)="restCar(combo._id, '/combo/' + combo._id)"
+          >
+            -
+          </div>
+          <input
+            type="number"
+            [value]="appComponent.getCantidadCombos(combo._id)"
+            disabled
+          />
+          <div class="addCar" (click)="addCarCantidad(combo._id)">+</div>
+        </div>
+
         <span>{{ combo.precio | currency : "$" : "symbol" : "4.0-0" }}</span>
       </div>
     </div>

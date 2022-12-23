@@ -1,7 +1,9 @@
+import { DOCUMENT } from '@angular/common';
 import {
   Component,
   ElementRef,
   HostListener,
+  Inject,
   OnInit,
   Renderer2,
   ViewChild,
@@ -46,7 +48,8 @@ export class AppComponent implements OnInit {
     public router: Router,
     public localStorageService: LocalStorageService,
     private usersService: UsersService,
-    private spinner: NgxSpinnerService
+    private spinner: NgxSpinnerService,
+    @Inject(DOCUMENT) private document: Document
   ) {}
 
   @HostListener('window:scroll')
@@ -62,8 +65,6 @@ export class AppComponent implements OnInit {
       'pedido',
       {}
     );
-
-    // this.activatedRoute.url.subscribe((res) => console.log(res.join('')));
 
     this.totalPedido = 0;
     this.pedidosLength = 1;
@@ -164,13 +165,12 @@ export class AppComponent implements OnInit {
       });
   }
 
-  reloadTo(uri: string) {
+  async reloadTo(uri: String) {
     this.router
       .navigateByUrl('/', { skipLocationChange: true })
       .then(() => this.router.navigate([uri]));
   }
 
-  // Menú toggle
   toogleMenu() {
     let toggleMenu = this.menuToggle.nativeElement,
       menu = this.menu.nativeElement,
@@ -203,7 +203,7 @@ export class AppComponent implements OnInit {
       scrollbarPadding: false,
     })
       .then(() => this.redirectTo('/login'))
-      .then(() => (this.user = undefined))
+      .then(() => ((this.user = undefined), (this.pedidos = [])))
       .then(() => this.localStorageService.clear());
   }
 
@@ -238,17 +238,14 @@ export class AppComponent implements OnInit {
     return this.pedidos.filter((pedido) => pedido._id === _id)[0]?.cantidad;
   }
 
-  async restCar(_id: String) {
+  async restCar(_id: String, realoadTo?: String) {
     this.spinner
       .show()
       .then(() => {
         this.pedidos = this.pedidos.filter((pedido) => {
           if (pedido.cantidad)
-            if (pedido._id === _id && pedido.cantidad > 1) {
-              pedido.cantidad--;
-            } else if (pedido._id === _id && pedido.cantidad == 1) {
-              return false;
-            }
+            if (pedido._id === _id && pedido.cantidad > 1) pedido.cantidad--;
+            else if (pedido._id === _id && pedido.cantidad == 1) return false;
 
           return pedido;
         });
@@ -258,8 +255,9 @@ export class AppComponent implements OnInit {
           this.sectionContentPedido = false;
           this.renderer.removeClass(this.pedidoSection.nativeElement, 'screen');
           this.renderer.removeClass(this.screenEvent.nativeElement, 'active');
-          this.reloadTo('/menu');
+          this.reloadTo(realoadTo! || '/menu');
         }
+
         if (this.userID)
           this.usersService
             .updateUser(this.userID, this.pedidos, 'pedido')
@@ -376,6 +374,75 @@ export class AppComponent implements OnInit {
         }).then((response) => {
           if (response.value) this.router.navigate(['/login']);
         });
+      }
+    });
+  }
+
+  existeComboPedido(_id: String, pedidos: pedidoInterface[]): Boolean {
+    return !pedidos.some((pedido) => pedido._id === _id) || false;
+  }
+
+  async addToCar(_id: String, i?: number, realoadTo?: String): Promise<void> {
+    this.spinner.show().then(() => {
+      if (typeof i == 'number') {
+        let list = this.document.querySelectorAll('.action')[i];
+
+        this.renderer.addClass(list, 'active');
+      }
+
+      if (!this.user) {
+        if (!this.pedidos) {
+          this.spinner.hide().then(() => {
+            Swal.fire({
+              icon: 'question',
+              title: 'NO ESTÁ REGISTRADO',
+              html: `<h4>Desea ingresar antes de hacer su pedido?</h4>
+        <h6 style="font-size:10px">Si marca NO podrá hacer su pedido sin
+        ningún problema, pero de manera anónima.</h6>`,
+              showCancelButton: true,
+              cancelButtonText: 'Quiero hacer mi pedido ya',
+              confirmButtonText: 'Deseo ingresar a mi cuenta',
+              scrollbarPadding: false,
+            }).then((response) => {
+              if (response.isConfirmed) this.router.navigate(['/login', _id]);
+              else {
+                this.pedidos = [];
+                this.pedidos.push({ _id, cantidad: 1 });
+                this.localStorageService.set('pedido', this.pedidos, {});
+                this.ngOnInit();
+                this.reloadTo(realoadTo! || '/menu');
+              }
+            });
+          });
+        } else {
+          this.pedidos.push({ _id, cantidad: 1 });
+          this.localStorageService.set('pedido', this.pedidos, {});
+          this.ngOnInit();
+        }
+      } else {
+        this.pedidos.push({ _id, cantidad: 1 });
+
+        this.usersService
+          .updateUser(this.userID, this.pedidos, 'pedido')
+          .subscribe(
+            (res) => {
+              console.log(
+                '🚀 ~ file: app.component.ts:430 ~ this.usersService.updateUser ~ res',
+                res
+              );
+            },
+            (err) =>
+              this.spinner.hide().then(() => {
+                console.error(err);
+                Swal.fire({
+                  confirmButtonColor: '#000',
+                  icon: 'error',
+                  html: err.error.message,
+                  scrollbarPadding: false,
+                });
+              }),
+            () => this.ngOnInit()
+          );
       }
     });
   }

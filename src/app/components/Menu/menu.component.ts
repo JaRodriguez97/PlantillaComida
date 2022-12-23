@@ -7,7 +7,7 @@ import {
   faEye,
   faHeart,
   faShoppingCart,
-  faStar
+  faStar,
 } from '@fortawesome/free-solid-svg-icons';
 import { comboInterface } from '@models/combo.interface';
 import { pedidoInterface } from '@models/pedido.interface';
@@ -21,7 +21,7 @@ import SwiperCore, {
   Autoplay,
   EffectCoverflow,
   Navigation,
-  Pagination
+  Pagination,
 } from 'swiper';
 
 SwiperCore.use([EffectCoverflow, Pagination, Navigation, Autoplay]);
@@ -91,10 +91,6 @@ export class MenuComponent implements OnInit {
                 this.user = res;
                 this.appComponent.user = res;
                 this.pedidos = this.user.pedido!;
-                console.log(
-                  '🚀 ~ file: menu.component.ts:94 ~ MenuComponent ~ this.spinner.show ~ this.pedidos',
-                  this.pedidos
-                );
               },
               (err) =>
                 this.spinner.hide().then(() => {
@@ -123,83 +119,12 @@ export class MenuComponent implements OnInit {
     this.spinner.show().then(() => this.router.navigate(['/combo', _id]));
   }
 
-  addToCar(_id: String, i?: number) {
-    this.spinner.show().then(() => {
-      if (typeof i == 'number') {
-        let list = this.document.querySelectorAll('.action')[i];
-
-        this.renderer.addClass(list, 'active');
-      }
-
-      if (!this.user) {
-        if (!this.pedidos) {
-          this.spinner.hide().then(() => {
-            Swal.fire({
-              icon: 'question',
-              title: 'NO ESTÁ REGISTRADO',
-              html: `<h4>Desea ingresar antes de hacer su pedido?</h4>
-        <h6 style="font-size:10px">Si marca NO podrá hacer su pedido sin
-        ningún problema, pero de manera anónima.</h6>`,
-              showCancelButton: true,
-              cancelButtonText: 'Quiero hacer mi pedido ya',
-              confirmButtonText: 'Deseo ingresar a mi cuenta',
-              scrollbarPadding: false,
-            }).then((response) => {
-              if (response.isConfirmed) this.router.navigate(['/login', _id]);
-              else {
-                this.pedidos.push({ _id, cantidad: 1 });
-                this.localStorageService.set('pedido', this.pedidos, {});
-                this.ngOnInit();
-                this.appComponent.ngOnInit();
-              }
-            });
-          });
-        } else {
-          this.pedidos.push({ _id, cantidad: 1 });
-          this.localStorageService.set('pedido', this.pedidos, {});
-          this.ngOnInit();
-          this.appComponent.ngOnInit();
-        }
-      } else {
-        this.pedidos.push({ _id, cantidad: 1 });
-
-        this.usersService
-          .updateUser(this.userID, this.pedidos, 'pedido')
-          .subscribe(
-            (res) => {
-              console.log(
-                '🚀 ~ file: menu.component.ts:171 ~ MenuComponent ~ addToCar ~ res',
-                res
-              );
-            },
-            (err) =>
-              this.spinner.hide().then(() => {
-                console.error(err);
-                Swal.fire({
-                  confirmButtonColor: '#000',
-                  icon: 'error',
-                  html: err.error.message,
-                  scrollbarPadding: false,
-                });
-              }),
-            () => {
-              this.ngOnInit();
-              this.appComponent.ngOnInit();
-            }
-          );
-      }
-    });
+  addToCar(_id: String, i?: number, realoadTo?: String) {
+    this.appComponent.addToCar(_id, i, realoadTo).then(() => this.ngOnInit());
   }
 
-  existeComboPedido(_id: String, pedidos: pedidoInterface[]): Boolean {
-    if (pedidos && pedidos.length)
-      pedidos = pedidos.filter((pedido) => pedido._id === _id);
-
-    return !pedidos?.length || false;
-  }
-
-  restCar(_id: String) {
-    this.appComponent.restCar(_id).then(() => this.ngOnInit());
+  restCar(_id: String, realoadTo?: String) {
+    this.appComponent.restCar(_id, realoadTo).then(() => this.ngOnInit());
   }
 
   addCarCantidad(_id: String) {
