@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng g m components/Comentarios/comentarios -m=app --route comentarios --flat",
+    "start": "ng g m components/Pedido/Pedido -m=app --route finalizarPedido --flat",
     "dev": "ng serve -o",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",

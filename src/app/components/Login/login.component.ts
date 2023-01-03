@@ -1,15 +1,13 @@
-import { pedidoInterface } from '@models/pedido.interface';
-import { AppComponent } from '@app/app.component';
 import {
-  AfterViewInit,
   Component,
   ElementRef,
   OnInit,
   Renderer2,
-  ViewChild,
+  ViewChild
 } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
-import { userInterface } from '@app/models/users.interface';
+import { ActivatedRoute, Router } from '@angular/router';
+import { AppComponent } from '@app/app.component';
+import { pedidoInterface } from '@models/pedido.interface';
 import { UsersService } from '@service/Users/users.service';
 import { LocalStorageService } from 'ngx-localstorage';
 import { NgxSpinnerService } from 'ngx-spinner';
@@ -20,9 +18,7 @@ import Swal from 'sweetalert2';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css'],
 })
-export class LoginComponent implements OnInit, AfterViewInit {
-  @ViewChild('signInBtn') signInBtn!: ElementRef;
-  @ViewChild('signUpBtn') signUpBtn!: ElementRef;
+export class LoginComponent implements OnInit {
   @ViewChild('formBx') formBx!: ElementRef;
   @ViewChild('body') body!: ElementRef;
   telefono!: Number;
@@ -42,31 +38,39 @@ export class LoginComponent implements OnInit, AfterViewInit {
     private router: Router,
     private localStorageService: LocalStorageService,
     private spinner: NgxSpinnerService
-  ) {}
-
-  ngOnInit(): void {
-    this.spinner.show();
+  ) {
+    appComponent.ngOnInit().then(() => {});
   }
 
-  ngAfterViewInit(): void {
-    if (this.localStorageService.get<String>('userID', {}))
-      this.router.navigate(['/landing']);
+  ngOnInit(): void {
+    this.spinner
+      .show()
+      .then(() => {
+        if (this.localStorageService.get<String>('userID', {}))
+          this.router.navigate(['/landing']);
 
-    this.pedidos = this.localStorageService.get<pedidoInterface[]>(
-      'pedido',
-      {}
-    )!;
+        this.renderer.removeClass(
+          this.appComponent.pedidoSection.nativeElement,
+          'active'
+        );
+        
+        this.pedidos = this.localStorageService.get<pedidoInterface[]>(
+          'pedido',
+          {}
+        )!;
+      })
+      .then(() => {})
+      .then(() => this.spinner.hide());
+  }
 
-    this.renderer.listen(this.signUpBtn.nativeElement, 'click', () => {
-      this.renderer.addClass(this.formBx.nativeElement, 'active');
-      this.renderer.addClass(this.body.nativeElement, 'active');
-    });
+  signInBtn() {
+    this.renderer.removeClass(this.formBx.nativeElement, 'active');
+    this.renderer.removeClass(this.body.nativeElement, 'active');
+  }
 
-    this.renderer.listen(this.signInBtn.nativeElement, 'click', () => {
-      this.renderer.removeClass(this.formBx.nativeElement, 'active');
-      this.renderer.removeClass(this.body.nativeElement, 'active');
-    });
-    this.spinner.hide();
+  signUpBtn() {
+    this.renderer.addClass(this.formBx.nativeElement, 'active');
+    this.renderer.addClass(this.body.nativeElement, 'active');
   }
 
   checkLogin() {

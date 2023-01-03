@@ -58,61 +58,67 @@ export class MenuComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.spinner.show().then(() => {
-      this.userID = this.localStorageService.get<String>('userID', {})!;
+    this.spinner
+      .show()
+      .then(() => {
+        this.userID = this.localStorageService.get<String>('userID', {})!;
+        this.appComponent.ngOnInit();
 
-      this.combosService.getCombos().subscribe(
-        (res) => {
-          this.CombosBD = res.filter((combo) => combo.estrellas === 5);
-          this.cards = res.filter((combo) => combo.estrellas !== 5);
+        this.combosService.getCombos().subscribe(
+          (res) => {
+            this.CombosBD = res.filter((combo) => combo.estrellas === 5);
+            this.cards = res.filter((combo) => combo.estrellas !== 5);
 
-          if (!this.CombosBD.length) {
-            res.sort(function (a: any, b: any) {
-              return b.estrellas - a.estrellas;
-            });
-            this.CombosBD = res.splice(0, 3);
-            this.cards = res;
+            if (!this.CombosBD.length) {
+              res.sort(function (a: any, b: any) {
+                return b.estrellas - a.estrellas;
+              });
+              this.CombosBD = res.splice(0, 3);
+              this.cards = res;
+            }
+          },
+          (err) =>
+            this.spinner.hide().then(() => {
+              console.error(err);
+              Swal.fire({
+                confirmButtonColor: '#000',
+                icon: 'error',
+                html: err.error.message,
+                scrollbarPadding: false,
+              });
+            }),
+          () => {
+            if (this.userID)
+              this.usersService.getUser(this.userID).subscribe(
+                (res) => {
+                  this.user = res;
+                  this.appComponent.user = res;
+                  this.pedidos = this.user.pedido!;
+                },
+                (err) =>
+                  this.spinner.hide().then(() => {
+                    console.error(err);
+                    Swal.fire({
+                      confirmButtonColor: '#000',
+                      icon: 'error',
+                      html: err.error.message,
+                      scrollbarPadding: false,
+                    });
+                  }),
+                () => this.spinner.hide()
+              );
+            else {
+              this.pedidos =
+                this.localStorageService.get<[pedidoInterface]>(
+                  'pedido',
+                  {}
+                )! || [];
+              this.spinner.hide();
+            }
           }
-        },
-        (err) =>
-          this.spinner.hide().then(() => {
-            console.error(err);
-            Swal.fire({
-              confirmButtonColor: '#000',
-              icon: 'error',
-              html: err.error.message,
-              scrollbarPadding: false,
-            });
-          }),
-        () => {
-          if (this.userID)
-            this.usersService.getUser(this.userID).subscribe(
-              (res) => {
-                this.user = res;
-                this.appComponent.user = res;
-                this.pedidos = this.user.pedido!;
-              },
-              (err) =>
-                this.spinner.hide().then(() => {
-                  console.error(err);
-                  Swal.fire({
-                    confirmButtonColor: '#000',
-                    icon: 'error',
-                    html: err.error.message,
-                    scrollbarPadding: false,
-                  });
-                }),
-              () => this.spinner.hide()
-            );
-          else {
-            this.pedidos =
-              this.localStorageService.get<[pedidoInterface]>('pedido', {})! ||
-              [];
-            this.spinner.hide();
-          }
-        }
-      );
-    });
+        );
+      })
+      .then(() => this.appComponent.addActivePedido());
   }
 
   getDetails(_id: String) {

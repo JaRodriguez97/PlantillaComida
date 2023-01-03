@@ -3,11 +3,11 @@
     <div class="blueBg">
       <div class="box signIn">
         <h2>Ya tienes una Cuenta?</h2>
-        <button #signInBtn>Login</button>
+        <button type="button" (click)="signInBtn()">Login</button>
       </div>
       <div class="box signUp">
         <h2>No tienes una Cuenta?</h2>
-        <button #signUpBtn>Registrarse</button>
+        <button type="button" (click)="signUpBtn()">Registrarse</button>
       </div>
     </div>
     <div #formBx class="formBx">
@@ -59,11 +59,7 @@
             <i></i>
           </div>
           <div class="inputBox">
-            <input
-              type="text"
-              name="apellidos"
-              [(ngModel)]="apellidos"
-            />
+            <input type="text" name="apellidos" [(ngModel)]="apellidos" />
             <span>Apellidos (Opcional)</span>
             <i></i>
           </div>

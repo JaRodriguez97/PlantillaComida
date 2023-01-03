@@ -1,5 +1,5 @@
 export const environment = {
   production: true,
-  backend: 'https://bdpc.up.railway.app/',
+  backend: 'https://bdpc-prod.up.railway.app/',
   apiKey: 'AIzaSyANPMMk_LmctJkbG61fjRkLJ5HQHLqYEwc',
 };

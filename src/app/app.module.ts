@@ -1,4 +1,3 @@
-import { MenuComponent } from './components/Menu/menu.component';
 import { AgmCoreModule } from '@agm/core';
 import { ScrollingModule } from '@angular/cdk/scrolling';
 import { HttpClientModule } from '@angular/common/http';

@@ -44,6 +44,7 @@ const routes: Routes = [
     loadChildren: () =>
       import('./components/Combo/combo.module').then((m) => m.ComboModule),
   },
+  { path: 'finalizarPedido', loadChildren: () => import('./components/Pedido/pedido.module').then(m => m.PedidoModule) },
   {
     path: '**',
     loadChildren: () =>

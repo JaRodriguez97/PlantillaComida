@@ -32,6 +32,7 @@ export class AppComponent implements OnInit {
   user!: userInterface | undefined;
   userID!: String | null | undefined;
   sectionContentPedido!: Boolean;
+  finalizarPedido!: Boolean;
   combosPedido!: comboInterface[];
   faHeart = faHeart;
 
@@ -60,12 +61,13 @@ export class AppComponent implements OnInit {
     this.renderer.removeClass(this.header.nativeElement, 'sticky');
   }
 
-  ngOnInit(): void {
+  async ngOnInit(): Promise<void> {
     let pedidoStorage = this.localStorageService.get<pedidoInterface[]>(
       'pedido',
       {}
     );
 
+    this.finalizarPedido = false;
     this.totalPedido = 0;
     this.pedidosLength = 1;
     this.userID = this.localStorageService.get('userID', {});
@@ -209,29 +211,57 @@ export class AppComponent implements OnInit {
 
   activePedido(): Boolean {
     let pedi = this.localStorageService.get<pedidoInterface[]>('pedido', {});
-    if (this.user && this.user.pedido && this.user.pedido.length) return true;
 
+    if (this.user && this.user.pedido && this.user.pedido.length) return true;
     if (pedi && pedi.length) return true;
 
     return false;
   }
 
+  addActivePedido() {
+    if (this.activePedido())
+      this.renderer.addClass(this.pedidoSection.nativeElement, 'active');
+  }
+
   screenPedido(): void {
+    // let classList = this.pedidoSection.nativeElement.classList;
     if (!this.pedidoSection.nativeElement.classList.contains('screen')) {
       this.renderer.addClass(this.pedidoSection.nativeElement, 'screen');
       this.renderer.addClass(this.screenEvent.nativeElement, 'active');
       this.sectionContentPedido = true;
+      console.log(
+        "🚀 ~ file: app.component.ts:233 ~ AppComponent ~ classList.contains('finalizarPedido')",
+        this.pedidoSection.nativeElement.classList.contains('finalizarPedido')
+      );
+      if (
+        this.pedidoSection.nativeElement.classList.contains('finalizarPedido')
+      )
+        return;
     } else {
       this.renderer.removeClass(this.pedidoSection.nativeElement, 'screen');
       this.renderer.removeClass(this.screenEvent.nativeElement, 'active');
       this.sectionContentPedido = false;
-      this.reloadTo('/menu');
+      console.log(
+        "🚀 ~ file: app.component.ts:241 ~ AppComponent ~ classList.contains('finalizarPedido')",
+        this.pedidoSection.nativeElement.classList.contains('finalizarPedido')
+      );
+      if (
+        this.pedidoSection.nativeElement.classList.contains('finalizarPedido')
+      ) {
+        this.finalizarPedido = false;
+      } else this.reloadTo('/menu');
     }
     this.ngOnInit();
   }
 
   terminarPedido() {
-    this.router.navigate(['/pedido']);
+    this.router.navigate(['/finalizarPedido']).then(() => {
+      this.renderer.removeClass(this.pedidoSection.nativeElement, 'screen');
+      this.renderer.removeClass(this.screenEvent.nativeElement, 'active');
+
+      this.sectionContentPedido = false;
+      this.finalizarPedido = true;
+    });
   }
 
   getCantidadCombos(_id: String) {
