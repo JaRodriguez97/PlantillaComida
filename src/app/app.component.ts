@@ -409,7 +409,7 @@ export class AppComponent implements OnInit {
   }
 
   existeComboPedido(_id: String, pedidos: pedidoInterface[]): Boolean {
-    return !pedidos.some((pedido) => pedido._id === _id) || false;
+    return !pedidos?.some((pedido) => pedido._id === _id) || false;
   }
 
   async addToCar(_id: String, i?: number, realoadTo?: String): Promise<void> {
