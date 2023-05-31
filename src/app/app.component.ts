@@ -30,7 +30,7 @@ export class AppComponent implements OnInit {
   totalPedido!: number;
   pedidosLength!: number;
   user!: userInterface | undefined;
-  userID!: String | null | undefined;
+  userID!: string | null | undefined;
   sectionContentPedido!: Boolean;
   finalizarPedido!: Boolean;
   combosPedido!: comboInterface[];
@@ -70,92 +70,78 @@ export class AppComponent implements OnInit {
     this.finalizarPedido = false;
     this.totalPedido = 0;
     this.pedidosLength = 1;
-    this.userID = this.localStorageService.get('userID', {});
+    this.userID = this.localStorageService.get<string>('userID', {});
 
-    if (this.userID && this.userID.length)
-      this.usersService.getUser(this.userID).subscribe(
-        (res) => (this.user = res),
-        (err) =>
-          this.spinner.hide().then(() => {
-            console.error(err);
-            Swal.fire({
-              confirmButtonColor: '#000',
-              icon: 'error',
-              html: err.error.message,
-              scrollbarPadding: false,
-            });
-          }),
-        () => {
-          if (this.user) {
-            if (this.user.pedido && this.user.pedido.length) {
-              this.pedidosLength = this.user.pedido.length;
-              this.pedidos = this.user.pedido;
-            }
-            this.combosService
-              .getTotalPedido(this.user.pedido?.map((pedido) => pedido._id)!)
-              .subscribe(
-                (res) => {
-                  this.combosPedido = res;
-                  this.totalPedido = res.reduce((accumulator, currentValue) => {
-                    if (this.user)
-                      this.user.pedido?.forEach((combo) => {
-                        if (combo._id == currentValue._id)
-                          currentValue.precio =
-                            combo.cantidad! * currentValue.precio;
-                      });
-                    return accumulator + currentValue.precio;
-                  }, this.totalPedido);
-                },
-                (err) =>
-                  this.spinner.hide().then(() => {
-                    console.error(err);
-                    Swal.fire({
-                      confirmButtonColor: '#000',
-                      icon: 'error',
-                      html: err.error.message,
-                      scrollbarPadding: false,
-                    });
-                  }),
-                () => {
-                  if (this.sectionContentPedido) this.spinner.hide();
-                }
-              );
-          }
-        }
-      );
+    if (this.userID) this.getUser(this.userID);
     else if (pedidoStorage && pedidoStorage.length) {
       this.pedidosLength = pedidoStorage.length;
       this.pedidos = pedidoStorage;
-      this.combosService
-        .getTotalPedido(pedidoStorage.map((pedido) => pedido._id))
-        .subscribe(
-          (res) => {
-            this.combosPedido = res;
-            this.totalPedido = res.reduce((accumulator, currentValue) => {
-              if (pedidoStorage) {
-                pedidoStorage.forEach((combo) => {
-                  if (combo._id == currentValue._id)
-                    currentValue.precio = combo.cantidad! * currentValue.precio;
-                });
-              }
-              return accumulator + currentValue.precio;
-            }, this.totalPedido);
-          },
-          (err) =>
-            this.spinner.hide().then(() => {
-              console.error(err);
-              Swal.fire({
-                confirmButtonColor: '#000',
-                icon: 'error',
-                html: err.error.message,
-                scrollbarPadding: false,
-              });
-            }),
-          () => {
-            if (this.sectionContentPedido) this.spinner.hide();
-          }
-        );
+
+      this.getTotalPedido(this.pedidos.map((pedido) => pedido._id));
     } else this.spinner.hide();
+  }
+
+  getUser(ID: string) {
+    this.usersService.getUser(ID).subscribe(
+      (res) => {
+        this.user = res;
+        this.pedidos = this.user.pedido!;
+        this.pedidosLength = this.pedidos.length;
+      },
+      (err) =>
+        this.spinner.hide().then(() => {
+          console.error(err);
+          Swal.fire({
+            confirmButtonColor: '#000',
+            icon: 'error',
+            html: err.error.message,
+            scrollbarPadding: false,
+          });
+        }),
+      () => this.getTotalPedido(this.pedidos.map((pedido) => pedido._id)!)
+    );
+  }
+
+  getTotalPedido(arrayPedidos: Array<string>) {
+    this.combosService.getTotalPedido(arrayPedidos).subscribe(
+      (res) => {
+        this.combosPedido = res;
+        this.totalPedido = res.reduce((accumulator, currentValue) => {
+          let pedidoReduce: pedidoInterface[] = [];
+
+          if (this.user) pedidoReduce = this.user.pedido!;
+          else if (this.pedidos) pedidoReduce = this.pedidos;
+
+          let positionCombo = pedidoReduce.findIndex(
+            (combo) => combo._id == currentValue._id
+          );
+
+          currentValue.precio =
+            pedidoReduce[positionCombo].cantidad! * currentValue.precio;
+
+          return accumulator + currentValue.precio;
+        }, 0);
+      },
+      (err) =>
+        this.spinner.hide().then(() => {
+          console.error(err);
+          Swal.fire({
+            confirmButtonColor: '#000',
+            icon: 'error',
+            html: err.error.message,
+            scrollbarPadding: false,
+          });
+        }),
+      () => {
+        if (getWindow().location.pathname !== '/finalizarPedido')
+          this.renderer.removeClass(
+            this.pedidoSection.nativeElement,
+            'finalizarPedido'
+          );
+
+        this.sectionContentPedido ? this.spinner.hide() : null;
+      }
+    );
   }
 
   onActivate(event: Event) {
@@ -167,7 +153,7 @@ export class AppComponent implements OnInit {
       });
   }
 
-  async reloadTo(uri: String) {
+  async reloadTo(uri: string) {
     this.router
       .navigateByUrl('/', { skipLocationChange: true })
       .then(() => this.router.navigate([uri]));
@@ -229,10 +215,7 @@ export class AppComponent implements OnInit {
       this.renderer.addClass(this.pedidoSection.nativeElement, 'screen');
       this.renderer.addClass(this.screenEvent.nativeElement, 'active');
       this.sectionContentPedido = true;
-      console.log(
-        "🚀 ~ file: app.component.ts:233 ~ AppComponent ~ classList.contains('finalizarPedido')",
-        this.pedidoSection.nativeElement.classList.contains('finalizarPedido')
-      );
+
       if (
         this.pedidoSection.nativeElement.classList.contains('finalizarPedido')
       )
@@ -264,11 +247,11 @@ export class AppComponent implements OnInit {
     });
   }
 
-  getCantidadCombos(_id: String) {
-    return this.pedidos.filter((pedido) => pedido._id === _id)[0]?.cantidad;
+  getCantidadCombos(_id: string) {
+    return this.pedidos?.filter((pedido) => pedido._id === _id)[0]?.cantidad;
   }
 
-  async restCar(_id: String, realoadTo?: String) {
+  async restCar(_id: string, realoadTo?: string) {
     this.spinner
       .show()
       .then(() => {
@@ -316,7 +299,7 @@ export class AppComponent implements OnInit {
       });
   }
 
-  async addCarCantidad(_id: String) {
+  async addCarCantidad(_id: string) {
     this.spinner
       .show()
       .then(() => {
@@ -356,14 +339,14 @@ export class AppComponent implements OnInit {
       });
   }
 
-  validateFavorite(_id: String): Boolean {
+  validateFavorite(_id: string): Boolean {
     if (this.user && this.user.favoritos && this.user.favoritos.length)
       if (this.user.favoritos.indexOf(_id) !== -1) return true;
 
     return false;
   }
 
-  addFavorite(_id: String) {
+  addFavorite(_id: string) {
     this.spinner.show().then(() => {
       if (this.user) {
         if (this.user.favoritos) {
@@ -408,11 +391,11 @@ export class AppComponent implements OnInit {
     });
   }
 
-  existeComboPedido(_id: String, pedidos: pedidoInterface[]): Boolean {
+  existeComboPedido(_id: string, pedidos: pedidoInterface[]): Boolean {
     return !pedidos?.some((pedido) => pedido._id === _id) || false;
   }
 
-  async addToCar(_id: String, i?: number, realoadTo?: String): Promise<void> {
+  async addToCar(_id: string, i?: number, realoadTo?: string): Promise<void> {
     this.spinner.show().then(() => {
       if (typeof i == 'number') {
         let list = this.document.querySelectorAll('.action')[i];

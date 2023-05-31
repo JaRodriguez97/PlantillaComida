@@ -2,16 +2,16 @@ import { LowerCasePipe } from '@angular/common';
 import { pedidoInterface } from './pedido.interface';
 
 export interface userInterface {
-  _id?: String;
-  apellidos?: String;
-  contraseña?: String;
-  email?: String | LowerCasePipe;
-  direccion?: String;
-  img?: String;
-  nombres?: String;
-  numeroTelefono?: Number;
-  userName?: String;
+  _id?: string;
+  apellidos?: string;
+  contraseña?: string;
+  email?: string | LowerCasePipe;
+  direccion?: string;
+  img?: string;
+  nombres?: string;
+  numeroTelefono?: number;
+  userName?: string;
   pedido?: pedidoInterface[];
   pedidosRealizados?: [{ pedido: pedidoInterface[]; fecha: Date }];
-  favoritos?: String[];
+  favoritos?: string[];
 }

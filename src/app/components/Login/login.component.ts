@@ -3,7 +3,7 @@ import {
   ElementRef,
   OnInit,
   Renderer2,
-  ViewChild
+  ViewChild,
 } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AppComponent } from '@app/app.component';
@@ -12,6 +12,7 @@ import { UsersService } from '@service/Users/users.service';
 import { LocalStorageService } from 'ngx-localstorage';
 import { NgxSpinnerService } from 'ngx-spinner';
 import Swal from 'sweetalert2';
+import { getWindow } from 'ssr-window';
 
 @Component({
   selector: 'app-login',
@@ -21,13 +22,13 @@ import Swal from 'sweetalert2';
 export class LoginComponent implements OnInit {
   @ViewChild('formBx') formBx!: ElementRef;
   @ViewChild('body') body!: ElementRef;
-  telefono!: Number;
-  contrasena!: String;
-  repiteContrasena!: String;
-  nombres!: String;
-  apellidos!: String;
-  email!: String;
-  idCombo!: String;
+  telefono!: number;
+  contrasena!: string;
+  repiteContrasena!: string;
+  nombres!: string;
+  apellidos!: string;
+  email!: string;
+  idCombo!: string;
   pedidos!: pedidoInterface[];
 
   constructor(
@@ -46,14 +47,14 @@ export class LoginComponent implements OnInit {
     this.spinner
       .show()
       .then(() => {
-        if (this.localStorageService.get<String>('userID', {}))
+        if (this.localStorageService.get<string>('userID', {}))
           this.router.navigate(['/landing']);
 
         this.renderer.removeClass(
           this.appComponent.pedidoSection.nativeElement,
           'active'
         );
-        
+
         this.pedidos = this.localStorageService.get<pedidoInterface[]>(
           'pedido',
           {}
@@ -122,7 +123,7 @@ export class LoginComponent implements OnInit {
               });
             }),
           () => {
-            this.localStorageService.set<String>(
+            this.localStorageService.set<string>(
               'userID',
               this.appComponent.user?._id!,
               {}
@@ -175,9 +176,9 @@ export class LoginComponent implements OnInit {
               }</b>`,
             }).then(() => {
               this.spinner.show().then(() => {
-                // this.localStorageService.set<String>('userID', res._id!, {});
-                this.renderer.removeClass(this.formBx.nativeElement, 'active');
-                this.renderer.removeClass(this.body.nativeElement, 'active');
+                // this.localStorageService.set<string>('userID', res._id!, {});
+                getWindow().location.reload();
+
                 setTimeout(() => this.spinner.hide(), 500);
               });
             });

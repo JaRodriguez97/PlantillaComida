@@ -19,7 +19,7 @@ export class UsersService {
     });
   }
 
-  getUser(id: String, token?: string): Observable<userInterface> {
+  getUser(id: string, token?: string): Observable<userInterface> {
     let headers = this.headers(token);
 
     return this.http.post<userInterface>(`${this.URL}`, { id }, { headers });
@@ -42,9 +42,9 @@ export class UsersService {
   }
 
   updateUser(
-    id: String | null | undefined,
+    id: string | null | undefined,
     dataUpdate: any,
-    NamePropUpdate: String,
+    NamePropUpdate: string,
     token?: string
   ): Observable<userInterface> {
     let headers = this.headers(token);

@@ -22,7 +22,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 })
 export class ComentariosComponent implements OnInit {
   @Input() comentarios!: ComentarioInterface[];
-  @Input() comentarioID!: String;
+  @Input() comentarioID!: string;
   contactForm!: FormGroup;
   user!: userInterface;
   userArray: userInterface[] = [];
@@ -54,14 +54,14 @@ export class ComentariosComponent implements OnInit {
         }
       });
 
-    let userID = this.localStorageService.get<String>('userID', {})!,
+    let userID = this.localStorageService.get<string>('userID', {})!,
       groupForm: {
-        id?: (String | ValidationErrors | null)[];
-        nombres: (String | ValidationErrors | null)[];
-        email: (String | LowerCasePipe | ValidationErrors | null)[];
-        apellidos: (String | ValidationErrors | null)[];
-        comentarios: (String | ValidationErrors | null)[];
-        celular: (Number | ValidationErrors | null)[];
+        id?: (string | ValidationErrors | null)[];
+        nombres: (string | ValidationErrors | null)[];
+        email: (string | LowerCasePipe | ValidationErrors | null)[];
+        apellidos: (string | ValidationErrors | null)[];
+        comentarios: (string | ValidationErrors | null)[];
+        celular: (number | ValidationErrors | null)[];
       } = {
         nombres: [],
         email: [],
@@ -113,17 +113,17 @@ export class ComentariosComponent implements OnInit {
   }
 
   initForm(groupForm?: {
-    nombres: (String | ValidationErrors | null)[];
-    email: (String | LowerCasePipe | ValidationErrors | null)[];
-    apellidos: (String | ValidationErrors | null)[];
-    comentarios: (String | ValidationErrors | null)[];
-    celular: (Number | ValidationErrors | null)[];
+    nombres: (string | ValidationErrors | null)[];
+    email: (string | LowerCasePipe | ValidationErrors | null)[];
+    apellidos: (string | ValidationErrors | null)[];
+    comentarios: (string | ValidationErrors | null)[];
+    celular: (number | ValidationErrors | null)[];
   }): FormGroup {
     if (groupForm && groupForm.nombres && groupForm.nombres.length)
       return this.formBuilder.group(groupForm);
 
     return this.formBuilder.group({
-      nombres: ['', [Validators.required, Validators.minLength(3),]],
+      nombres: ['', [Validators.required, Validators.minLength(3)]],
       email: ['', [Validators.required, Validators.minLength(5)]],
       apellidos: ['', [Validators.required, Validators.minLength(3)]],
       comentarios: [
@@ -138,7 +138,7 @@ export class ComentariosComponent implements OnInit {
     });
   }
 
-  handleSubmit(comentarioID: String) {
+  handleSubmit(comentarioID: string) {
     this.spinner.show().then(() => {
       console.log(this.contactForm.value);
       this.combosService

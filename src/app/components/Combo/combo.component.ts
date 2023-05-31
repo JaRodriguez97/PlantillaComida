@@ -42,15 +42,15 @@ export class ComboComponent implements OnInit {
     });
   }
 
-  addToCar(_id: String, i?: number, realoadTo?: String) {
+  addToCar(_id: string, i?: number, realoadTo?: string) {
     this.appComponent.addToCar(_id, i, realoadTo).then(() => this.ngOnInit());
   }
 
-  restCar(_id: String, realoadTo?: String) {
+  restCar(_id: string, realoadTo?: string) {
     this.appComponent.restCar(_id, realoadTo).then(() => this.ngOnInit());
   }
 
-  addCarCantidad(_id: String) {
+  addCarCantidad(_id: string) {
     this.appComponent.addCarCantidad(_id).then(() => this.ngOnInit());
   }
 }

@@ -44,7 +44,7 @@ export class MenuComponent implements OnInit {
   wrapper!: HTMLElement;
   window: Window = window;
   user!: userInterface | undefined;
-  userID!: String;
+  userID!: string;
 
   constructor(
     public appComponent: AppComponent,
@@ -61,7 +61,7 @@ export class MenuComponent implements OnInit {
     this.spinner
       .show()
       .then(() => {
-        this.userID = this.localStorageService.get<String>('userID', {})!;
+        this.userID = this.localStorageService.get<string>('userID', {})!;
         this.appComponent.ngOnInit();
 
         this.combosService.getCombos().subscribe(
@@ -121,19 +121,19 @@ export class MenuComponent implements OnInit {
       .then(() => this.appComponent.addActivePedido());
   }
 
-  getDetails(_id: String) {
+  getDetails(_id: string) {
     this.spinner.show().then(() => this.router.navigate(['/combo', _id]));
   }
 
-  addToCar(_id: String, i?: number, realoadTo?: String) {
+  addToCar(_id: string, i?: number, realoadTo?: string) {
     this.appComponent.addToCar(_id, i, realoadTo).then(() => this.ngOnInit());
   }
 
-  restCar(_id: String, realoadTo?: String) {
+  restCar(_id: string, realoadTo?: string) {
     this.appComponent.restCar(_id, realoadTo).then(() => this.ngOnInit());
   }
 
-  addCarCantidad(_id: String) {
+  addCarCantidad(_id: string) {
     this.appComponent.addCarCantidad(_id).then(() => this.ngOnInit());
   }
 }

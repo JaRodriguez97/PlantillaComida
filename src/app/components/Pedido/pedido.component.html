@@ -1,62 +1,66 @@
 <section class="order" id="order">
-  <h3 class="sub-heading">order now</h3>
-  <h1 class="heading">free and fast</h1>
+  <h1 class="heading">Tenemos Domicilio GRATIS y rápido,</h1>
+  <h3 class="sub-heading">Pero primero finaliza tu orden:</h3>
 
-  <form action="">
+  <form>
     <div class="inputBox">
       <div class="input">
-        <span>your name</span>
-        <input type="text" placeholder="enter your name" />
+        <span>Nombre Completo:</span>
+        <input
+          type="text"
+          placeholder="Ingresa nombre de quien recibe el pedido"
+          name="nombreCompleto"
+          [(ngModel)]="nombreCompleto"
+        />
       </div>
       <div class="input">
-        <span>your number</span>
-        <input type="number" placeholder="enter your number" />
+        <span>Número de WhatsApp:</span>
+        <input
+          type="number"
+          placeholder="Ingresa número de celular de quien recibe el pedido"
+          name="telefono"
+          [(ngModel)]="telefono"
+        />
       </div>
     </div>
     <div class="inputBox">
       <div class="input">
-        <span>your order</span>
-        <input type="text" placeholder="enter food name" />
+        <span>Dirección Exacta:</span>
+        <input
+          type="text"
+          placeholder="Ingresa dirección exacta de quien recibe el pedido"
+          name="direccionExacta"
+          [(ngModel)]="direccionExacta"
+        />
       </div>
       <div class="input">
-        <span>additional food</span>
-        <input type="test" placeholder="extra with food" />
+        <span>Datos Extras Dirección:</span>
+        <input
+          type="text"
+          placeholder="Ingresa detalles Ej: (Apto, Casa, Bloque, Manzana)"
+          name="detallesDireccion"
+          [(ngModel)]="detallesDireccion"
+        />
       </div>
     </div>
     <div class="inputBox">
-      <div class="input">
-        <span>how musch</span>
-        <input type="number" placeholder="how many orders" />
-      </div>
-      <div class="input">
-        <span>date and time</span>
-        <input type="datetime-local" />
-      </div>
-    </div>
-    <div class="inputBox">
-      <div class="input">
-        <span>your address</span>
+      <div class="input textarea">
+        <span>Detalles sobre el pedido en general:</span>
         <textarea
           name=""
-          placeholder="enter your address"
-          id=""
+          placeholder="Ingresa algún detalle a tener en cuenta al momento de hacer o despachar tu pedido."
           cols="30"
           rows="10"
         ></textarea>
       </div>
-      <div class="input">
-        <span>your message</span>
-        <textarea
-          name=""
-          placeholder="enter your message"
-          id=""
-          cols="30"
-          rows="10"
-        ></textarea>
-      </div>
     </div>
 
-    <input type="submit" value="order now" class="btn" />
+    <input
+      type="submit"
+      value="Enviar Orden Ya!"
+      class="btn"
+      (click)="SendOrder()"
+    />
   </form>
 </section>
 

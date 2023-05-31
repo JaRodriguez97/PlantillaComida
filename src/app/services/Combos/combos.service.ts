@@ -25,14 +25,14 @@ export class CombosService {
     return this.http.get<comboInterface[]>(this.URL, { headers });
   }
 
-  getCombo(_id: String, token?: string): Observable<comboInterface> {
+  getCombo(_id: string, token?: string): Observable<comboInterface> {
     let headers = this.headers(token);
 
     return this.http.get<comboInterface>(this.URL + _id, { headers });
   }
 
   getTotalPedido(
-    arrayID: String[],
+    arrayID: string[],
     token?: string
   ): Observable<comboInterface[]> {
     let headers = this.headers(token);
@@ -40,7 +40,7 @@ export class CombosService {
     return this.http.post<comboInterface[]>(this.URL, { arrayID }, { headers });
   }
 
-  updateComboComentario(id: String, contactForm: any, token?: string) {
+  updateComboComentario(id: string, contactForm: any, token?: string) {
     let headers = this.headers(token);
 
     return this.http.put<comboInterface>(

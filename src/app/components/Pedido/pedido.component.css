@@ -6,10 +6,18 @@
 }
 
 .order {
-  margin-top: 10vh;
+  margin-top: 15vh;
+}
+
+.order .heading,
+.order .sub-heading {
+  color: wheat;
+  text-align: left;
+  margin-left: 5%;
 }
 
 .order form {
+  display: grid;
   max-width: 90rem;
   border-radius: 0.5rem;
   box-shadow: var(--box-shadow);
@@ -27,6 +35,10 @@
 
 .order form .inputBox .input {
   width: 49%;
+}
+
+.order form .inputBox .textarea {
+  width: 100%;
 }
 
 .order form .inputBox .input span {
@@ -50,7 +62,7 @@
 
 .order form .inputBox .input input:focus,
 .order form .inputBox .input textarea:focus {
-  border: 0.1rem solid var(--green);
+  border: 0.3rem solid #f87c00;
 }
 
 .order form .inputBox .input textarea {
@@ -59,5 +71,6 @@
 }
 
 .order form .btn {
+  border: 1px solid #000;
   margin-top: 0;
 }

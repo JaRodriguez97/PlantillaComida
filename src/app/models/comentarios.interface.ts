@@ -1,9 +1,9 @@
 export interface ComentarioInterface {
-  _idUser?: String;
-  texto: String;
+  _idUser?: string;
+  texto: string;
   fecha: Date;
-  apellidos?: String;
-  nombres?: String;
-  numeroTelefono?: Number;
-  email?: String;
+  apellidos?: string;
+  nombres?: string;
+  numeroTelefono?: number;
+  email?: string;
 }
